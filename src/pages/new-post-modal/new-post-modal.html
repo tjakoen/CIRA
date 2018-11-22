@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar color="secondary">
+      <ion-buttons start>
+        <button ion-button icon-only (click)="dismiss()">
+          <ion-icon name="md-arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        New Post
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    
+    <div>
+      <ion-row no-padding>
+        <ion-col no-padding col-6 offset-3>
+          <img [src]="image" alt="this is the image"/>
+        </ion-col>
+      </ion-row>
+      <ion-row no-padding class="user-image-row">
+        <ion-col no-padding width-60>
+          <button class="image-action-button" ion-button outline block small (click)="openImagePicker()">Change Picture</button>
+        </ion-col>
+      </ion-row>
+    </div> 
+
+    <br>
+    
+    <form class="new-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+  
+      <ion-item>
+        <ion-label>Report Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate" formControlName="date"></ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label>Report Time</ion-label>
+          <ion-datetime displayFormat="HH:mm" [(ngModel)]="myTime" formControlName="time"></ion-datetime>
+        </ion-item>
+     
+      <ion-item>
+        <ion-label>Report Type</ion-label>
+        <ion-select formControlName="type" submitText="Select" cancelText="Cancel" required>
+          <ion-option value="Missing Person">Missing Persons</ion-option>
+          <ion-option value="Missing Property">Missing Property</ion-option>
+          <ion-option value="Wanted Person">Wanted Person</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <br>
+  
+      <ion-item>
+        <ion-label floating color="primary">Name of Target Individual</ion-label>
+        <ion-input type="text" formControlName="name" class="form-control" required></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label floating color="primary">Report Location</ion-label>
+        <ion-input type="text" formControlName="location" class="form-control" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label floating color="primary">Report Description</ion-label>
+          <ion-textarea type="text" formControlName="description" class="form-control" required></ion-textarea>
+        </ion-item>
+  
+      <br>
+      <br>
+  
+      <button class="form-action-button" ion-button block type="submit" [disabled]="!validations_form.valid">Create</button>
+    </form>
+  </ion-content>
+  

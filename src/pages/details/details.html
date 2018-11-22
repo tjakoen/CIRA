@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+      View Post
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+
+  <ion-grid>
+    <ion-row>
+      <div class="user-image-content">
+        <ion-row no-padding class="user-image-row">
+          <ion-col no-padding col-6 offset-3>
+            <img [src]="image" alt="this is the image"/>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-row>
+    <ion-row>
+      <h3>{{post.type}} Report</h3>
+    </ion-row>
+  </ion-grid>
+</ion-content>

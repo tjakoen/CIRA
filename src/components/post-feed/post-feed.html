@@ -1,0 +1,10 @@
+<!-- Generated template for the PostFeedComponent component -->
+<ion-list>
+    <ion-item *ngFor="let post of posts" (click)="viewDetails(item.payload.doc.id,item.payload.doc.data())">
+      <ion-thumbnail item-start>
+        <img [src]="item.payload.doc.data().image">
+      </ion-thumbnail>
+      <h2>{{item.payload.doc.data().title}}</h2>
+      <button ion-button clear item-end>Details</button>
+    </ion-item>
+</ion-list>
