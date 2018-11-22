@@ -14,26 +14,37 @@
       <button ion-fab (click)="openNewUserModal()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <div>
 
-    <ion-item class="filter-bar">
-      <ion-select [(ngModel)]="viewType" interface="popover" (ionChange)="proccessPosts()">
+  <ion-row class="filter-bar">
+    <ion-col>
+      <ion-searchbar> </ion-searchbar>
+    </ion-col>
+      <ion-col col-2>
+        <button class="funnel" ion-button end>
+            <ion-label>Filter</ion-label>
+            <ion-icon name="funnel"></ion-icon>
+        </button>
+    </ion-col>
+  </ion-row>
+
+    <!-- <ion-item class="filter-bar"> -->
+      <!-- <ion-select [(ngModel)]="viewType" interface="popover" (ionChange)="proccessPosts()">
         <ion-option value="all">All Types</ion-option>
         <ion-option value="Missing Person">Missing Persons</ion-option>
         <ion-option value="Missing Property">Missing Property</ion-option>
         <ion-option value="Wanted Person">Wanted Person</ion-option>
-      </ion-select>
-      <ion-select [(ngModel)]="orderBy" interface="popover" (ionChange)="proccessPosts()">
+      </ion-select> -->
+      <!-- <ion-select [(ngModel)]="orderBy" interface="popover" (ionChange)="proccessPosts()">
           <ion-option value="date">By Date</ion-option>
           <ion-option value="name">By Name</ion-option>
-        </ion-select>
-      <button class="funnel" ion-button item-end>
+        </ion-select> -->
+      <!-- <button class="funnel" ion-button item-end>
         <ion-label>Filter</ion-label>
         <ion-icon name="funnel"></ion-icon>
       </button>
-    </ion-item>
+    </ion-item> -->
        
-   
+   <div>
     <ion-segment [(ngModel)]="viewMode">
       <ion-segment-button value="gallery">
         <ion-icon name="photos"></ion-icon>
@@ -97,9 +108,11 @@
           </div>
     </div>
   </div>
+
 </ion-content>
-<ion-footer (click)="logout()">
+
+<!-- <ion-footer (click)="logout()">
   <ion-toolbar color="secondary">
     <ion-title>Log out</ion-title>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

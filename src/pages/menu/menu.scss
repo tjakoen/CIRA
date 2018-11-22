@@ -6,7 +6,21 @@ page-menu{
         padding-top: 0.5em;
         padding-bottom: 0.5em;
 
+        .col {
+            padding: unset;
+        }
+
+        ion-searchbar {
+            padding: 8px 1em 8px 0px;
+            margin-right: 0.5em;
+        }
+
         .funnel {
+            width: 100%;
+            height: auto;
+            margin: 8px 0px 8px 0px;
+            padding: 1px 1.1em 1px 1.1em;
+
             .label-md {
                 color: white;
             }

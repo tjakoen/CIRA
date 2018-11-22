@@ -25700,6 +25700,22 @@ page-menu .filter-bar {
   padding-bottom: 0.5em;
 }
 
+page-menu .filter-bar .col {
+  padding: unset;
+}
+
+page-menu .filter-bar ion-searchbar {
+  padding: 8px 1em 8px 0px;
+  margin-right: 0.5em;
+}
+
+page-menu .filter-bar .funnel {
+  width: 100%;
+  height: auto;
+  margin: 8px 0px 8px 0px;
+  padding: 1px 1.1em 1px 1.1em;
+}
+
 page-menu .filter-bar .funnel .label-md {
   color: white;
 }
