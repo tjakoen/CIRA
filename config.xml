@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ionic-firebase-crud-example" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Ionic Firebase CRUD Example</name>
-    <description>Learn how to create a complete Ionic app with Firebase.</description>
-    <author email="contact@ionicthemes.com" href="https://ionicthemes.com/">IonicThemes Team</author>
+<widget id="com.tjakoen.cira" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>CIRA</name>
+    <description>Decision Support System for Crime Investigatory Report in Angeles City</description>
+    <author email="tjakoen.s@gmail.com">Tjakoen Stolk</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

@@ -5,3 +5,5 @@ temp/
 *.swp
 platforms/
 plugins/
+www/
+.sourcemaps/
