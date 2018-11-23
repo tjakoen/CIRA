@@ -64,6 +64,7 @@ export class FirebaseService {
         imageURL: value.imageURL,
         userID: currentUser.uid, // Current User
         timestamp: firebase.firestore.FieldValue.serverTimestamp(), // Server Timestamp
+        status: 'unsolved',
       })
       .then(
         res => resolve(res),

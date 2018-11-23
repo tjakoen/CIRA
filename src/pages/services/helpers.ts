@@ -2,15 +2,22 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class HelperService {
-    filterByKey( data, key?: string ) {
-        return typeof key == 'undefined' ? data : data.filter(post => post.type === key);
+    filterByKey( data, key?: string, value?: string ) {
+        return typeof key == 'undefined' || value == 'undefined' ? data : data.filter(post => post[key] === value);
     }
     
-    sortByKey( data, key, order='asc' ) {
+    sortByKey( data, key, order ) {
         return data.sort(this.compareValues(key, order))
     }
 
+    filterByDate( data, startDate, endDate) {
+      return data.filter(
+        m => new Date(m.date) >= new Date(startDate) && new Date(m.date) <= new Date(endDate)
+        );
+    }
+    
     compareValues(key, order) {
+        console.log( order )
         return function(a, b) {
           if(!a.hasOwnProperty(key) || 
              !b.hasOwnProperty(key)) {
@@ -29,7 +36,7 @@ export class HelperService {
             comparison = -1;
           }
           return (
-            (order == 'desc') ? 
+            (order == 'asc') ? 
             (comparison * -1) : comparison
           );
         };

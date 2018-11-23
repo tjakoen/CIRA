@@ -25674,8 +25674,13 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
-center-text {
-  text-align: center;
+ion-select {
+  max-width: 100% !important;
+}
+
+.popover-top-right .popover-content {
+  -webkit-transform: translateY(-120%) !important;
+  transform: translateY(-120%) !important;
 }
 
 page-login .error-message {
@@ -25713,7 +25718,7 @@ page-menu .filter-bar .funnel {
   width: 100%;
   height: auto;
   margin: 8px 0px 8px 0px;
-  padding: 1px 1.1em 1px 1.1em;
+  padding: 1em 1em 1em 1em;
 }
 
 page-menu .filter-bar .funnel .label-md {

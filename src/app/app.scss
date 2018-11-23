@@ -15,6 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-center-text {
-    text-align: center;
+ion-select{
+    max-width: 100% !important;// your choice :)
+}
+
+.popover-top-right .popover-content {
+    transform: translateY(-120%) !important;
 }

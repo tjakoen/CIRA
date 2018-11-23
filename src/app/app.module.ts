@@ -12,6 +12,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { DetailsPage } from '../pages/details/details';
 import { NewPostModalPage } from '../pages/new-post-modal/new-post-modal';
 
+import { FilterPopover } from '../pages/menu/menu';
+
 import { ImagePicker } from '@ionic-native/image-picker';
 
 import { FirebaseService } from '../pages/services/firebase.service';
@@ -24,8 +26,6 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environment/environment';
 
-import {MatchTypePipe} from '../pages/pipes/filter';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -35,7 +35,7 @@ import {MatchTypePipe} from '../pages/pipes/filter';
     NewPostModalPage,
     DetailsPage,
     TabsPage,
-    MatchTypePipe,
+    FilterPopover,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +54,7 @@ import {MatchTypePipe} from '../pages/pipes/filter';
     NewPostModalPage,
     DetailsPage,
     TabsPage,
+    FilterPopover,
   ],
   providers: [
     StatusBar,
