@@ -5,20 +5,21 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { MenuPage } from '../pages/menu/menu';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DetailsPage } from '../pages/details/details';
-import { NewPostModalPage } from '../pages/new-post-modal/new-post-modal';
 
-import { FilterPopover } from '../pages/menu/menu';
+import { LoginPage } from '../pages/login/login';
+import { RegisterPage } from '../pages/login/register/register';
+
+import { PostsPage } from '../pages/posts/posts';
+import { NewPostModalPage } from '../pages/posts/new-post-modal/new-post-modal';
+import { PostDetailPage } from '../pages/posts/post-details/post-details';
+import { PostFilterPopover } from '../pages/posts/posts';
 
 import { ImagePicker } from '@ionic-native/image-picker';
 
 import { FirebaseService } from '../pages/services/firebase.service';
 import { AuthService } from '../pages/services/auth.service';
-import { HelperService } from '../pages/services/helpers';
+import { HelperService } from '../pages/services/helpers.service';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -31,11 +32,11 @@ import { environment } from '../environment/environment';
     MyApp,
     LoginPage,
     RegisterPage,
-    MenuPage,
+    PostsPage,
     NewPostModalPage,
-    DetailsPage,
+    PostDetailPage,
     TabsPage,
-    FilterPopover,
+    PostFilterPopover,
   ],
   imports: [
     BrowserModule,
@@ -50,11 +51,11 @@ import { environment } from '../environment/environment';
     MyApp,
     LoginPage,
     RegisterPage,
-    MenuPage,
+    PostsPage,
     NewPostModalPage,
-    DetailsPage,
+    PostDetailPage,
     TabsPage,
-    FilterPopover,
+    PostFilterPopover,
   ],
   providers: [
     StatusBar,

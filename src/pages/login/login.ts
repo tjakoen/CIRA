@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
-import { RegisterPage } from '../register/register';
+import { RegisterPage } from './register/register';
 import { TabsPage } from '../tabs/tabs';
 
 import { AuthService } from '../services/auth.service';
