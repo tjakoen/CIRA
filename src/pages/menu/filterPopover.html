@@ -1,0 +1,57 @@
+<ion-list no-lines>
+    <ion-list-header>
+        <span>
+            Filters
+        </span>
+        <button float-right (click)="postsPage.resetFilter()" >
+            <p>Reset All</p>
+        </button>
+    </ion-list-header>
+    <ion-item>
+        <ion-label>Order:</ion-label>
+        <ion-select [(ngModel)]="postsPage.filters.orderDirection" interface="popover" (ionChange)="postsPage.displayPosts()">
+            <ion-option value="desc">Descending</ion-option>
+            <ion-option value="asc">Ascending</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Order By:</ion-label>
+        <ion-select [(ngModel)]="postsPage.filters.orderBy" interface="popover" (ionChange)="postsPage.displayPosts()">
+            <ion-option value="date">By Date</ion-option>
+            <ion-option value="name">By Name</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Type:</ion-label>
+        <ion-select [(ngModel)]="postsPage.filters.viewType" interface="popover" (ionChange)="postsPage.displayPosts()">
+            <ion-option value="all">All Types</ion-option>
+            <ion-option value="Missing Person">Missing Persons</ion-option>
+            <ion-option value="Missing Property">Missing Property</ion-option>
+            <ion-option value="Wanted Person">Wanted Person</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Status:</ion-label>
+        <ion-select [(ngModel)]="postsPage.filters.viewStatus" interface="popover" (ionChange)="postsPage.displayPosts()">
+            <ion-option value="all">All</ion-option>
+            <ion-option value="unsolved">Unsolved</ion-option>
+            <ion-option value="solved">Solved</ion-option>
+        </ion-select>
+    </ion-item>
+    
+    <ion-list-header>
+        <span>Date Range</span>
+        <button float-right (click)="postsPage.resetDate()" >
+            <p>Reset Date</p>
+        </button>
+    </ion-list-header>
+    <ion-item>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="postsPage.filters.startDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="postsPage.filters.endDate" (ionChange)="postsPage.displayPosts()"></ion-datetime>
+    </ion-item>
+
+</ion-list>
