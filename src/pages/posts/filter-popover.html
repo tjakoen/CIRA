@@ -11,6 +11,7 @@
         <ion-label>Owner:</ion-label>
         <ion-select [(ngModel)]="postsPage.filters.owner" interface="popover" (ionSelect)="postsPage.viewOwners($event)">
             <ion-option value="all">All Posts</ion-option>
+            <ion-option value="saved">Saved Posts</ion-option>
             <ion-option value="own">My Posts</ion-option>
         </ion-select>
     </ion-item>

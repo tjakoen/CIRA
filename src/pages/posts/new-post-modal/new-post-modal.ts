@@ -45,7 +45,7 @@ export class NewPostModalPage {
   }
 
   dismiss() {
-   this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss();
   }
 
   onSubmit(value){
@@ -62,7 +62,7 @@ export class NewPostModalPage {
     .then(
       res => {
         this.resetFields();
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss({success: true});
       }
     )
   }

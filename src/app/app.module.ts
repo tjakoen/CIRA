@@ -15,6 +15,8 @@ import { NewPostModalPage } from '../pages/posts/new-post-modal/new-post-modal';
 import { PostDetailPage } from '../pages/posts/post-details/post-details';
 import { PostFilterPopover } from '../pages/posts/posts';
 
+import { DataPage } from '../pages/data/data';
+
 import { ImagePicker } from '@ionic-native/image-picker';
 
 import { FirebaseService } from '../pages/services/firebase.service';
@@ -44,7 +46,8 @@ import { environment } from '../environment/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    DataPage, // Generated with cli idk why it should be here
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,6 +59,7 @@ import { environment } from '../environment/environment';
     PostDetailPage,
     TabsPage,
     PostFilterPopover,
+    DataPage,
   ],
   providers: [
     StatusBar,

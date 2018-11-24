@@ -44,8 +44,6 @@ export class PostsPage {
     this.getData();
   }
 
-
-
   resetFilter() { 
     this.filters = {
       owner: 'all',
@@ -147,8 +145,10 @@ export class PostsPage {
   openNewUserModal(){
     let modal = this.modalCtrl.create(NewPostModalPage);
     modal.onDidDismiss( data => {
-      this.postData = [];
-      this.displayPosts();
+      if ( typeof data != 'undefined' ) {
+        this.postData = [];
+        this.displayPosts();
+      }
     });
     modal.present();
   }
