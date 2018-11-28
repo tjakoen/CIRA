@@ -1,47 +1,61 @@
 <ion-header>
     <ion-navbar color="danger">
       <ion-title>
-        Charts in Ionic 2
-      </ion-title>
+        Post Data
+        </ion-title>
     </ion-navbar>
   </ion-header>
    
   <ion-content>
-   
+
       <ion-card>
         <ion-card-header>
-          Bar Chart
+          Post Information
+        </ion-card-header>
+        <ion-card-content>
+          <p>Solve Rate = {{ getSolveRate( postsSum('solved'), postsSum('unsolved')) }}%</p>
+          <p>Total Number of Posts: {{ postsSum() }}</p>
+          <ul>
+            <li>
+              Solved Posts: {{ postsSum('solved') }}
+              <ul>
+                  <li>Missing Persons {{ postData.solved.missingPersons }}</li>
+                  <li>Missing Properties {{ postData.solved.missingProperties }}</li>
+                  <li>Wanted Pesons: {{ postData.solved.wantedPersons }}</li>
+              </ul>
+            </li>
+            <li>
+                Unolved Posts: {{ postsSum('unsolved') }}
+                <ul>
+                    <li>Missing Persons {{ postData.unsolved.missingPersons }}</li>
+                    <li>Missing Properties {{ postData.unsolved.missingProperties }}</li>
+                    <li>Wanted Pesons: {{ postData.unsolved.wantedPersons }}</li>
+                </ul>
+              </li>
+          </ul>
+
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          Number of Posts By Type
         </ion-card-header>
         <ion-card-content>
           <canvas #barCanvas></canvas>
         </ion-card-content>
       </ion-card>
    
-      <ion-card>
-        <ion-card-header>
-          Doughnut Chart
-        </ion-card-header>
-        <ion-card-content>
-          <canvas #doughnutCanvas></canvas>
-        </ion-card-content>
-      </ion-card>
+   
    
       <ion-card>
         <ion-card-header>
-          Incident Rate in Accordance to Time Day
+          Incident Rate for the current year
         </ion-card-header>
         <ion-card-content>
           <canvas #lineCanvas></canvas>
         </ion-card-content>
       </ion-card>
-      
-      <ion-card>
-          <ion-card-header>
-            
-          </ion-card-header>
-          <ion-card-content>
-            <canvas #lineCanvas></canvas>
-          </ion-card-content>
-        </ion-card>
+  
 
   </ion-content>

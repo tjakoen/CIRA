@@ -39,6 +39,7 @@ import { environment } from '../environment/environment';
     PostDetailPage,
     TabsPage,
     PostFilterPopover,
+    DataPage,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,6 @@ import { environment } from '../environment/environment';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    DataPage, // Generated with cli idk why it should be here
   ],
   bootstrap: [IonicApp],
   entryComponents: [

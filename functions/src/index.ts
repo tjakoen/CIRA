@@ -1,14 +1,6 @@
 const functions = require('firebase-functions'); 
 const admin = require('firebase-admin');
 
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
 admin.initializeApp(functions.config().firebase);
 
 // Sets Unsolved Post Data
@@ -17,14 +9,12 @@ exports.setUnsovlvedPostData = functions.database.ref('/posts/').onCreate( post 
     //whenever a new post is created
     const data = post.val();
     const type = data.type;
+    const dataRef = functions.database.ref("/data/posts");
 
-    let dataRef = functions.database.ref("/data/posts");
-
-    return dataRef.once('value').then(function( val ) {
-        const currentNumber = val.unsolved[type];
-        val.unsolved[type] = currentNumber + 1;
-        dataRef.child.set(val);
-    });
+    const currentData = dataRef.child.get();
+    const currentNumber = currentData.unsolved[type];
+    currentData.unsolved[type] = currentNumber + 1;
+    dataRef.child.set(currentData);
 });
 
 exports.updateSolvedPostData = functions.database.ref('/posts/').onCreate(event => {

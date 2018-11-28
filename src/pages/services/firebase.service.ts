@@ -24,6 +24,17 @@ export class FirebaseService {
     });
   }
 
+
+  getData() {
+    return new Promise<any>((resolve, reject) => {
+      let query = this.afs.collection('data');
+      this.snapshotChangesSubscription =  query.snapshotChanges()
+      .subscribe(snapshots => {
+        resolve(snapshots);
+      })
+    });
+  }
+
   unsubscribeOnLogOut(){
     //remember to unsubscribe from the snapshotChanges
     // debugger;

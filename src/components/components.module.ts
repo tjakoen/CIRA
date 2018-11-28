@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { PostFeedComponent } from './post-feed/post-feed';
+
 @NgModule({
-	declarations: [PostFeedComponent],
+	declarations: [],
 	imports: [],
-	exports: [PostFeedComponent]
+	exports: []
 })
 export class ComponentsModule {}
