@@ -1,0 +1,40 @@
+<!-- <ion-navbar *navbar>
+    <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+    <ion-title>Getting Started</ion-title>
+</ion-navbar> -->
+
+
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>CIRA - Reports</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only menuToggle="userMenu">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-fab right bottom>
+      <button ion-fab (click)="openNewReportModal()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+    
+  <div class="list-mini">
+      <ion-list>
+        <ion-item padding *ngFor="let report of reports" (click)="viewDetails(report)">
+          <h2>Blotter #{{report.blotterNo}} ({{report.status}})</h2>
+          <p>Incident Date: {{report.incidentDateAndTime}}</p>
+          <p>Incident Type: {{report.incidentType}}</p>
+          <p>Incident Location: {{report.incidentType}}</p>
+          <p>Victim Name: {{report.itemA.name.qualifier}} {{report.itemA.name.firstName}} {{report.itemA.name.middleName}} {{report.itemA.name.familyName}}</p>
+          <p>Suspect Name: {{report.itemB.name.qualifier}} {{report.itemB.name.firstName}} {{report.itemB.name.middleName}} {{report.itemB.name.familyName}}</p>
+          <button ion-button clear item-end>Details</button>
+        </ion-item>
+      </ion-list>
+    </div>
+
+</ion-content>

@@ -15,6 +15,10 @@ import { NewPostModalPage } from '../pages/posts/new-post-modal/new-post-modal';
 import { PostDetailPage } from '../pages/posts/post-details/post-details';
 import { PostFilterPopover } from '../pages/posts/posts';
 
+import { ReportsPage } from '../pages/reports/reports';
+import { NewReportModalPage } from '../pages/reports/new-report-modal/new-report-modal';
+import { ReportDetailPage } from '../pages/reports/report-details/report-details';
+
 import { DataPage } from '../pages/data/data';
 
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -35,6 +39,9 @@ import { environment } from '../environment/environment';
     LoginPage,
     RegisterPage,
     PostsPage,
+    ReportsPage,
+    NewReportModalPage,
+    ReportDetailPage,
     NewPostModalPage,
     PostDetailPage,
     TabsPage,
@@ -55,6 +62,9 @@ import { environment } from '../environment/environment';
     LoginPage,
     RegisterPage,
     PostsPage,
+    ReportsPage,
+    ReportDetailPage,
+    NewReportModalPage,
     NewPostModalPage,
     PostDetailPage,
     TabsPage,

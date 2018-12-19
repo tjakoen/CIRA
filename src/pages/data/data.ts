@@ -41,7 +41,6 @@ export class DataPage {
             data.map( dataMap => {
                 let allData = dataMap.payload.doc.data();
                 this.postData = allData;
-                console.log(this.postData);
             });  		
             }
         })

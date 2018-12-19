@@ -1,0 +1,494 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      New Post
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  
+  <form class="new-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">
+    
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Report Information
+        </ion-card-title>
+        <ion-item>
+          <ion-label  color="primary">Blotter #</ion-label>
+          <ion-input type="number" formControlName="blotterNo"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Incident Type</ion-label>
+          <ion-input type="text" formControlName="incidentType"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Incident Location</ion-label>
+          <ion-input type="text" formControlName="incidentLocation"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Incident Date & Time</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="incidentDateAndTime" value=" "></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Type A - Reporting Person Data
+        </ion-card-title>
+        <h2>Basic Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Family Name</ion-label>
+          <ion-input type="text" formControlName="itemA_name_familyName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">First Name</ion-label>
+          <ion-input type="text" formControlName="itemA_name_firstName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Middle Name</ion-label>
+          <ion-input type="text" formControlName="itemA_name_middleName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Qualifier</ion-label>
+          <ion-input type="text" formControlName="itemA_name_qualifier" value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Nickname</ion-label>
+          <ion-input type="text" formControlName="itemA_name_nickName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-input type="text" formControlName="itemA_citizenship"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Sex</ion-label>
+          <ion-input type="text" formControlName="itemA_sex"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-input type="text" formControlName="itemA_civilStatus"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="itemA_birthDate" value=" "></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Age</ion-label>
+          <ion-input type="number" formControlName="itemA_age"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-input type="text" formControlName="itemA_birthPlace"  value=" "></ion-input>
+        </ion-item>
+        
+        
+        <br>
+        <h2>Current Address</h2>
+        <ion-item>
+          <ion-label  color="primary">House Number</ion-label>
+          <ion-input type="text" formControlName="itemA_currentAddress_houseNumber"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Village</ion-label>
+          <ion-input type="text" formControlName="itemA_currentAddress_village"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Barangay</ion-label>
+          <ion-input type="text" formControlName="itemA_currentAddress_barangay"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Town</ion-label>
+          <ion-input type="text" formControlName="itemA_currentAddress_town"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Province</ion-label>
+          <ion-input type="text" formControlName="itemA_currentAddress_province"  value=" "></ion-input>
+        </ion-item>
+
+        <br>
+        <h2>Other Address</h2>
+        <ion-item>
+          <ion-label  color="primary">House Number</ion-label>
+          <ion-input type="text" formControlName="itemA_otherAddress_houseNumber"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Village</ion-label>
+          <ion-input type="text" formControlName="itemA_otherAddress_village" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Barangay</ion-label>
+          <ion-input type="text" formControlName="itemA_otherAddress_barangay"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Town</ion-label>
+          <ion-input type="text" formControlName="itemA_otherAddress_town"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Province</ion-label>
+          <ion-input type="text" formControlName="itemA_otherAddress_province"  value=" "></ion-input>
+        </ion-item>
+
+        <br>
+        <h2>Other Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Highest Educational Attainment</ion-label>
+          <ion-input type="text" formControlName="itemA_highestEducationalAttainment" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Occupation</ion-label>
+          <ion-input type="text" formControlName="itemA_occupation"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">ID Card Presented</ion-label>
+          <ion-input type="text" formControlName="itemA_idCardPresented"  value=" "></ion-input>
+        </ion-item>
+
+
+        <br>
+        <h2>Contact Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Email Address</ion-label>
+          <ion-input type="email" formControlName="itemA_contactInfo_emailAddress"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Home Phone</ion-label>
+          <ion-input type="text" formControlName="itemA_contactInfo_homePhone"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Mobile Phone</ion-label>
+          <ion-input type="text" formControlName="itemA_contactInfo_mobilePhone"  value=" "></ion-input>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Type B - Suspect Data
+        </ion-card-title>
+        <h2>Basic Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Family Name</ion-label>
+          <ion-input type="text" formControlName="itemB_name_familyName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">First Name</ion-label>
+          <ion-input type="text" formControlName="itemB_name_firstName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Middle Name</ion-label>
+          <ion-input type="text" formControlName="itemB_name_middleName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Qualifier</ion-label>
+          <ion-input type="text" formControlName="itemB_name_qualifier"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Nickname</ion-label>
+          <ion-input type="text" formControlName="itemB_name_nickName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-input type="text" formControlName="itemB_citizenship" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Sex</ion-label>
+          <ion-input type="text" formControlName="itemB_sex"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-input type="text" formControlName="itemB_civilStatus"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="itemB_birthDate" value=" "></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Age</ion-label>
+          <ion-input type="number" formControlName="itemB_age"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-input type="text" formControlName="itemB_birthPlace"  value=" "></ion-input>
+        </ion-item>
+
+
+        <br>
+          <h2>Current Address</h2>
+          <ion-item>
+            <ion-label  color="primary">House Number</ion-label>
+            <ion-input type="text" formControlName="itemB_currentAddress_houseNumber"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Village</ion-label>
+            <ion-input type="text" formControlName="itemB_currentAddress_village"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Barangay</ion-label>
+            <ion-input type="text" formControlName="itemB_currentAddress_barangay" value=" " ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Town</ion-label>
+            <ion-input type="text" formControlName="itemB_currentAddress_town"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Province</ion-label>
+            <ion-input type="text" formControlName="itemB_currentAddress_province"  value=" "></ion-input>
+          </ion-item>
+
+          <br>
+          <h2>Other Address</h2>
+          <ion-item>
+            <ion-label  color="primary">House Number</ion-label>
+            <ion-input type="text" formControlName="itemB_otherAddress_houseNumber"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Village</ion-label>
+            <ion-input type="text" formControlName="itemB_otherAddress_village"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Barangay</ion-label>
+            <ion-input type="text" formControlName="itemB_otherAddress_barangay"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Town</ion-label>
+            <ion-input type="text" formControlName="itemB_otherAddress_town"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Province</ion-label>
+            <ion-input type="text" formControlName="itemB_otherAddress_province"  value=" "></ion-input>
+          </ion-item>
+
+          <br>
+          <h2>Other Information</h2>
+          <ion-item>
+            <ion-label  color="primary">Highest Educational Attainment</ion-label>
+            <ion-input type="text" formControlName="itemB_highestEducationalAttainment"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Occupation</ion-label>
+            <ion-input type="text" formControlName="itemB_occupation"  value=" "></ion-input>
+          </ion-item>
+
+
+          <br>
+          <h2>Bio-Data</h2>
+          <ion-item>
+            <ion-label  color="primary">Height</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_height"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Weight</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_weight"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Eye Color</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_eyeColor"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Eye Description</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_eyeDescription"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Hair Color</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_hairColor"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Hair Description</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_hairDescription"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Under Influence? [Yes/No]. If yes give details</ion-label>
+            <ion-input type="text" formControlName="itemB_bioData_influence"  value=" "></ion-input>
+          </ion-item>
+
+          <br>
+          <h2>For Children in conflict with the law</h2>
+          <ion-item>
+            <ion-label  color="primary">Guardian Name</ion-label>
+            <ion-input type="text" formControlName="itemB_children_guardianName"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Guardian Address</ion-label>
+            <ion-input type="text" formControlName="itemB_children_guardianAddress"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Home Phone</ion-label>
+            <ion-input type="text" formControlName="itemB_children_homePhone"  value=" "></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Mobile Phone</ion-label>
+            <ion-input type="text" formControlName="itemB_children_mobilePhone"  value=" "></ion-input>
+          </ion-item>
+
+
+          <br>
+          <h2>Other Distinguishing Features</h2>
+          <ion-item>
+            <ion-textarea type="text" formControlName="itemB_otherDistinguishingFeatures"  value=" ">Test</ion-textarea>
+          </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Type C - Victim Person Data (Leave Blank if reporting person is the victim)
+        </ion-card-title>
+        <h2>Basic Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Family Name</ion-label>
+          <ion-input type="text" formControlName="itemC_name_familyName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">First Name</ion-label>
+          <ion-input type="text" formControlName="itemC_name_firstName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Middle Name</ion-label>
+          <ion-input type="text" formControlName="itemC_name_middleName"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Qualifier</ion-label>
+          <ion-input type="text" formControlName="itemC_name_qualifier"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Nickname</ion-label>
+          <ion-input type="text" formControlName="itemC_name_nickName" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-input type="text" formControlName="itemC_citizenship" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Sex</ion-label>
+          <ion-input type="text" formControlName="itemC_sex" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-input type="text" formControlName="itemC_civilStatus"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="itemC_birthDate" value=" "></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Age</ion-label>
+          <ion-input type="number" formControlName="itemC_age" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-input type="text" formControlName="itemC_birthPlace" value=" " ></ion-input>
+        </ion-item>
+        
+        
+        <br>
+        <h2>Current Address</h2>
+        <ion-item>
+          <ion-label  color="primary">House Number</ion-label>
+          <ion-input type="text" formControlName="itemC_currentAddress_houseNumber"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Village</ion-label>
+          <ion-input type="text" formControlName="itemC_currentAddress_village" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Barangay</ion-label>
+          <ion-input type="text" formControlName="itemC_currentAddress_barangay" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Town</ion-label>
+          <ion-input type="text" formControlName="itemC_currentAddress_town"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Province</ion-label>
+          <ion-input type="text" formControlName="itemC_currentAddress_province" value=" " ></ion-input>
+        </ion-item>
+
+        <br>
+        <h2>Other Address</h2>
+        <ion-item>
+          <ion-label  color="primary">House Number</ion-label>
+          <ion-input type="text" formControlName="itemC_otherAddress_houseNumber"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Village</ion-label>
+          <ion-input type="text" formControlName="itemC_otherAddress_village" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Barangay</ion-label>
+          <ion-input type="text" formControlName="itemC_otherAddress_barangay" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Town</ion-label>
+          <ion-input type="text" formControlName="itemC_otherAddress_town" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Province</ion-label>
+          <ion-input type="text" formControlName="itemC_otherAddress_province" value=" " ></ion-input>
+        </ion-item>
+
+        <br>
+        <h2>Other Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Highest Educational Attainment</ion-label>
+          <ion-input type="text" formControlName="itemC_highestEducationalAttainment" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Occupation</ion-label>
+          <ion-input type="text" formControlName="itemC_occupation"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">ID Card Presented</ion-label>
+          <ion-input type="text" formControlName="itemC_idCardPresented"  value=" "></ion-input>
+        </ion-item>
+
+
+        <br>
+        <h2>Contact Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Occupation</ion-label>
+          <ion-input type="email" formControlName="itemC_contactInfo_emailAddress"  value=" "></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Home Phone</ion-label>
+          <ion-input type="text" formControlName="itemC_contactInfo_homePhone" value=" " ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Mobile Phone</ion-label>
+          <ion-input type="text" formControlName="itemC_contactInfo_mobilePhone" value=" " ></ion-input>
+        </ion-item>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Type D - Incident Narrative
+        </ion-card-title>
+          <ion-item>
+            <ion-textarea type="text" formControlName="itemD_incidentNarrative"  value=" ">Test</ion-textarea>
+          </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()" [disabled]="!validations_form.valid">Submit</button>
+  <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()">Save as draft</button>
+</ion-footer>
