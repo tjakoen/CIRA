@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, normalizeURL, ToastController, LoadingController } from 'ionic-angular';
+import { ViewController, normalizeURL, ToastController, LoadingController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -13,6 +13,8 @@ export class NewPostModalPage {
   validations_form: FormGroup;
   image: any;
   loading: any;
+  postData;
+  update = false;
 
   myDate: String = new Date().toISOString();
   myTime: String = new Date().toISOString();
@@ -23,13 +25,31 @@ export class NewPostModalPage {
     private formBuilder: FormBuilder,
     private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private params: NavParams,
   ) {
     this.loading = this.loadingCtrl.create();
+    this.postData =  params.get('data') 
   }
 
   ionViewWillLoad(){
     this.resetFields()
+    if ( typeof this.postData != 'undefined' ) {
+      this.update = true;
+      this.setFields( this.postData )
+    }
+  }
+
+  setFields( data ) {
+    this.image = data.imageURL;
+    this.validations_form = this.formBuilder.group({
+      date: [data.date, Validators.required],
+      time: [data.time, Validators.required],
+      type: [data.type, Validators.required],
+      name: [data.name, Validators.required],
+      description: [data.description, Validators.required],
+      location: [data.location, Validators.required],
+    })
   }
 
   resetFields(){
@@ -65,6 +85,26 @@ export class NewPostModalPage {
         this.viewCtrl.dismiss({success: true});
       }
     )
+    
+    if ( this.update ) {
+      this.firebaseService.updatePost(data, this.postData)
+      .then(
+        res => {
+          this.resetFields();
+          this.viewCtrl.dismiss({success: true});
+        }
+      )
+    } else {
+      this.firebaseService.createPost(data)
+      .then(
+        res => {
+          this.resetFields();
+          this.viewCtrl.dismiss({success: true});
+        }
+      )
+    }
+
+
   }
 
   openImagePicker(){

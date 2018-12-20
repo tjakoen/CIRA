@@ -7,12 +7,12 @@
 <ion-content padding class="form-content">
   <ion-grid>
       <ion-row>
-          <ion-col col-lg-5 col-sm-12  fixed center-text>
+          <ion-col col-sm-12  fixed center-text>
               <img [src]="logoURL"/>
               <h2>Welcome to CIRA</h2>
               <p>Decision Support System for Crime Investigatory Report in Angeles City</p>
           </ion-col>
-          <ion-col col-lg-7 col-sm-12 fixed>
+          <ion-col col-sm-12 fixed>
             <br><br><br>
             <form class="form" [formGroup]="validations_form"  (ngSubmit)="tryLogin(validations_form.value)">
                 <ion-item>

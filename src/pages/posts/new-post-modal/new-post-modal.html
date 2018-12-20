@@ -5,7 +5,10 @@
           <ion-icon name="md-arrow-back"></ion-icon>
         </button>
       </ion-buttons>
-      <ion-title>
+      <ion-title *ngIf="update == true">
+        Update Post
+      </ion-title>
+      <ion-title *ngIf="update != true">
         New Post
       </ion-title>
     </ion-navbar>
@@ -69,7 +72,9 @@
       <br>
       <br>
   
-      <button class="form-action-button" ion-button block type="submit" [disabled]="!validations_form.valid">Create</button>
+      <button  *ngIf="update == true" class="form-action-button" ion-button block type="submit" [disabled]="!validations_form.valid">Update</button>
+      <button  *ngIf="update != true" class="form-action-button" ion-button block type="submit" [disabled]="!validations_form.valid">Create</button>
+    
     </form>
   </ion-content>
   

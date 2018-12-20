@@ -12,6 +12,7 @@ export class NewReportModalPage {
   validations_form: FormGroup;
   loading: any;
   reportData;
+  update = false;
 
   constructor(
     private viewCtrl: ViewController,
@@ -24,18 +25,17 @@ export class NewReportModalPage {
   ) {
     this.loading = this.loadingCtrl.create();
     this.reportData =  params.get('data') 
-   
   }
 
   ionViewWillLoad(){
     this.resetFields()
     if ( typeof this.reportData != 'undefined' ) {
-      this.setFields( this.reportData )
+      this.update = true;
+      this.setFields( this.reportData );
     }
   }
 
   setFields( data ) {
-    console.log(data.blotterNo)
     this.validations_form = this.formBuilder.group({
 
       blotterNo: [data.blotterNo, Validators.required],
@@ -416,14 +416,26 @@ export class NewReportModalPage {
         incidentNarrative: value.itemD_incidentNarrative,
       }
     }
-    console.log(data)
-    this.firebaseService.createReport(data, 'posted')
-    .then(
-      res => {
-        this.resetFields();
-        this.viewCtrl.dismiss({success: true});
-      }
-    )
+
+    if ( this.update ) {
+      this.firebaseService.updateReport(data, this.reportData)
+      .then(
+        res => {
+          this.resetFields();
+          this.viewCtrl.dismiss({success: true});
+        }
+      )
+    } else {
+      this.firebaseService.createReport(data, 'posted')
+      .then(
+        res => {
+          this.resetFields();
+          this.viewCtrl.dismiss({success: true});
+        }
+      )
+    }
+
+   
   }
 
 }

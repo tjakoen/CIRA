@@ -7,7 +7,15 @@
 </ion-header>
 
 <ion-content padding>
-  
+
+    <ion-fab left bottom *ngIf="currentUser.uid == post.userID">
+      <button ion-fab (click)="delete()"><ion-icon name="trash"></ion-icon></button>
+    </ion-fab>
+
+    <ion-fab right bottom *ngIf="currentUser.uid == post.userID">
+      <button ion-fab (click)="openNewPostModal()"><ion-icon name="brush"></ion-icon></button>
+    </ion-fab>
+
   <ion-card>
       <img [src]="post.imageURL" />
       <ion-card-content>

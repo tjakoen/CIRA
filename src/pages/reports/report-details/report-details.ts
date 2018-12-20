@@ -53,4 +53,29 @@ export class ReportDetailPage {
     });
     modal.present();
   }
+
+  delete() {
+    let confirm = this.alertCtrl.create({
+      title: 'Confirm',
+      message: 'Do you want to delete this Report?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {}
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.firebaseService.deleteReport(this.report.documentId)
+            .then(
+              res => this.viewCtrl.dismiss(),
+              err => console.log(err)
+            )
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
 }

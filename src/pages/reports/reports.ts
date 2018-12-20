@@ -60,11 +60,12 @@ export class ReportsPage {
   }
 
   getData(){
-    this.firebaseService.getReports(this.filters.viewType)
+    this.firebaseService.getReports()
     .then(data => {
       if (data) {
         data.map( dataMap => {
           let report = dataMap.payload.doc.data();
+          report.documentId = dataMap.payload.doc.id;
           this.reportData.push( report );
           this.displayReports();
         });  		

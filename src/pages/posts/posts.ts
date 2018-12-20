@@ -68,7 +68,10 @@ export class PostsPage {
     .then(data => {
       if (data) {
         data.map( dataMap => {
+
           let post = dataMap.payload.doc.data();
+          post.documentId = dataMap.payload.doc.id;
+
           this.postData.push( post );
           this.displayPosts();
         });  		

@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import { ViewController, normalizeURL, ToastController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { ViewController, normalizeURL, ModalController, ToastController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { NewPostModalPage } from '../new-post-modal/new-post-modal';
+import * as firebase from 'firebase/app';
 
 @Component({
   templateUrl: 'post-details.html'
 })
 export class PostDetailPage {
 
+  currentUser = firebase.auth().currentUser;
   validations_form: FormGroup;
   image: any;
   post: any;
@@ -22,7 +25,8 @@ export class PostDetailPage {
     private formBuilder: FormBuilder,
     private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
   ) {
     this.loading = this.loadingCtrl.create();
   }
@@ -33,6 +37,7 @@ export class PostDetailPage {
 
   getData(){
     this.post = this.navParams.get('data');
+    console.log(this.post)
     this.image = this.post.imageURL;
     this.validations_form = this.formBuilder.group({
       title: new FormControl(this.post.title, Validators.required),
@@ -70,7 +75,7 @@ export class PostDetailPage {
         {
           text: 'Yes',
           handler: () => {
-            this.firebaseService.deleteTask(this.post.id)
+            this.firebaseService.deletePost(this.post.documentId)
             .then(
               res => this.viewCtrl.dismiss(),
               err => console.log(err)
@@ -122,6 +127,16 @@ export class PostDetailPage {
       });
       toast.present();
     })
+  }
+
+  openNewPostModal(){
+    let modal = this.modalCtrl.create(NewPostModalPage, {data: this.post});
+    modal.onDidDismiss( data => {
+      if ( typeof data != 'undefined' ) {
+        this.dismiss()
+      }
+    });
+    modal.present();
   }
 
 }
