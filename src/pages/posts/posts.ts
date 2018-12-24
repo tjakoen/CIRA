@@ -89,7 +89,7 @@ export class PostsPage {
 
   viewOwners(ev: any) {
     let val = ev.target.value;
-    let userID = this.firebaseService.currentUser.uid;
+    let userID = this.firebaseService.getCurrentUser().uid;
     this.filters.owner = val != 'all' ? userID : val 
 
     this.displayPosts()
@@ -156,13 +156,7 @@ export class PostsPage {
     });
     modal.present();
   }
-
-  logout(){
-    this.authService.doLogout()
-    .then(res => {
-      this.navCtrl.push(LoginPage);
-    })
-  }
+  
 } // End of Posts Page
 
 

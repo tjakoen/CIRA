@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, AlertController, ModalController, LoadingController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
@@ -36,11 +36,9 @@ export class LoginPage {
     private navCtrl: NavController,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private firebaseService: FirebaseService,
     private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController,
     private globals: Globals,
   ) {}
 
@@ -58,12 +56,12 @@ export class LoginPage {
   }
 
   tryLogin( value ){
-    this.presentLoading();
     this.authService.doLogin(value)
     .then(login => {
       if ( !login.user.emailVerified ) {
         this.showVerificationDialog();
       } else {
+        this.globals.presentLoadingTillNextScreen('Logging you in...');
         this.firebaseService.getUserDetails(login.user.uid)
         .then( res => {
           let userData = res.userData
@@ -100,7 +98,7 @@ export class LoginPage {
           handler: () => {
             this.authService.sendVerificationEmail()
             .then(res => {
-              this.showToast('Verification Email Sent')
+              this.globals.showToast('Verification Email Sent')
             });
           }
         }
@@ -109,16 +107,8 @@ export class LoginPage {
     confirm.present();
   }
 
-  showToast( message) {
-    const toast = this.toastCtrl.create({
-      message: message,
-      duration: 3000
-    });
-    toast.present();
-  }
-
   openEditUser( uid ) {
-    this.showToast("Please Enter the following information to procceed")
+    this.globals.showToast("Please Enter the following information to procceed")
     let modal = this.modalCtrl.create(EditUserModal, {uid: uid});
     modal.onDidDismiss( data => {
       if ( data.success ) {
@@ -128,11 +118,6 @@ export class LoginPage {
     modal.present();
   }
 
-  presentLoading() {
-    this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    }).present();
-  }
+  
 
 }

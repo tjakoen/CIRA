@@ -12,28 +12,26 @@
   </ion-header>
   
   <ion-content padding>
-    
-    <div>
-      <ion-row no-padding>
-        <ion-col no-padding col-6 offset-3>
-          <img [src]="image" alt="this is the image"/>
-        </ion-col>
-      </ion-row>
-      <ion-row no-padding class="user-image-row">
-        <ion-col no-padding width-60>
-          <button class="image-action-button" ion-button outline block small (click)="openImagePicker()">Change Picture</button>
-        </ion-col>
-      </ion-row>
-    </div> 
-
-    <br>
-    
+      
     <form class="update-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)" #documentEditForm="ngForm">
         <ion-card>
             <ion-card-content>
                 <ion-card-title>
                     User Information
                 </ion-card-title>
+                <div>
+                    <ion-row no-padding>
+                        <ion-col no-padding col-6 offset-3>
+                        <img [src]="image" alt="this is the image"/>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row no-padding class="user-image-row">
+                        <ion-col no-padding width-60>
+                        <button class="image-action-button" ion-button outline block small (click)="openImagePicker()">Change Picture</button>
+                        </ion-col>
+                    </ion-row>
+                </div> 
+                <br>
                 <ion-item>
                     <ion-label floating color="primary">Name</ion-label>
                     <ion-input type="text" formControlName="name" class="form-control" required></ion-input>

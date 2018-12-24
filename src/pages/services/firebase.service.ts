@@ -10,6 +10,9 @@ export class FirebaseService {
   private snapshotChangesSubscription: any;
   constructor(public afs: AngularFirestore){}
 
+  getCurrentUser() {
+    return firebase.auth().currentUser;
+  }
   // TODO: Dynamic database
   getPosts(filter){
     return new Promise<any>((resolve, reject) => {
@@ -50,8 +53,9 @@ export class FirebaseService {
   }
 
   updateTask(taskKey, value){
+    let currentUser = firebase.auth().currentUser;
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection('people').doc(this.currentUser.uid).collection('tasks').doc(taskKey).set(value)
+      this.afs.collection('people').doc(currentUser.uid).collection('tasks').doc(taskKey).set(value)
       .then(
         res => resolve(res),
         err => reject(err)

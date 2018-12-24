@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/toPromise';
 import * as firebase from 'firebase/app';
 import { FirebaseService } from './firebase.service';
-import { P } from "@angular/core/src/render3";
 
 @Injectable()
 export class AuthService {
@@ -54,5 +53,39 @@ export class AuthService {
         });
       }
     })
+  }
+
+  sendPasswordResetEmail() {
+    return new Promise((resolve, reject) => {
+      let currentUser = firebase.auth().currentUser
+      if( currentUser ){
+        firebase.auth().sendPasswordResetEmail( currentUser.email )
+        .then(() => {
+          resolve();
+        }).catch((error) => {
+          reject();
+        });
+      }
+    });
+  }
+
+  sendEmailChangeEmail( newEmail, password ) {
+    console.log(password);
+    return new Promise((resolve, reject) => {
+      let currentUser = firebase.auth().currentUser;
+      let credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, password);
+
+      currentUser.reauthenticateWithCredential( credential )
+      .then(() => {
+        // User re-authenticated.
+        currentUser.updateEmail(newEmail).then(() => {
+          this.sendVerificationEmail();
+          resolve();
+        });
+      }).catch((error) => {
+        // An error happened.
+        reject();
+      });
+    });
   }
 }

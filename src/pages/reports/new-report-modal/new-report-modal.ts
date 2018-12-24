@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ViewController, ToastController, LoadingController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
-import { ImagePicker } from '@ionic-native/image-picker';
+import { Globals } from '../../services/globals';
 
 @Component({
   templateUrl: 'new-report-modal.html'
@@ -18,14 +18,14 @@ export class NewReportModalPage {
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private firebaseService: FirebaseService,
-    private loadingCtrl: LoadingController,
+    private globals: Globals,
     private params: NavParams,
   ) {
-    this.loading = this.loadingCtrl.create();
     this.reportData =  params.get('data') 
   }
 
   ionViewWillLoad(){
+    this.globals.presentLoading( 'Please Wait...', 3000 );
     this.resetFields()
     if ( typeof this.reportData != 'undefined' ) {
       this.update = true;

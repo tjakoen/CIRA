@@ -8,15 +8,18 @@
     <ion-content>
         <ion-list>
             <button ion-item (click)="openPage('User Info')" menuClose>
-                <ion-icon item-start [name]="trash"></ion-icon>
                 User Info
             </button>
-            <button ion-item menuClose>
-                <ion-icon item-start [name]="trash"></ion-icon>
-                Change Login Credentials
+            <button ion-item (click)="openPage('Change Login')" menuClose>
+                Change Login
+            </button>
+            <button ion-item (click)="openPage('Change Password')" menuClose>
+                Change Password
+            </button>
+            <button ion-item menuClose (click)="openPage('Log Out')">
+                Log Out
             </button>
             <button ion-item menuClose>
-                <ion-icon item-start [name]="trash"></ion-icon>
                 Close Menu
             </button>
         </ion-list>
