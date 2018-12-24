@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import 'rxjs/add/operator/toPromise';
 import * as firebase from 'firebase/app';
 import { FirebaseService } from './firebase.service';
+import { P } from "@angular/core/src/render3";
 
 @Injectable()
 export class AuthService {
@@ -34,6 +35,19 @@ export class AuthService {
         firebase.auth().signOut()
         .then(() => {
           this.firebaseService.unsubscribeOnLogOut();
+          resolve();
+        }).catch((error) => {
+          reject();
+        });
+      }
+    })
+  }
+
+  sendVerificationEmail() {
+    return new Promise((resolve, reject) => {
+      if(firebase.auth().currentUser){
+        firebase.auth().currentUser.sendEmailVerification()
+        .then(() => {
           resolve();
         }).catch((error) => {
           reject();

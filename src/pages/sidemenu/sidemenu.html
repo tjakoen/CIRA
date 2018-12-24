@@ -7,13 +7,16 @@
 
     <ion-content>
         <ion-list>
-        <button ion-item menuClose (click)="openPage('User Info')">
-            <ion-icon item-start [name]="trash"></ion-icon>
-            User Info
-        </button>
+            <button ion-item (click)="openPage('User Info')" menuClose>
+                <ion-icon item-start [name]="trash"></ion-icon>
+                User Info
+            </button>
+            <button ion-item menuClose>
+                <ion-icon item-start [name]="trash"></ion-icon>
+                Close Menu
+            </button>
         </ion-list>
     </ion-content>
 </ion-menu>
 
-<!-- main navigation -->
 <ion-nav  [root]="rootPage" #content></ion-nav>

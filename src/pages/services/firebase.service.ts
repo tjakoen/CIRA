@@ -443,6 +443,29 @@ export class FirebaseService {
     })
   }
 
+  getUserDetails( uid ) {
+    return new Promise<any>((resolve, reject) => {
+      // Create User Document if not exists
+      this.afs.doc(`users/${uid}`)
+      .update({})
+      .then(() => {
+        resolve({ userData:this.afs.doc(`users/${uid}`).valueChanges()});
+      })
+      .catch((error) => {
+        // console.log('Error updating user', error); // (document does not exists)
+        this.afs.doc(`users/${uid}`)
+          .set(
+            {
+              infoSet: false
+            }
+          ) .then(() => {
+            resolve({ userData: this.afs.doc(`users/${uid}`).valueChanges()});
+          });
+         
+      });
+
+    });
+  }
 
 
 }
