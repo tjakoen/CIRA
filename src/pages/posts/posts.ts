@@ -96,6 +96,7 @@ export class PostsPage {
   }
    
   displayPosts() {
+    this.posts = [];
     this.proccessPosts( ( callback ) => {
       if ( callback ) {
         this.posts = this.filteredPostData;
@@ -105,7 +106,7 @@ export class PostsPage {
   }
 
   proccessPosts( callback ) {
-    this.posts= [];
+    this.filteredPostData = [];
     let filterdValue = this.filterPosts( this.postData );
     let orderedValue = this.helperService.sortByKey( filterdValue, this.filters.orderBy, this.filters.orderDirection );
     this.filteredPostData = orderedValue;

@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
+import { SideMenuPage } from '../pages/sidemenu/sidemenu';
 
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/login/register/register';
@@ -47,6 +48,7 @@ import { environment } from '../environment/environment';
     TabsPage,
     PostFilterPopover,
     DataPage,
+    SideMenuPage,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,7 @@ import { environment } from '../environment/environment';
     NewPostModalPage,
     PostDetailPage,
     TabsPage,
+    SideMenuPage,
     PostFilterPopover,
     DataPage,
   ],

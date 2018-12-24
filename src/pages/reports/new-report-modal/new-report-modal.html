@@ -14,7 +14,12 @@
 <ion-content padding>
   
   <form class="new-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">
-    
+    <ion-card>
+      <ion-card-content>
+        <p>INSTRUCTIONS: Refer to PNP SOP on ‘Recording of Incidents in the Police Blotter’ in filling up this form. This Incident Record Form (IRF) may be reproduced, photocopied,
+and/or downloaded from the DIDM website, <a href="www.didm.pnp.gov.ph">www.didm.pnp.gov.ph</a>.</p>
+      </ion-card-content>
+    </ion-card>
     <ion-card>
       <ion-card-content>
         <ion-card-title>
@@ -176,6 +181,8 @@
         <ion-card-title>
           Type B - Suspect Data
         </ion-card-title>
+        <p>If there are no suspects, proceed to Item C</p>
+        <br>
         <h2>Basic Information</h2>
         <ion-item>
           <ion-label  color="primary">Family Name</ion-label>
@@ -334,6 +341,9 @@
 
           <br>
           <h2>Other Distinguishing Features</h2>
+          <p>DESCRIBE IN DETAIL CLOTHES, VEHICLE, SUNGLASSES, WEAPON/S, SCARS, AND OTHER DATA OR ACTIVITY OF THE SUSPECT/S WHICH WERE OBSERVED BY THE
+            REPORTING PERSON AND/OR WITNESS/ES TO IDENTIFY THE SUSPECT/S. THESE ARE IMPORTANT AND MAY BECOME EVIDENCE TO IDENTIFY, AND LINK TO THE CRIME, THE SUSPECT/S. USE
+            ADDITIONAL SHEET/S IF NECESSARY</p>
           <ion-item>
             <ion-textarea type="text" formControlName="itemB_otherDistinguishingFeatures"  >Test</ion-textarea>
           </ion-item>
@@ -344,8 +354,10 @@
     <ion-card>
       <ion-card-content>
         <ion-card-title>
-          Type C - Victim Person Data (Leave Blank if reporting person is the victim)
+          Type C - Victim Person Data
         </ion-card-title>
+        <p>If reporting person is the victim, proceed to Item D</p>
+        <br>
         <h2>Basic Information</h2>
         <ion-item>
           <ion-label  color="primary">Family Name</ion-label>
@@ -478,6 +490,8 @@
         <ion-card-title>
           Type D - Incident Narrative
         </ion-card-title>
+          <br>
+          <p>ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT, ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY AND HOW OF REPORTING. (USE ADDITIONAL SHEET/S IF NECESSARY</p>
           <ion-item>
             <ion-textarea type="text" formControlName="itemD_incidentNarrative"  >Test</ion-textarea>
           </ion-item>
