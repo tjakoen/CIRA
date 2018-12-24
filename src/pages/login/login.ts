@@ -108,7 +108,7 @@ export class LoginPage {
   }
 
   openEditUser( uid ) {
-    this.globals.showToast("Please Enter the following information to procceed")
+    this.globals.showToast("Please enter the following information to procceed")
     let modal = this.modalCtrl.create(EditUserModal, {uid: uid});
     modal.onDidDismiss( data => {
       if ( data.success ) {

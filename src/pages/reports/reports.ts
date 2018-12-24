@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController,PopoverController, NavParams } from 'ionic-angular';
-import { AuthService } from '../services/auth.service';
+import { NavController, ModalController } from 'ionic-angular';
 import { FirebaseService } from '../services/firebase.service';
 
 import { ReportDetailPage } from './report-details/report-details';
@@ -13,8 +12,6 @@ import { NewReportModalPage } from './new-report-modal/new-report-modal';
   templateUrl: 'reports.html'
 })
 export class ReportsPage {
-
-  
   reportData = [];
   filteredReportData = [];
   reports = [];
@@ -26,26 +23,27 @@ export class ReportsPage {
   constructor(
     private navCtrl: NavController,
     private modalCtrl: ModalController,
-    private authService: AuthService,
     private firebaseService: FirebaseService,
     private helperService: HelperService,
-    private popCtrl: PopoverController,
 
-  ) {}
+  ) {
+    this.getData();
+  }
   
   ionViewWillEnter(){
-    this.getData();
+    this.displayReports();
   }
 
   displayReports() {
-    this.proccessPosts( ( callback ) => {
+    this.reports = [];
+    this.proccessReports( ( callback ) => {
       if ( callback ) {
         this.reports = this.filteredReportData;
       }
     });
   }
 
-  proccessPosts( callback ) {
+  proccessReports( callback ) {
     this.filteredReportData =[];
     let filterdValue = this.filterReports( this.reportData );
     //let orderedValue = this.helperService.sortByKey( filterdValue, this.filters.orderBy, this.filters.orderDirection );
@@ -83,6 +81,7 @@ export class ReportsPage {
     let modal = this.modalCtrl.create(NewReportModalPage);
     modal.onDidDismiss( data => {
       if ( typeof data != 'undefined' ) {
+        this.reportData = [];
         this.displayReports();
       }
     });

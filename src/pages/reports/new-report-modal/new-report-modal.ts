@@ -25,7 +25,7 @@ export class NewReportModalPage {
   }
 
   ionViewWillLoad(){
-    this.globals.presentLoading( 'Please Wait...', 3000 );
+    this.globals.presentLoading( 'Please Wait...', 2000 );
     this.resetFields()
     if ( typeof this.reportData != 'undefined' ) {
       this.update = true;
@@ -198,23 +198,23 @@ export class NewReportModalPage {
       itemA_contactInfo_mobilePhone: new FormControl('', Validators.required),
       
       // ITEM B
-      itemB_name_familyName: new FormControl('', Validators.required),
-      itemB_name_firstName: new FormControl('', Validators.required),
-      itemB_name_middleName: new FormControl('', Validators.required),
+      itemB_name_familyName: new FormControl(''),
+      itemB_name_firstName: new FormControl(''),
+      itemB_name_middleName: new FormControl(''),
       itemB_name_qualifier: new FormControl(''),
       itemB_name_nickName: new FormControl(''),
-      itemB_citizenship: new FormControl('', Validators.required),
-      itemB_sex: new FormControl('', Validators.required),
-      itemB_civilStatus: new FormControl('', Validators.required),
-      itemB_birthDate: new FormControl('', Validators.required),
-      itemB_age: new FormControl('', Validators.required),
-      itemB_birthPlace: new FormControl('', Validators.required),
+      itemB_citizenship: new FormControl(''),
+      itemB_sex: new FormControl(''),
+      itemB_civilStatus: new FormControl(''),
+      itemB_birthDate: new FormControl(''),
+      itemB_age: new FormControl(''),
+      itemB_birthPlace: new FormControl(''),
       
-      itemB_currentAddress_houseNumber: new FormControl('', Validators.required),
-      itemB_currentAddress_village: new FormControl('', Validators.required),
-      itemB_currentAddress_barangay: new FormControl('', Validators.required),
-      itemB_currentAddress_town: new FormControl('', Validators.required),
-      itemB_currentAddress_province: new FormControl('', Validators.required),
+      itemB_currentAddress_houseNumber: new FormControl(''),
+      itemB_currentAddress_village: new FormControl(''),
+      itemB_currentAddress_barangay: new FormControl(''),
+      itemB_currentAddress_town: new FormControl(''),
+      itemB_currentAddress_province: new FormControl(''),
     
       itemB_otherAddress_houseNumber: new FormControl(''),
       itemB_otherAddress_village: new FormControl(''),
@@ -222,7 +222,7 @@ export class NewReportModalPage {
       itemB_otherAddress_town: new FormControl(''),
       itemB_otherAddress_province: new FormControl(''),
       
-      itemB_highestEducationalAttainment: new FormControl('', Validators.required),
+      itemB_highestEducationalAttainment: new FormControl(''),
       itemB_occupation: new FormControl(''),
       
       itemB_bioData_height: new FormControl(''),
@@ -231,7 +231,7 @@ export class NewReportModalPage {
       itemB_bioData_eyeDescription: new FormControl(''),
       itemB_bioData_hairColor: new FormControl(''),
       itemB_bioData_hairDescription: new FormControl(''),
-      itemB_bioData_influence: new FormControl('', Validators.required),
+      itemB_bioData_influence: new FormControl(''),
     
       itemB_children_guardianName: new FormControl(''),
       itemB_children_guardianAddress: new FormControl(''),

@@ -38,10 +38,12 @@ export class PostsPage {
     private helperService: HelperService,
     private popCtrl: PopoverController,
 
-  ) {}
+  ) {
+    this.getData();
+  }
   
   ionViewWillEnter(){
-    this.getData();
+    this.displayPosts();
   }
 
   resetFilter() { 
@@ -91,7 +93,6 @@ export class PostsPage {
     let val = ev.target.value;
     let userID = this.firebaseService.getCurrentUser().uid;
     this.filters.owner = val != 'all' ? userID : val 
-
     this.displayPosts()
   }
    
@@ -125,7 +126,6 @@ export class PostsPage {
 
   searchPosts(ev: any) {
     let val = ev.target.value;
-
     if (val && val.trim() != '') {
       this.posts = this.filteredPostData.filter((post) => {
         return (
