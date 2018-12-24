@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, ToastController, AlertController, ModalController, LoadingController } from 'ionic-angular';
 
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
 
 import { RegisterPage } from './register/register';
 import { SideMenuPage } from '../sidemenu/sidemenu';
+import { EditUserModal } from '../user-info/edit-user-modal/edit-user-modal';
 
 import { AuthService } from '../services/auth.service';
-
+import { Globals } from '../services/globals'
 
 @Component({
   selector: 'page-login',
@@ -38,6 +39,9 @@ export class LoginPage {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private firebaseService: FirebaseService,
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
@@ -53,19 +57,21 @@ export class LoginPage {
     });
   }
 
-  tryLogin(value){
+  tryLogin( value ){
+    this.presentLoading();
     this.authService.doLogin(value)
-    .then(res => {
-      if ( !res.user.emailVerified ) {
+    .then(login => {
+      if ( !login.user.emailVerified ) {
         this.showVerificationDialog();
       } else {
-        this.firebaseService.getUserDetails(res.user.uid)
+        this.firebaseService.getUserDetails(login.user.uid)
         .then( res => {
-          if ( res.userData.infoSet ) {
-            localStorage.setItem('userData', res.userData);
+          let userData = res.userData
+          if ( userData.infoSet == true  ) {
+            this.globals.userData = userData;
             this.navCtrl.push(SideMenuPage);
           } else {
-            console.log("Set the data");
+            this.openEditUser(login.user.uid)
           }
         }, err => {
           this.errorMessage = err.message;
@@ -94,7 +100,7 @@ export class LoginPage {
           handler: () => {
             this.authService.sendVerificationEmail()
             .then(res => {
-              this.showVerificationConfirm()
+              this.showToast('Verification Email Sent')
             });
           }
         }
@@ -103,12 +109,30 @@ export class LoginPage {
     confirm.present();
   }
 
-  showVerificationConfirm() {
+  showToast( message) {
     const toast = this.toastCtrl.create({
-      message: 'Verification Email Sent',
+      message: message,
       duration: 3000
     });
     toast.present();
+  }
+
+  openEditUser( uid ) {
+    this.showToast("Please Enter the following information to procceed")
+    let modal = this.modalCtrl.create(EditUserModal, {uid: uid});
+    modal.onDidDismiss( data => {
+      if ( data.success ) {
+        this.navCtrl.push(SideMenuPage);
+      }
+    });
+    modal.present();
+  }
+
+  presentLoading() {
+    this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    }).present();
   }
 
 }

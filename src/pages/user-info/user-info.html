@@ -1,0 +1,41 @@
+<ion-header>
+        <ion-navbar color="secondary">
+          <ion-title>
+            CIRA - User Information
+          </ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+      <ion-content padding>
+      
+          <ion-fab right bottom>
+            <button ion-fab (click)="editUserModal()"><ion-icon name="brush"></ion-icon></button>
+          </ion-fab>
+      
+        <ion-card>
+            <img [src]="user.imageURL" />
+            <ion-card-content>
+                <ion-card-title>
+                    User Information
+                </ion-card-title>
+                <p><strong>Name:</strong> {{user.name}}</p>
+                <p><strong>Rank:</strong> {{user.rank}}</p>
+                <p><strong>Phone:</strong> {{user.phone}}</p>
+                <p><strong>Email:</strong> {{user.email}}</p>
+                <p><strong>Birth Date:</strong> {{user.birthDate}}</p>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-card-content>
+                <ion-card-title>
+                    Station Information
+                </ion-card-title>
+                <p><strong>Station Name:</strong> {{user.station}}</p>
+                <p><strong>Station Telephone:</strong> {{user.stationPhone}}</p>
+                <p><strong>Name of Chief/Head of Office:</strong> {{user.cheifName}}</p>
+            </ion-card-content>
+        </ion-card>
+      
+      </ion-content>
+      

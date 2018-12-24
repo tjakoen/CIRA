@@ -1,32 +1,29 @@
-
 import { Component } from '@angular/core';
-import { ViewController, normalizeURL, ModalController, ToastController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { FirebaseService } from '../services/firebase.service';
+import { ViewController, normalizeURL, ModalController, ToastController,  LoadingController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { FirebaseService } from '../services/firebase.service';
+import { EditUserModal } from './edit-user-modal/edit-user-modal';
 import * as firebase from 'firebase/app';
+import { Globals } from '../services/globals'
 
 @Component({
   templateUrl: 'user-info.html'
 })
-export class PostDetailPage {
+export class UserInfoPage {
 
   currentUser = firebase.auth().currentUser;
-  validations_form: FormGroup;
   image: any;
-  post: any;
+  user: any;
   loading: any;
 
   constructor(
-    private navParams: NavParams,
-    private alertCtrl: AlertController,
     private viewCtrl: ViewController,
     private toastCtrl: ToastController,
-    private formBuilder: FormBuilder,
     private imagePicker: ImagePicker,
-    private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
+    private firebaseService: FirebaseService,
+    private globals: Globals,
   ) {
     this.loading = this.loadingCtrl.create();
   }
@@ -36,55 +33,12 @@ export class PostDetailPage {
   }
 
   getData(){
-    this.post = this.navParams.get('data');
-    console.log(this.post)
-    this.image = this.post.imageURL;
-    this.validations_form = this.formBuilder.group({
-      title: new FormControl(this.post.title, Validators.required),
-      description: new FormControl(this.post.description, Validators.required)
-    });
+    this.user = this.globals.userData;
+    this.image = this.user.imageURL;
   }
 
   dismiss() {
    this.viewCtrl.dismiss();
-  }
-
-  onSubmit(value){
-    let data = {
-      title: value.title,
-      description: value.description,
-      image: this.image
-    }
-    this.firebaseService.updateTask(this.post.id,data)
-    .then(
-      res => {
-        this.viewCtrl.dismiss();
-      }
-    )
-  }
-
-  delete() {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirm',
-      message: 'Do you want to delete ' + this.post.type + ' Report?',
-      buttons: [
-        {
-          text: 'No',
-          handler: () => {}
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            this.firebaseService.deletePost(this.post.documentId)
-            .then(
-              res => this.viewCtrl.dismiss(),
-              err => console.log(err)
-            )
-          }
-        }
-      ]
-    });
-    confirm.present();
   }
 
   openImagePicker(){
@@ -129,14 +83,14 @@ export class PostDetailPage {
     })
   }
 
-  // openNewPostModal(){
-  //   let modal = this.modalCtrl.create(NewPostModalPage, {data: this.post});
-  //   modal.onDidDismiss( data => {
-  //     if ( typeof data != 'undefined' ) {
-  //       this.dismiss()
-  //     }
-  //   });
-  //   modal.present();
-  // }
+  editUserModal(){
+    let modal = this.modalCtrl.create( EditUserModal, {data: this.globals.userData} );
+    modal.onDidDismiss( data => {
+      if ( typeof data != 'undefined' ) {
+        this.getData()
+      }
+    });
+    modal.present();
+  }
 
 }

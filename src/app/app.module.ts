@@ -20,6 +20,9 @@ import { ReportsPage } from '../pages/reports/reports';
 import { NewReportModalPage } from '../pages/reports/new-report-modal/new-report-modal';
 import { ReportDetailPage } from '../pages/reports/report-details/report-details';
 
+import { UserInfoPage } from '../pages/user-info/user-info';
+import { EditUserModal } from '../pages/user-info/edit-user-modal/edit-user-modal';
+
 import { DataPage } from '../pages/data/data';
 
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -33,6 +36,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environment/environment';
+import { Globals } from '../pages/services/globals';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,8 @@ import { environment } from '../environment/environment';
     PostFilterPopover,
     DataPage,
     SideMenuPage,
+    EditUserModal,
+    UserInfoPage,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +79,8 @@ import { environment } from '../environment/environment';
     SideMenuPage,
     PostFilterPopover,
     DataPage,
+    EditUserModal,
+    UserInfoPage,
   ],
   providers: [
     StatusBar,
@@ -81,6 +89,7 @@ import { environment } from '../environment/environment';
     FirebaseService,
     AuthService,
     HelperService,
+    Globals,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

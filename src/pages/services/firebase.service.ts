@@ -8,8 +8,6 @@ import 'firebase/storage';
 export class FirebaseService {
 
   private snapshotChangesSubscription: any;
-  currentUser = firebase.auth().currentUser;
-
   constructor(public afs: AngularFirestore){}
 
   // TODO: Dynamic database
@@ -63,7 +61,6 @@ export class FirebaseService {
 
   deletePost(id){
     return new Promise<any>((resolve, reject) => {
-      let currentUser = firebase.auth().currentUser;
       this.afs.collection('posts').doc(id).delete()
       .then(
         res => resolve(res),
@@ -74,7 +71,6 @@ export class FirebaseService {
 
   deleteReport(id){
     return new Promise<any>((resolve, reject) => {
-      let currentUser = firebase.auth().currentUser;
       this.afs.collection('reports').doc(id).delete()
       .then(
         res => resolve(res),
@@ -443,29 +439,48 @@ export class FirebaseService {
     })
   }
 
+
   getUserDetails( uid ) {
     return new Promise<any>((resolve, reject) => {
       // Create User Document if not exists
       this.afs.doc(`users/${uid}`)
       .update({})
       .then(() => {
-        resolve({ userData:this.afs.doc(`users/${uid}`).valueChanges()});
+        this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
+          resolve({ userData: res });
+        });
       })
       .catch((error) => {
         // console.log('Error updating user', error); // (document does not exists)
         this.afs.doc(`users/${uid}`)
-          .set(
-            {
-              infoSet: false
-            }
-          ) .then(() => {
-            resolve({ userData: this.afs.doc(`users/${uid}`).valueChanges()});
-          });
-         
+          .set({
+            infoSet: false
+          }) 
+          .then(() => {
+            this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
+              resolve({ userData: res });
+            });
+          })
       });
 
     });
   }
 
+  updateUser( userData, uid? ) {
+    if ( typeof uid == 'undefined' ) {
+      let currentUser = firebase.auth().currentUser;
+      uid = currentUser.uid
+    }
+
+    return new Promise<any>((resolve, reject) => {
+      this.afs.doc(`users/${uid}`)
+        .update(userData)
+        .then(() => {
+          this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
+            resolve({ userData: res });
+          });
+      });
+    });
+  } 
 
 }

@@ -1,0 +1,100 @@
+<ion-header>
+    <ion-navbar color="secondary">
+      <ion-buttons start>
+        <button ion-button icon-only (click)="dismiss()">
+          <ion-icon name="md-arrow-back"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        Update User Info
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    
+    <div>
+      <ion-row no-padding>
+        <ion-col no-padding col-6 offset-3>
+          <img [src]="image" alt="this is the image"/>
+        </ion-col>
+      </ion-row>
+      <ion-row no-padding class="user-image-row">
+        <ion-col no-padding width-60>
+          <button class="image-action-button" ion-button outline block small (click)="openImagePicker()">Change Picture</button>
+        </ion-col>
+      </ion-row>
+    </div> 
+
+    <br>
+    
+    <form class="update-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)" #documentEditForm="ngForm">
+        <ion-card>
+            <ion-card-content>
+                <ion-card-title>
+                    User Information
+                </ion-card-title>
+                <ion-item>
+                    <ion-label floating color="primary">Name</ion-label>
+                    <ion-input type="text" formControlName="name" class="form-control" required></ion-input>
+                </ion-item>
+                
+                <ion-item>
+                    <ion-label floating color="primary">Rank</ion-label>
+                    <ion-input type="text" formControlName="rank" class="form-control" required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating color="primary">Phone</ion-label>
+                    <ion-input type="text" formControlName="phone" class="form-control" required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating color="primary">Email</ion-label>
+                    <ion-input type="text" formControlName="email" class="form-control" required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Birth Date</ion-label>
+                    <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birthDate"></ion-datetime>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-card-content>
+                <ion-card-title>
+                    Station Information
+                </ion-card-title>
+                <p>To be used when creating reports</p>
+                <br>
+
+                <ion-item>
+                    <ion-label floating color="primary">Station Name</ion-label>
+                    <ion-input type="text" formControlName="station" class="form-control" required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label floating color="primary">Station Telephone</ion-label>
+                    <ion-input type="text" formControlName="stationPhone" class="form-control" required></ion-input>
+                </ion-item>
+                
+                <!-- <ion-item>
+                    <ion-label floating color="primary">Investigator on Case</ion-label>
+                    <ion-input type="text" formControlName="rank" class="form-control" required></ion-input>
+                </ion-item> -->
+        
+                <ion-item>
+                    <ion-label floating color="primary">Name of Chief/Head of Office</ion-label>
+                    <ion-input type="text" formControlName="cheifName" class="form-control" required></ion-input>
+                </ion-item>
+
+            </ion-card-content>
+        </ion-card>
+          
+    </form>
+  </ion-content>
+  
+  <ion-footer>
+    <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()" [disabled]="!validations_form.valid">Submit</button>
+</ion-footer>
