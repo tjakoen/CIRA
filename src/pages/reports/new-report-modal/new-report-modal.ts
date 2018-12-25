@@ -416,7 +416,7 @@ export class NewReportModalPage {
     }
 
     if ( this.update ) {
-      this.firebaseService.updateReport(data, this.reportData)
+      this.firebaseService.updateReport(data, this.reportData.documentId)
       .then(
         res => {
           this.resetFields();

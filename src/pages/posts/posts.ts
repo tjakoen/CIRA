@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController,PopoverController, NavParams } from 'ionic-angular';
-import { AuthService } from '../services/auth.service';
+import { ModalController,PopoverController, NavParams } from 'ionic-angular';
 import { FirebaseService } from '../services/firebase.service';
+
 import { NewPostModalPage } from './new-post-modal/new-post-modal';
 import { PostDetailPage } from './post-details/post-details';
-import { LoginPage } from '../login/login';
 
 import { HelperService } from '../services/helpers.service';
 
@@ -26,54 +25,30 @@ export class PostsPage {
     endDate: ''
   }
   
-  postData = [];
+  postData = [];  // Raw Data
   filteredPostData = [];
   posts = [];
   
   constructor(
-    private navCtrl: NavController,
     private modalCtrl: ModalController,
-    private authService: AuthService,
     private firebaseService: FirebaseService,
     private helperService: HelperService,
     private popCtrl: PopoverController,
-
-  ) {
+  ) {}
+  
+  ionViewWillEnter(){
     this.getData();
   }
   
-  ionViewWillEnter(){
-    this.displayPosts();
-  }
-
-  resetFilter() { 
-    this.filters = {
-      owner: 'all',
-      viewType:'all',
-      viewStatus: 'all',
-      orderBy: 'date',
-      orderDirection: 'desc',
-      startDate: '',
-      endDate: ''
-    }
-    this.displayPosts();
-  }
-
-  resetDate() { 
-    this.filters.startDate = '';
-    this.filters.endDate = '';
-    this.displayPosts();
-  }
-  
+  // Gets Post Data
   getData(){
+    this.postData = [];
     this.firebaseService.getPosts(this.filters.viewType)
     .then(data => {
       if (data) {
         data.map( dataMap => {
-
           let post = dataMap.payload.doc.data();
           post.documentId = dataMap.payload.doc.id;
-
           this.postData.push( post );
           this.displayPosts();
         });  		
@@ -81,21 +56,7 @@ export class PostsPage {
     })
   }
 
-  showFilterPopover(myEvent?: Event) {
-    // Pass Post Page Refferrence to Popover Page
-    let popover = this.popCtrl.create(PostFilterPopover, { cssClass: 'popover-top-right', homeRef: this });
-    popover.present({
-      ev: myEvent
-    });
-  }
-
-  viewOwners(ev: any) {
-    let val = ev.target.value;
-    let userID = this.firebaseService.getCurrentUser().uid;
-    this.filters.owner = val != 'all' ? userID : val 
-    this.displayPosts()
-  }
-   
+  // Displays Post Data
   displayPosts() {
     this.posts = [];
     this.proccessPosts( ( callback ) => {
@@ -105,7 +66,7 @@ export class PostsPage {
       }
     });
   }
-
+  // Filters Displayed Post Data
   proccessPosts( callback ) {
     this.filteredPostData = [];
     let filterdValue = this.filterPosts( this.postData );
@@ -115,6 +76,7 @@ export class PostsPage {
   }
 
   // TODO: Improved multi-key filtering
+  // Filters post data based on each set key
   filterPosts( data ) {
     data = this.filters.owner != 'all' ? this.helperService.filterByKey( data, 'userID', this.filters.owner ) : data;
     data = this.filters.viewType != 'all' ? this.helperService.filterByKey( data, 'type', this.filters.viewType ) : data;
@@ -123,7 +85,15 @@ export class PostsPage {
     return data;
   }
 
-
+  // Sets the value for filter by owner option
+  viewOwners(ev: any) {
+    let val = ev.target.value;
+    let userID = this.firebaseService.getCurrentUser().uid;
+    this.filters.owner = val != 'all' ? userID : val 
+    this.displayPosts()
+  }
+  
+  // Searches Displayed Posts by Name, Location or Description
   searchPosts(ev: any) {
     let val = ev.target.value;
     if (val && val.trim() != '') {
@@ -139,26 +109,59 @@ export class PostsPage {
     }
   }
 
-
-  viewDetails( post ){  
-    this.navCtrl.push(PostDetailPage, {
-      data: post
-    })
+  // (Button Action) Shows filter options
+  showFilterPopover(myEvent?: Event) {
+    // Pass Post Page Refferrence to Popover Page
+    let popover = this.popCtrl.create(PostFilterPopover, { cssClass: 'popover-top-right', homeRef: this });
+    popover.present({
+      ev: myEvent
+    });
   }
 
+  // (Button Action) Resets All Filters
+  resetFilter() { 
+    this.filters = {
+      owner: 'all',
+      viewType:'all',
+      viewStatus: 'all',
+      orderBy: 'date',
+      orderDirection: 'desc',
+      startDate: '',
+      endDate: ''
+    }
+    this.displayPosts();
+  }
+
+  // (Button Action) Resets Date Filter
+  resetDate() { 
+    this.filters.startDate = '';
+    this.filters.endDate = '';
+    this.displayPosts();
+  }
+
+  // (Button Action) Opens Modal for one specific post
+  viewDetails( post ){
+    let modal = this.modalCtrl.create(PostDetailPage, { data: post });
+    modal.onDidDismiss( res => {
+      if ( typeof res != 'undefined' ) {
+        this.getData();
+      }
+    });
+    modal.present();
+  }
+
+  // (Button Action) Opens modal to create/edit a post
   openNewUserModal(){
     let modal = this.modalCtrl.create(NewPostModalPage);
     modal.onDidDismiss( data => {
       if ( typeof data != 'undefined' ) {
-        this.postData = [];
-        this.displayPosts();
+        this.getData();
       }
     });
     modal.present();
   }
   
 } // End of Posts Page
-
 
 @Component({
   selector: 'popover-filter',

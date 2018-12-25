@@ -1,5 +1,10 @@
 <ion-header>
   <ion-navbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>
       CIRA - View Post
     </ion-title>
@@ -8,12 +13,12 @@
 
 <ion-content padding>
 
-    <ion-fab left bottom *ngIf="currentUser.uid == post.userID">
+    <!-- Only Shows these fab buttons if user is the post owner -->
+    <ion-fab left bottom *ngIf="currentUser.uid == post.userId">
       <button ion-fab (click)="delete()"><ion-icon name="trash"></ion-icon></button>
     </ion-fab>
-
-    <ion-fab right bottom *ngIf="currentUser.uid == post.userID">
-      <button ion-fab (click)="openNewPostModal()"><ion-icon name="brush"></ion-icon></button>
+    <ion-fab right bottom *ngIf="currentUser.uid == post.userId">
+      <button ion-fab (click)="edit()"><ion-icon name="brush"></ion-icon></button>
     </ion-fab>
 
   <ion-card>

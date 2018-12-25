@@ -3,6 +3,7 @@ import { ViewController, normalizeURL, ToastController, LoadingController, NavPa
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { Globals } from '../../services/globals';
 
 @Component({
   selector: 'page-new-post-modal',
@@ -13,20 +14,20 @@ export class NewPostModalPage {
   validations_form: FormGroup;
   image: any;
   loading: any;
+
   postData;
   update = false;
-
-  myDate: String = new Date().toISOString();
-  myTime: String = new Date().toISOString();
-
+  myDate:String;
+  myTime:String;
+  
   constructor(
     private viewCtrl: ViewController,
     private toastCtrl: ToastController,
     private formBuilder: FormBuilder,
-    private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     private params: NavParams,
+    private globals: Globals,
   ) {
     this.loading = this.loadingCtrl.create();
     this.postData =  params.get('data') 
@@ -42,6 +43,8 @@ export class NewPostModalPage {
 
   setFields( data ) {
     this.image = data.imageURL;
+    this.myDate = data.date;
+    this.myTime = data.time;
     this.validations_form = this.formBuilder.group({
       date: [data.date, Validators.required],
       time: [data.time, Validators.required],
@@ -54,6 +57,8 @@ export class NewPostModalPage {
 
   resetFields(){
     this.image = "./assets/imgs/default-image.png";
+    this.myDate = new Date().toISOString();
+    this.myTime = new Date().toISOString();
     this.validations_form = this.formBuilder.group({
       date: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
@@ -64,88 +69,51 @@ export class NewPostModalPage {
     });
   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
+  dismiss( data? ) {
+    this.resetFields();
+    this.viewCtrl.dismiss( data );
   }
 
-  onSubmit(value){
-    let data = {
-      date: value.date,
-      time: value.time,
-      type: value.type,
-      name: value.name,
-      description: value.description,
-      location: value.location,
-      imageURL: this.image
-    }
-    this.firebaseService.createPost(data)
-    .then(
-      res => {
-        this.resetFields();
-        this.viewCtrl.dismiss({success: true});
-      }
-    )
-    
+  onSubmit( value ){
+    // let value = {
+    //   date: value.date,
+    //   time: value.time,
+    //   type: value.type,
+    //   name: value.name,
+    //   description: value.description,
+    //   location: value.location,
+    //   imageURL: this.image
+    // }
+    value.imageUrl = this.image
     if ( this.update ) {
-      this.firebaseService.updatePost(data, this.postData)
-      .then(
-        res => {
-          this.resetFields();
-          this.viewCtrl.dismiss({success: true});
-        }
-      )
+      this.firebaseService.updatePost(value, this.postData.documentId)
+       .then(
+          res => {
+            this.dismiss({data: res.data});
+        });
     } else {
-      this.firebaseService.createPost(data)
-      .then(
-        res => {
-          this.resetFields();
-          this.viewCtrl.dismiss({success: true});
-        }
-      )
-    }
-
-
+        this.firebaseService.createPost(value)
+        .then(
+          res => {
+            this.dismiss();
+        });
+      }
   }
 
   openImagePicker(){
-    this.imagePicker.hasReadPermission()
-    .then((result) => {
-      if(result == false){
-        // no callbacks required as this opens a popup which returns async
-        this.imagePicker.requestReadPermission();
-      }
-      else if(result == true){
-        this.imagePicker.getPictures({
-          maximumImagesCount: 1
-        }).then(
-          (results) => {
-            for (var i = 0; i < results.length; i++) {
-              this.uploadImageToFirebase(results[i]);
-            }
-          }, (err) => console.log(err)
-        );
-      }
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  uploadImageToFirebase(image){
-    this.loading.present();
-    image = normalizeURL(image);
-    let randomId = Math.random().toString(36).substr(2, 5);
-
-    //uploads img to firebase storage
-    this.firebaseService.uploadImage(image, randomId)
-    .then(photoURL => {
-      this.image = photoURL;
-      this.loading.dismiss();
+    this.loading.present()
+    this.globals.uploadImage()
+    .then( res => {
+      this.image = res.image;
+      this.loading.dismiss()
       let toast = this.toastCtrl.create({
         message: 'Image was updated successfully',
         duration: 3000
       });
       toast.present();
-      })
+    }, err => {
+      this.loading.dismiss()
+    })
   }
 
 }

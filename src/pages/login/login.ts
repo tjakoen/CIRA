@@ -58,6 +58,7 @@ export class LoginPage {
   tryLogin( value ){
     this.authService.doLogin(value)
     .then(login => {
+      console.log("jere")
       if ( !login.user.emailVerified ) {
         this.showVerificationDialog();
       } else {
@@ -73,10 +74,12 @@ export class LoginPage {
           }
         }, err => {
           this.errorMessage = err.message;
+          console.log(err.message)
         });        
       }
     }, err => {
       this.errorMessage = err.message;
+      console.log(err.message)
     })
   }
 

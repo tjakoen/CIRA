@@ -21,7 +21,6 @@ export class EditUserModal {
     private viewCtrl: ViewController,
     private toastCtrl: ToastController,
     private formBuilder: FormBuilder,
-    private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
     private loadingCtrl: LoadingController,
     private params: NavParams,
@@ -68,7 +67,7 @@ export class EditUserModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss({success: false});
+    this.viewCtrl.dismiss();
   }
 
   onSubmit(value){
@@ -89,7 +88,7 @@ export class EditUserModal {
         this.firebaseService.updateUser( data )
         .then(
             res => {
-                this.globals.userData = res.userData;
+                this.globals.userData = res.data;
                 this.resetFields();
                 this.viewCtrl.dismiss({success: true});
         })
@@ -97,7 +96,7 @@ export class EditUserModal {
         this.firebaseService.updateUser( data, this.userId )
         .then(
             res => {
-                this.globals.userData = res.userData;
+                this.globals.userData = res.data;
                 this.resetFields();
                 this.viewCtrl.dismiss({success: true});
         })
@@ -105,44 +104,19 @@ export class EditUserModal {
   }
 
   openImagePicker(){
-    this.imagePicker.hasReadPermission()
-    .then((result) => {
-      if(result == false){
-        // no callbacks required as this opens a popup which returns async
-        this.imagePicker.requestReadPermission();
-      }
-      else if(result == true){
-        this.imagePicker.getPictures({
-          maximumImagesCount: 1
-        }).then(
-          (results) => {
-            for (var i = 0; i < results.length; i++) {
-              this.uploadImageToFirebase(results[i]);
-            }
-          }, (err) => console.log(err)
-        );
-      }
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  uploadImageToFirebase(image){
-    this.loading.present();
-    image = normalizeURL(image);
-    let randomId = Math.random().toString(36).substr(2, 5);
-
-    //uploads img to firebase storage
-    this.firebaseService.uploadImage(image, randomId)
-    .then(photoURL => {
-      this.image = photoURL;
-      this.loading.dismiss();
+    this.loading.present()
+    this.globals.uploadImage()
+    .then( res => {
+      this.image = res.image;
+      this.loading.dismiss()
       let toast = this.toastCtrl.create({
         message: 'Image was updated successfully',
         duration: 3000
       });
       toast.present();
-      })
+    }, err => {
+      this.loading.dismiss()
+    })
   }
 
 }

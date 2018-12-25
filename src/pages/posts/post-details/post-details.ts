@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ViewController, normalizeURL, ModalController, ToastController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { ViewController, normalizeURL, ModalController, ToastController, NavParams, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { FirebaseService } from '../../services/firebase.service';
-import { ImagePicker } from '@ionic-native/image-picker';
 import { NewPostModalPage } from '../new-post-modal/new-post-modal';
 import * as firebase from 'firebase/app';
 
@@ -16,28 +15,24 @@ export class PostDetailPage {
   image: any;
   post: any;
   loading: any;
+  update = false;
 
   constructor(
-    private navParams: NavParams,
+    private params: NavParams,
     private alertCtrl: AlertController,
     private viewCtrl: ViewController,
-    private toastCtrl: ToastController,
     private formBuilder: FormBuilder,
-    private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
-    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
-  ) {
-    this.loading = this.loadingCtrl.create();
-  }
+  ) {}
 
   ionViewWillLoad(){
     this.getData()
   }
 
+  // Set Displayed Data
   getData(){
-    this.post = this.navParams.get('data');
-    console.log(this.post)
+    this.post = this.params.get('data');
     this.image = this.post.imageURL;
     this.validations_form = this.formBuilder.group({
       title: new FormControl(this.post.title, Validators.required),
@@ -45,24 +40,7 @@ export class PostDetailPage {
     });
   }
 
-  dismiss() {
-   this.viewCtrl.dismiss();
-  }
-
-  onSubmit(value){
-    let data = {
-      title: value.title,
-      description: value.description,
-      image: this.image
-    }
-    this.firebaseService.updateTask(this.post.id,data)
-    .then(
-      res => {
-        this.viewCtrl.dismiss();
-      }
-    )
-  }
-
+  // (Button Action) Delete Post - Only shows if user is the owner
   delete() {
     let confirm = this.alertCtrl.create({
       title: 'Confirm',
@@ -87,56 +65,23 @@ export class PostDetailPage {
     confirm.present();
   }
 
-  openImagePicker(){
-    this.imagePicker.hasReadPermission()
-    .then((result) => {
-      if(result == false){
-        // no callbacks required as this opens a popup which returns async
-        this.imagePicker.requestReadPermission();
-      }
-      else if(result == true){
-        this.imagePicker.getPictures({
-          maximumImagesCount: 1
-        }).then(
-          (results) => {
-            for (var i = 0; i < results.length; i++) {
-              this.uploadImageToFirebase(results[i]);
-            }
-          }, (err) => console.log(err)
-        );
-      }
-    }, (err) => {
-      console.log(err);
-    });
-  }
-
-  uploadImageToFirebase(image){
-    this.loading.present();
-    image = normalizeURL(image);
-    let randomId = Math.random().toString(36).substr(2, 5);
-    console.log(randomId);
-
-    //uploads img to firebase storage
-    this.firebaseService.uploadImage(image, randomId)
-    .then(photoURL => {
-      this.image = photoURL;
-      this.loading.dismiss();
-      let toast = this.toastCtrl.create({
-        message: 'Image was updated successfully',
-        duration: 3000
-      });
-      toast.present();
-    })
-  }
-
-  openNewPostModal(){
-    let modal = this.modalCtrl.create(NewPostModalPage, {data: this.post});
-    modal.onDidDismiss( data => {
-      if ( typeof data != 'undefined' ) {
-        this.dismiss()
+  // (Button Action) Edit Post - Only Shows if user is the owner)
+  edit(){
+    let modal = this.modalCtrl.create( NewPostModalPage, { data: this.post } );
+    modal.onDidDismiss( res => {
+      if ( typeof res != 'undefined' ) {
+        this.post = res.data;
+        this.update = true;
       }
     });
     modal.present();
   }
 
+  dismiss() {
+    if ( this.update ) {
+      this.viewCtrl.dismiss({ update: true });
+    } else {
+      this.viewCtrl.dismiss()
+    } 
+  }
 }
