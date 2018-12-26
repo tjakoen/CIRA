@@ -13,24 +13,23 @@
 
 <ion-content padding>
 
-    <!-- Only Shows these fab buttons if user is the post owner -->
-    <ion-fab left bottom *ngIf="currentUser.uid == post.userId">
-      <button ion-fab (click)="delete()"><ion-icon name="trash"></ion-icon></button>
-    </ion-fab>
-    <ion-fab right bottom *ngIf="currentUser.uid == post.userId">
-      <button ion-fab (click)="edit()"><ion-icon name="brush"></ion-icon></button>
-    </ion-fab>
+  <!-- Only Shows these fab buttons if user is the post owner -->
+  <ion-fab left bottom>
+    <button ion-fab [hidden]="!isCurrentUser" (click)="delete()"><ion-icon name="trash"></ion-icon></button>
+  </ion-fab>
+  <ion-fab right bottom>
+    <button ion-fab [hidden]="!isCurrentUser" (click)="edit()"><ion-icon name="brush"></ion-icon></button>
+  </ion-fab>
 
   <ion-card>
-    <img [src]="post.imageURL" />
+    <img [src]="post.imageUrl" />
     <ion-card-content>
       <ion-card-title>
         {{post.type}} Report ({{post.status}})
       </ion-card-title>
       <p><strong>Name:</strong> {{post.name}}</p>
       <p><strong>Location:</strong> {{post.location}}</p>
-      <p><strong>Date:</strong> {{post.date}}</p>
-      <p><strong>Time:</strong> {{post.time}}</p>
+      <p><strong>Date & Time:</strong> {{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
       <p><strong>Description:</strong></p>
       <p>{{post.description}}</p>
     </ion-card-content>

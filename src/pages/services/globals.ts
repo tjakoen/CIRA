@@ -13,7 +13,7 @@ export class Globals {
     private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
   ){}
-  
+
   showToast( message) {
     const toast = this.toastCtrl.create({
       message: message,
@@ -63,6 +63,7 @@ export class Globals {
         }
       }, (err) => {
         console.log(err);
+        reject();
       });
     })
   }

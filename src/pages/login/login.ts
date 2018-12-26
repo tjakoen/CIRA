@@ -58,7 +58,6 @@ export class LoginPage {
   tryLogin( value ){
     this.authService.doLogin(value)
     .then(login => {
-      console.log("jere")
       if ( !login.user.emailVerified ) {
         this.showVerificationDialog();
       } else {

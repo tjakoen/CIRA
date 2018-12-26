@@ -37,15 +37,9 @@
         <form class="new-user-form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">
       
           <ion-item>
-            <ion-label>Report Date</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate" formControlName="date"></ion-datetime>
+            <ion-label>Report Date & Time</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY HH:mm" [(ngModel)]="myDateTime" formControlName="dateTime"></ion-datetime>
           </ion-item>
-      
-          <ion-item>
-              <ion-label>Report Time</ion-label>
-              <ion-datetime displayFormat="HH:mm" [(ngModel)]="myTime" formControlName="time"></ion-datetime>
-            </ion-item>
-        
           <ion-item>
             <ion-label>Report Type</ion-label>
             <ion-select formControlName="type" submitText="Select" cancelText="Cancel" required>

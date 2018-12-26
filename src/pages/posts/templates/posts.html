@@ -47,12 +47,13 @@
           <ion-list>
             <ion-item padding *ngFor="let post of posts" (click)="viewDetails(post)">
               <ion-thumbnail item-start>
-                <img [src]="post.imageURL">
+                <img [src]="post.imageUrl">
               </ion-thumbnail>
-              <h2>{{post.type}}</h2>
-              <p>{{post.name}}</p>
-              <p>{{post.location}}</p>
-              <p>{{post.date}} {{post.time}}</p>
+              <h2>{{ post.type }}</h2>
+              <p>{{ post.name }}</p>
+              <p>{{ post.location }}</p>
+              <p>{{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+              <p>{{ post.status | uppercase }}</p>
               <button ion-button clear item-end>Details</button>
             </ion-item>
           </ion-list>
@@ -61,14 +62,15 @@
     
     <div *ngSwitchCase="'gallery'">
       <ion-card *ngFor="let post of posts" (click)="viewDetails(post)">
-        <img [src]="post.imageURL" />
+        <img [src]="post.imageUrl" />
         <ion-card-content>
           <ion-card-title>
-            {{post.type}}
+            {{ post.type }}
           </ion-card-title>
-          <p>{{post.name}}</p>
-          <p>{{post.location}}</p>
-          <p>{{post.date}} {{post.time}}</p>
+          <p>{{ post.name }}</p>
+          <p>{{ post.location }}</p>
+          <p>{{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+          <p>{{ post.status | uppercase }}</p>
         </ion-card-content>
 
         <ion-row no-padding>
@@ -84,9 +86,12 @@
         <ion-row>
           <ion-col col-4 *ngFor="let post of posts" (click)="viewDetails(post)">
             <ion-card>
-              <img [src]="post.imageURL"/>
-              <div class="card-title">{{post.type}}</div>
-              <div class="card-subtitle">{{post.date}} {{post.time}}</div>
+              <img [src]="post.imageUrl"/>
+              <div class="card-title">{{ post.type }}</div>
+              <div class="card-subtitle">
+                <p>{{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+                <p>{{ post.status | uppercase  }}</p>
+              </div>       
             </ion-card>
           </ion-col>
         </ion-row>

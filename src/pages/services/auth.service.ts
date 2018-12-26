@@ -70,7 +70,6 @@ export class AuthService {
   }
 
   sendEmailChangeEmail( newEmail, password ) {
-    console.log(password);
     return new Promise((resolve, reject) => {
       let currentUser = firebase.auth().currentUser;
       let credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, password);

@@ -11,10 +11,8 @@ import { SideMenuPage } from '../pages/sidemenu/sidemenu';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/login/register/register';
 
-import { PostsPage } from '../pages/posts/posts';
-import { NewPostModalPage } from '../pages/posts/new-post-modal/new-post-modal';
-import { PostDetailPage } from '../pages/posts/post-details/post-details';
-import { PostFilterPopover } from '../pages/posts/posts';
+import { PostsPage, PostFilterPopover, PostDetailModal,NewPostModalPage } from '../pages/posts/posts';
+import { PostsService } from '../pages/posts/posts.service'
 
 import { ReportsPage } from '../pages/reports/reports';
 import { NewReportModalPage } from '../pages/reports/new-report-modal/new-report-modal';
@@ -48,7 +46,7 @@ import { Globals } from '../pages/services/globals';
     NewReportModalPage,
     ReportDetailPage,
     NewPostModalPage,
-    PostDetailPage,
+    PostDetailModal,
     TabsPage,
     PostFilterPopover,
     DataPage,
@@ -74,7 +72,7 @@ import { Globals } from '../pages/services/globals';
     ReportDetailPage,
     NewReportModalPage,
     NewPostModalPage,
-    PostDetailPage,
+    PostDetailModal,
     TabsPage,
     SideMenuPage,
     PostFilterPopover,
@@ -87,6 +85,7 @@ import { Globals } from '../pages/services/globals';
     SplashScreen,
     ImagePicker,
     FirebaseService,
+    PostsService,
     AuthService,
     HelperService,
     Globals,
