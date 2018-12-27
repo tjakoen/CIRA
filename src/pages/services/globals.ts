@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController, normalizeURL } from 'ionic-angular';
+import { ToastController, LoadingController, normalizeURL, AlertController } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { FirebaseService } from './firebase.service';
 
@@ -12,6 +12,7 @@ export class Globals {
     private loadingCtrl: LoadingController,
     private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
+    private alertCtrl: AlertController,
   ){}
 
   showToast( message) {
@@ -35,6 +36,25 @@ export class Globals {
       duration: duration,
     }).present();
   }
+
+  showYesNoConfirmDialog( title, message, callback ) {
+    let confirm = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+        {
+          text: 'No',
+          handler: () => { callback( false ) }
+        },
+        {
+          text: 'Yes',
+          handler: () => { callback( true ) }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
 
   uploadImage(){
     return new Promise<any>((resolve, reject) => {

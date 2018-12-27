@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title [hidden]="update">
+      New Report
+    </ion-title>
+    <ion-title [hidden]="!update">
+      Update Report
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Type A - Reporting Person Data
+        </ion-card-title>
+        <h2>Basic Information</h2>
+        <div formGroupName="name">
+          <ion-item>
+            <ion-label  color="primary">Family Name</ion-label>
+            <ion-input type="text" formControlName="familyName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">First Name</ion-label>
+            <ion-input type="text" formControlName="firstName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Middle Name</ion-label>
+            <ion-input type="text" formControlName="middleName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Qualifier</ion-label>
+            <ion-input type="text" formControlName="qualifier" ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Nickname</ion-label>
+            <ion-input type="text" formControlName="nickName"></ion-input>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-input type="text" formControlName="citizenship"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Sex</ion-label>
+          <ion-input type="text" formControlName="sex"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-input type="text" formControlName="civilStatus"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="birthDate" ></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Age</ion-label>
+          <ion-input type="number" formControlName="age"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-input type="text" formControlName="birthPlace"></ion-input>
+        </ion-item>
+        <br>
+        <h2>Current Address</h2>
+        <div formGroupName="currentAddress">
+          <ion-item>
+            <ion-label  color="primary">House Number</ion-label>
+            <ion-input type="text" formControlName="houseNumber"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Village</ion-label>
+            <ion-input type="text" formControlName="village"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Barangay</ion-label>
+            <ion-input type="text" formControlName="barangay"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Town</ion-label>
+            <ion-input type="text" formControlName="town"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Province</ion-label>
+            <ion-input type="text" formControlName="province"></ion-input>
+          </ion-item>
+        </div>
+        <br>
+        <h2>Other Address</h2>
+        <div formGroupName="otherAddress">
+          <ion-item>
+            <ion-label  color="primary">House Number</ion-label>
+            <ion-input type="text" formControlName="houseNumber"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Village</ion-label>
+            <ion-input type="text" formControlName="village"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Barangay</ion-label>
+            <ion-input type="text" formControlName="barangay"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Town</ion-label>
+            <ion-input type="text" formControlName="town"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Province</ion-label>
+            <ion-input type="text" formControlName="province"></ion-input>
+          </ion-item>
+        </div>
+
+        <br>
+        <h2>Other Information</h2>
+        <ion-item>
+          <ion-label  color="primary">Highest Educational Attainment</ion-label>
+          <ion-input type="text" formControlName="highestEducationalAttainment"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Occupation</ion-label>
+          <ion-input type="text" formControlName="occupation"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">ID Card Presented</ion-label>
+          <ion-input type="text" formControlName="idCardPresented"></ion-input>
+        </ion-item>
+
+
+        <br>
+        <h2>Contact Information</h2>
+        <div formGroupName="contactInfo">
+          <ion-item>
+            <ion-label  color="primary">Email Address</ion-label>
+            <ion-input type="email" formControlName="emailAddress"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Home Phone</ion-label>
+            <ion-input type="text" formControlName="homePhone"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label  color="primary">Mobile Phone</ion-label>
+            <ion-input type="text" formControlName="mobilePhone"></ion-input>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()">Set Values</button>
+</ion-footer>

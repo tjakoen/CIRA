@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FirebaseService } from '../services/firebase.service';
+import { Post } from './post.model';
 
 @Injectable()
 export class PostsService {
@@ -23,10 +24,10 @@ export class PostsService {
     });
   }
 
-  createPost( value ) {    
+  createPost( value:Post ) {    
     return new Promise<any>((resolve, reject) => {
-      value.status = 'unsolved';
-      value.timestamp = this.firebaseService.getTimeStamp();
+      value.createdOn = this.firebaseService.getTimeStamp();
+      value.updatedOn = this.firebaseService.getTimeStamp();
       value.userId = this.firebaseService.getCurrentUser().uid;
       this.afs.collection('posts').add( value )
       .then(
@@ -36,9 +37,9 @@ export class PostsService {
     })
   }
 
-  updatePost( value, postId ){
+  updatePost( value:Post, postId ){
     return new Promise<any>((resolve, reject) => {
-      value.status = 'unsolved';
+      value.updatedOn = this.firebaseService.getTimeStamp();
       this.afs.collection('posts').doc( postId ).update(value)
       .then(() => {
         this.afs.collection('posts').doc( postId ).valueChanges().subscribe(res => {

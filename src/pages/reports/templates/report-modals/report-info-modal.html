@@ -1,0 +1,49 @@
+
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title [hidden]="update">
+        New Report
+    </ion-title>
+    <ion-title [hidden]="!update">
+      Update Report
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Report Information
+        </ion-card-title>
+        <ion-item>
+          <ion-label  color="primary">Blotter #</ion-label>
+          <ion-input type="number" formControlName="blotterNo"  ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Incident Type</ion-label>
+          <ion-input type="text" formControlName="incidentType"  ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Incident Location</ion-label>
+          <ion-input type="text" formControlName="incidentLocation"  ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Incident Date & Time</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="incidentDateAndTime" ></ion-datetime>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()">Set Values</button>
+</ion-footer>

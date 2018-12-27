@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ViewController, LoadingController, ModalController,PopoverController, NavParams, AlertController, } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { ViewController, LoadingController, ModalController,PopoverController, NavParams } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { FirebaseService } from '../services/firebase.service';
 import { PostsService } from './posts.service'
@@ -8,6 +8,7 @@ import { PostsService } from './posts.service'
 import { HelperService } from '../services/helpers.service';
 import { Globals } from '../services/globals';
 
+import { Post } from './post.model';
 
 @Component({
 selector: './templates/page-posts',
@@ -27,9 +28,11 @@ filters = {
   endDate: ''
 }
 
-postData = [];  // Raw Data
-filteredPostData = [];
-posts = [];
+postData:Post[] = [];  // Raw Data
+filteredPostData:Post[] = [];
+posts:Post[] = [];
+
+documentId:string;
 
 constructor(
   private modalCtrl: ModalController,
@@ -43,7 +46,7 @@ ionViewWillEnter(){
   this.getData();
 }
 
-// Gets Post Data
+// Gets Data
 getData(){
   this.postData = [];
   this.postsService.getPosts(this.filters.viewType)
@@ -59,7 +62,7 @@ getData(){
   })
 }
 
-// Displays Post Data
+// Displays Data
 displayPosts() {
   this.posts = [];
   this.proccessPosts( ( callback ) => {
@@ -69,7 +72,7 @@ displayPosts() {
     }
   });
 }
-// Filters Displayed Post Data
+// Filters Displayed Data
 proccessPosts( callback ) {
   this.filteredPostData = [];
   let filterdValue = this.filterPosts( this.postData );
@@ -79,7 +82,7 @@ proccessPosts( callback ) {
 }
 
 // TODO: Improved multi-key filtering
-// Filters post data based on each set key
+// Filters data based on each set key
 filterPosts( data ) {
   data = this.filters.owner != 'all' ? this.helperService.filterByKey( data, 'userID', this.filters.owner ) : data;
   data = this.filters.viewType != 'all' ? this.helperService.filterByKey( data, 'type', this.filters.viewType ) : data;
@@ -142,9 +145,9 @@ resetDate() {
   this.displayPosts();
 }
 
-// (Button Action) Opens Modal for one specific post
+// (Button Action) Opens Modal to view data of one item
 viewDetails( post ){
-  let modal = this.modalCtrl.create(PostDetailModal, { data: post });
+  let modal = this.modalCtrl.create(PostDetailsModal, { data: post });
   modal.onDidDismiss( res => {
     if ( typeof res != 'undefined' ) {
       this.getData();
@@ -153,11 +156,10 @@ viewDetails( post ){
   modal.present();
 }
 
-// (Button Action) Opens modal to create/edit a post
-openNewUserModal(){
+// (Button Action) Opens modal to create/edit data
+openNewPostModal(){
   let modal = this.modalCtrl.create(NewPostModalPage);
   modal.onDidDismiss( res => {
-    console.log( res );
     if ( typeof res != 'undefined' ) {
       this.getData();
     }
@@ -180,88 +182,65 @@ constructor(private navParams: NavParams) {
 @Component({
 templateUrl: './templates/post-details-modal.html'
 })
-export class PostDetailModal {
-validations_form: FormGroup;
-post: any;
-update = false;
-isCurrentUser = false;
+export class PostDetailsModal {
+  post: Post;
 
-constructor(
-  private params: NavParams,
-  private alertCtrl: AlertController,
-  private viewCtrl: ViewController,
-  private formBuilder: FormBuilder,
-  private firebaseService: FirebaseService,
-  private postsService: PostsService,
-  private modalCtrl: ModalController,
-  private globals: Globals,
-) {
-  this.post = this.params.get('data');
-  this.isCurrentUser = this.firebaseService.getCurrentUser().uid == this.post.userId ? true : false;
-}
+  update = false;
+  isCurrentUser = false;
 
-ionViewWillLoad(){
-  this.setData()
-}
+  
+  constructor(
+    private params: NavParams,
+    private viewCtrl: ViewController,
+    private firebaseService: FirebaseService,
+    private postsService: PostsService,
+    private modalCtrl: ModalController,
+    private globals: Globals,
+  ) {
+    this.post = this.params.get('data');
+    this.isCurrentUser = this.firebaseService.getCurrentUser().uid == this.post.userId ? true : false;
+  }
 
-// Set Displayed Data
-setData(){
-  this.validations_form = this.formBuilder.group({
-    title: new FormControl(this.post.title, Validators.required),
-    description: new FormControl(this.post.description, Validators.required)
-  });
-}
+  ionViewWillLoad(){}
 
-// (Button Action) Delete Post - Only shows if user is the owner
-delete() {
-  let confirm = this.alertCtrl.create({
-    title: 'Confirm',
-    message: 'Do you want to delete ' + this.post.type + ' Report?',
-    buttons: [
-      {
-        text: 'No',
-        handler: () => {}
-      },
-      {
-        text: 'Yes',
-        handler: () => {
-          this.postsService.deletePost(this.post.documentId)
-          .then(
-            res => {
-              this.update = true;
-              this.dismiss();
-              this.globals.showToast("Post Successfully Deleted");
-            },
-            err => console.log(err)
-          )
-        }
+  // (Button Action) Edit Item - Only Shows if user is the owner
+  edit(){
+    let modal = this.modalCtrl.create( NewPostModalPage, { data: this.post, id: this.post.documentId } );
+    modal.onDidDismiss( res => {
+      if ( typeof res != 'undefined' ) {
+        let data = res.data
+        this.post = data.data;
+        this.update = true;
+        this.globals.showToast("Post Successfully Updated");
       }
-    ]
-  });
-  confirm.present();
-}
+    });
+    modal.present();
+  }
 
-// (Button Action) Edit Post - Only Shows if user is the owner)
-edit(){
-  let modal = this.modalCtrl.create( NewPostModalPage, { data: this.post } );
-  modal.onDidDismiss( res => {
-    if ( typeof res != 'undefined' ) {
-      let data = res.data
-      this.post = data.data;
-      this.update = true;
-      this.globals.showToast("Post Successfully Updated");
-    }
-  });
-  modal.present();
-}
+  // (Button Action) Delete Item - Only shows if user is the owner
+  delete() {
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Do you want to delete ${this.post.type} Report?`, confirm => {
+      if ( confirm ) {
+        this.postsService.deletePost(this.post.documentId)
+        .then(
+          res => {
+            this.update = true;
+            this.dismiss();
+            this.globals.showToast("Post Successfully Deleted");
+          },
+          err => console.log(err)
+        );
+      }
+    });
+  }
 
-dismiss() {
-  if ( this.update ) {
-    this.viewCtrl.dismiss({ update: true });
-  } else {
-    this.viewCtrl.dismiss();
-  } 
-}
+  dismiss() {
+    if ( this.update ) {
+      this.viewCtrl.dismiss({ update: true });
+    } else {
+      this.viewCtrl.dismiss();
+    } 
+  }
 }
 
 @Component({
@@ -269,90 +248,81 @@ templateUrl: './templates/new-post-modal.html'
 })
 export class NewPostModalPage {
 
-validations_form: FormGroup;
-image: any;
-loading: any;
+  validations_form: FormGroup;
+  image: any;
+  loading: any;
 
-postData;
-update = false;
-myDateTime:String;
+  update = false;
+  myDateTime:String;
+  documentId:string;
 
-constructor(
-  private params: NavParams,
-  private viewCtrl: ViewController,
-  private formBuilder: FormBuilder,
-  private firebaseService: FirebaseService,
-  private postsService: PostsService,
-  private loadingCtrl: LoadingController,
-  private globals: Globals,
-) {
-  this.loading = this.loadingCtrl.create();
-  this.postData =  params.get( 'data' ) 
-}
-
-ionViewWillLoad() {
-  this.resetFields()
-  if ( typeof this.postData != 'undefined' ) {
-    this.update = true;
-    this.setFields( this.postData )
+  constructor(
+    private params: NavParams,
+    private viewCtrl: ViewController,
+    private formBuilder: FormBuilder,
+    private postsService: PostsService,
+    private loadingCtrl: LoadingController,
+    private globals: Globals,
+  ) {
+    this.loading = this.loadingCtrl.create();
   }
-}
 
-setFields( data ) {
-  this.image = data.imageUrl;
-  this.myDateTime = data.date;
-  this.validations_form = this.formBuilder.group({
-    dateTime: [data.dateTime, Validators.required],
-    type: [data.type, Validators.required],
-    name: [data.name, Validators.required],
-    description: [data.description, Validators.required],
-    location: [data.location, Validators.required],
-  })
-}
-
-resetFields(){
-  this.image = "./assets/imgs/default-image.png";
-  this.myDateTime = new Date().toISOString();
-  this.validations_form = this.formBuilder.group({
-    dateTime: new FormControl('', Validators.required),
-    type: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required),
-  });
-}
-
-dismiss( data ) {
-  this.viewCtrl.dismiss({ data: data });
-}
-
-onSubmit( value ){
-  value.imageUrl = this.image
-  if ( this.update ) {
-    this.postsService.updatePost(value, this.postData.documentId)
-      .then(
-        res => {
-          this.dismiss({data: res.data});
-      });
-  } else {
-      this.postsService.createPost(value)
-      .then(
-        res => {
-          this.dismiss({data: res.data});
-      });
+  ionViewWillLoad() {
+    let post = this.params.get( 'data' );
+    if ( typeof post != 'undefined' ) {
+      this.documentId = post.documentId;
+      this.update = true;
+      this.setFields( this.update, post )
+    } else {
+      this.setFields();
     }
-}
+  }
 
-openImagePicker() {
-  this.loading.present()
-  this.globals.uploadImage()
-  .then( res => {
-    this.image = res.image;
-    this.loading.dismiss()
-    this.globals.showToast('Image was uploaded successfully');
-  }, err => {
-    this.loading.dismiss()
-  })
-}
+  setFields( update = false, data? ) {
+    this.image = update ? data.imageUrl : './assets/imgs/default-image.png';
+    this.myDateTime = update ? data.date : new Date().toISOString();
+
+    this.validations_form = this.formBuilder.group({
+      dateTime: [update ? data.dateTime : '', Validators.required],
+      type: [update ? data.type : '', Validators.required],
+      name: [update ? data.name : '', Validators.required],
+      status: [update ? data.status: 'unsolved'],
+      description: [ update ? data.description : '', Validators.required],
+      location: [update ? data.location : '', Validators.required],
+    })
+  }
+
+  dismiss( data ) {
+    this.viewCtrl.dismiss({ data: data });
+  }
+
+  onSubmit( value ){
+    value.imageUrl = this.image
+    if ( this.update ) {
+      this.postsService.updatePost(value, this.documentId)
+        .then(
+          res => {
+            this.dismiss({data: res.data});
+        });
+    } else {
+        this.postsService.createPost(value)
+        .then(
+          res => {
+            this.dismiss({data: res.data});
+        });
+      }
+  }
+
+  openImagePicker() {
+    this.loading.present()
+    this.globals.uploadImage()
+    .then( res => {
+      this.image = res.image;
+      this.loading.dismiss()
+      this.globals.showToast('Image was uploaded successfully');
+    }, err => {
+      this.loading.dismiss()
+    })
+  }
 
 }

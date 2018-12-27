@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title [hidden]="update">
+      New Report
+    </ion-title>
+    <ion-title [hidden]="!update">
+      Update Report
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+      <ion-card>
+        <ion-card-content>
+          <ion-card-title>
+            Type D - Incident Narrative
+          </ion-card-title>
+            <br>
+            <p>ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT, ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY AND HOW OF REPORTING. (USE ADDITIONAL SHEET/S IF NECESSARY</p>
+            <ion-item>
+              <ion-textarea type="text" formControlName="incidentNarrative">Test</ion-textarea>
+            </ion-item>
+        </ion-card-content>
+      </ion-card>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <button class="form-action-button" ion-button block (click)="documentEditForm.ngSubmit.emit()">Set Values</button>
+</ion-footer>

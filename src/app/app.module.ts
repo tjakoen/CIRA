@@ -11,12 +11,11 @@ import { SideMenuPage } from '../pages/sidemenu/sidemenu';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/login/register/register';
 
-import { PostsPage, PostFilterPopover, PostDetailModal,NewPostModalPage } from '../pages/posts/posts';
+import { PostsPage, PostFilterPopover, PostDetailsModal,NewPostModalPage } from '../pages/posts/posts';
 import { PostsService } from '../pages/posts/posts.service'
 
-import { ReportsPage } from '../pages/reports/reports';
-import { NewReportModalPage } from '../pages/reports/new-report-modal/new-report-modal';
-import { ReportDetailPage } from '../pages/reports/report-details/report-details';
+import { ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal } from '../pages/reports/reports';
+import { ReportsService } from '../pages/reports/reports.service'
 
 import { UserInfoPage } from '../pages/user-info/user-info';
 import { EditUserModal } from '../pages/user-info/edit-user-modal/edit-user-modal';
@@ -42,11 +41,9 @@ import { Globals } from '../pages/services/globals';
     LoginPage,
     RegisterPage,
     PostsPage,
-    ReportsPage,
-    NewReportModalPage,
-    ReportDetailPage,
+    ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal,
     NewPostModalPage,
-    PostDetailModal,
+    PostDetailsModal,
     TabsPage,
     PostFilterPopover,
     DataPage,
@@ -68,11 +65,9 @@ import { Globals } from '../pages/services/globals';
     LoginPage,
     RegisterPage,
     PostsPage,
-    ReportsPage,
-    ReportDetailPage,
-    NewReportModalPage,
+    ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal,
     NewPostModalPage,
-    PostDetailModal,
+    PostDetailsModal,
     TabsPage,
     SideMenuPage,
     PostFilterPopover,
@@ -86,6 +81,7 @@ import { Globals } from '../pages/services/globals';
     ImagePicker,
     FirebaseService,
     PostsService,
+    ReportsService,
     AuthService,
     HelperService,
     Globals,

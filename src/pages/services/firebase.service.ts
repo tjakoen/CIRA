@@ -15,51 +15,6 @@ export class FirebaseService {
   getTimeStamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
   }
-  
-  getReports(){
-    return new Promise<any>((resolve, reject) => {
-      let query = this.afs.collection('reports',  ref => ref.where('userID', '==', this.getCurrentUser().uid)) ;
-      this.snapshotChangesSubscription =  query.snapshotChanges()
-      .subscribe(snapshots => {
-        resolve(snapshots);
-      })
-    });
-  }
-
-  deleteReport( id ){
-    return new Promise<any>((resolve, reject) => {
-      this.afs.collection('reports').doc(id).delete()
-      .then(
-        res => resolve(res),
-        err => reject(err)
-      )
-    })
-  }
-
-  createReport( value, status ){
-    return new Promise<any>((resolve, reject) => {
-      value.createdOn = firebase.firestore.FieldValue.serverTimestamp();
-      value.updatedOn = firebase.firestore.FieldValue.serverTimestamp();
-      value.userId = this.getCurrentUser().uid;
-      value.status = status;
-      this.afs.collection('reports').add( value )
-      .then(
-        res => resolve(res),
-        err => reject(err)
-      )
-    })
-  }
-
-  updateReport( value, reportId ) {
-    return new Promise<any>((resolve, reject) => {
-      value.updatedOn = firebase.firestore.FieldValue.serverTimestamp();
-      this.afs.collection( 'reports' ).doc( reportId ).update( value ) 
-      .then(
-        res => resolve(res),
-        err => reject(err)
-      )
-    })
-  }
 
   getUserDetails( uid ) {
     return new Promise<any>((resolve, reject) => {
