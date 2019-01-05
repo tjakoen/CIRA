@@ -1,5 +1,6 @@
 <ion-tabs>
   <ion-tab [root]="tab1Root" tabTitle="Posts" tabIcon="chatbubbles"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Reports" tabIcon="clipboard"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Reports" tabIcon="clipboard" tabBadge="{{ draftCount }}" tabBadgeStyle="danger">
+  </ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="Data" tabIcon="analytics"></ion-tab>
 </ion-tabs>

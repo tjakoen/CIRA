@@ -17,7 +17,7 @@
 
   <ion-row class="filter-bar">
     <ion-col>
-      <ion-searchbar [(ngModel)]="searchQuery" placeholder="Search by Name, Location or Description" (ionInput)="searchPosts($event)"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchQuery" placeholder="Search by Name, Location or Description" (ionInput)="search($event)"></ion-searchbar>
     </ion-col>
       <ion-col col-2>
         <button class="funnel" ion-button icon-only end (click)="showFilterPopover($event)">

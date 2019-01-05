@@ -18,9 +18,7 @@ export class ReportsPage {
   filteredReportData:Report[] = [];
   reports:Report[] = [];
 
-  filters = {
-    viewType:'all',
-  }
+  filter:string = 'all';
   
   constructor(
     private modalCtrl: ModalController,
@@ -71,8 +69,25 @@ export class ReportsPage {
   // TODO: Improved multi-key filtering
   // Filters data based on each set key
   filterReports( data ) {
-    data = this.filters.viewType != 'all' ? this.helperService.filterByKey( data, 'type', this.filters.viewType ) : data;
+    data = this.filter != 'all' ? this.helperService.filterByKey( data, 'publishStatus', this.filter ) : data;
     return data;
+  }
+
+  // Searches Displayed Posts by Name, Location or Description
+  search(ev: any) {
+    let val = ev.target.value;
+    if (val && val.trim() != '') {
+      this.reports = this.filteredReportData.filter((report) => {
+        return (
+          report.blotterNo > -1 ||
+          report.status.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          report.incidentType.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          report.incidentLocation.toLowerCase().indexOf(val.toLowerCase()) > -1
+        );
+      })
+    } else {
+      this.reports = this.filteredReportData;
+    }
   }
 
   // (Button Action) Opens Modal to view data of one item
@@ -243,8 +258,7 @@ export class ReportDetailsModal {
     let modal = this.modalCtrl.create( ReportTypeAModal, {data: this.report.typeA});
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
-        let data = res.data
-        console.log( data );
+        let data = res.data;
         this.report.typeA = data;
         this.update = true;
       }

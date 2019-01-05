@@ -25,8 +25,8 @@ export class ReportsService {
 
     createReport( value:Report  ){
       return new Promise<any>((resolve, reject) => {
-        value.createdOn = this.firebaseService.getTimeStamp();
-        value.updatedOn = this.firebaseService.getTimeStamp();
+        value.createdOn = new Date();
+        value.updatedOn = new Date();
         value.userId = this.firebaseService.getCurrentUser().uid;
         this.afs.collection('reports').add( JSON.parse(JSON.stringify( value )) )
         .then(
@@ -38,7 +38,7 @@ export class ReportsService {
 
     updateReport( value:Report ) {
       return new Promise<any>((resolve, reject) => {
-        value.updatedOn = this.firebaseService.getTimeStamp();
+        value.updatedOn = new Date();
         this.afs.collection( 'reports' ).doc( value.documentId ).update( value ) 
         .then(() => {
           this.afs.collection('reports').doc( value.documentId ).valueChanges().subscribe(res => {

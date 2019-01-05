@@ -14,7 +14,23 @@
   <ion-fab right bottom>
       <button ion-fab (click)="openNewReportModal()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-    
+  
+  <ion-row>
+    <ion-col>
+      <ion-searchbar [(ngModel)]="searchQuery" placeholder="Search by Blotter No, Incident Type, Location, or Status" (ionInput)="search($event)"></ion-searchbar>
+    </ion-col>
+    <ion-col col-4>
+      <ion-item>
+        <ion-label>Filter By:</ion-label>
+        <ion-select [(ngModel)]="filter" interface="popover" (ionChange)="displayReports()">
+            <ion-option value="all">All</ion-option>
+            <ion-option value="draft">Draft</ion-option>
+            <ion-option value="published">Published</ion-option>
+        </ion-select>
+    </ion-item>
+    </ion-col>
+  </ion-row>
+
   <div class="list-mini">
       <ion-list>
         <ion-item padding *ngFor="let report of reports" (click)="viewDetails(report)">

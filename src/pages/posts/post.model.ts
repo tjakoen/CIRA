@@ -1,5 +1,3 @@
-import { Timestamp } from "rxjs";
-
 export class Post {
     dateTime:string;
     type:string;

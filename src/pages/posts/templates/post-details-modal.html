@@ -29,7 +29,10 @@
       </ion-card-title>
       <p><strong>Name:</strong> {{post.name}}</p>
       <p><strong>Location:</strong> {{post.location}}</p>
-      <p><strong>Date & Time:</strong> {{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+      <p><strong>Incident Date & Time:</strong> {{ post.dateTime | date: 'dd/MM/yyyy HH:mm' }}</p>
+      <!-- IDK WHY TODATE IS HERE -->
+      <p><strong>Created On:</strong> {{ post.createdOn.toDate() | date: 'dd/MM/yyyy HH:mm'  }}</p>
+      <p><strong>Updated On:</strong> {{ post.updatedOn.toDate() | date: 'dd/MM/yyyy HH:mm'  }}</p>
       <p><strong>Description:</strong></p>
       <p>{{post.description}}</p>
     </ion-card-content>

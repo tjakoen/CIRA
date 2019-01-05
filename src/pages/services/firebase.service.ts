@@ -12,10 +12,6 @@ export class FirebaseService {
     return firebase.auth().currentUser;
   }
 
-  getTimeStamp() {
-    return firebase.firestore.FieldValue.serverTimestamp();
-  }
-
   getUserDetails( uid ) {
     return new Promise<any>((resolve, reject) => {
       // Create User Document if not exists

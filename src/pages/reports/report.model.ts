@@ -1,5 +1,3 @@
-import { Timestamp } from "rxjs";
-
 export class Report {
 
     constructor (){
@@ -147,7 +145,6 @@ export class Report {
         }
     }
 
-   
     blotterNo: number;
     status: string;
     publishStatus: string;

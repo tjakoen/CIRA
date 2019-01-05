@@ -9,11 +9,18 @@ import { ReportsPage } from '../reports/reports';
 })
 export class TabsPage {
 
+  draftCount:Number
+
   tab1Root = PostsPage;
   tab2Root = ReportsPage;
   tab3Root = DataPage;
 
   constructor() {
-
+    this.draftCount = 3;
   }
+
+  setDraftCount( count:Number ) {
+    this.draftCount = count;
+  }
+  
 }

@@ -100,7 +100,7 @@ viewOwners(ev: any) {
 }
 
 // Searches Displayed Posts by Name, Location or Description
-searchPosts(ev: any) {
+search(ev: any) {
   let val = ev.target.value;
   if (val && val.trim() != '') {
     this.posts = this.filteredPostData.filter((post) => {
@@ -271,6 +271,7 @@ export class NewPostModalPage {
     let post = this.params.get( 'data' );
     if ( typeof post != 'undefined' ) {
       this.documentId = post.documentId;
+      this.myDateTime = post.ddateTime;
       this.update = true;
       this.setFields( this.update, post )
     } else {

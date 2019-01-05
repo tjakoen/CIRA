@@ -26,8 +26,8 @@ export class PostsService {
 
   createPost( value:Post ) {    
     return new Promise<any>((resolve, reject) => {
-      value.createdOn = this.firebaseService.getTimeStamp();
-      value.updatedOn = this.firebaseService.getTimeStamp();
+      value.createdOn = new Date();
+      value.updatedOn = new Date();
       value.userId = this.firebaseService.getCurrentUser().uid;
       this.afs.collection('posts').add( value )
       .then(
@@ -39,7 +39,7 @@ export class PostsService {
 
   updatePost( value:Post, postId ){
     return new Promise<any>((resolve, reject) => {
-      value.updatedOn = this.firebaseService.getTimeStamp();
+      value.updatedOn = new Date();
       this.afs.collection('posts').doc( postId ).update(value)
       .then(() => {
         this.afs.collection('posts').doc( postId ).valueChanges().subscribe(res => {

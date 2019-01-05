@@ -37,10 +37,10 @@
         </ion-card-title>
         <p>Incident Type: <span>{{ (report?.incidentType) || invalidate() }}</span></p>
         <p>Incident Location: {{report?.incidentLocation || invalidate() }}</p>
-        <p>Incident Date & Time: {{report?.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm' || invalidate() }}</p>
+        <p>Incident Date & Time: {{(report?.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm') || invalidate() }}</p>
         <p>Incident Status: {{ (report?.status | uppercase) || invalidate() }}</p>
-        <p>Created On: {{ report?.createdOn || "n/a" }}</p>
-        <p>Updated On: {{ report?.updatedOn || "n/a" }}</p>
+        <p>Created On: {{ report?.createdOn | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
+        <p>Updated On: {{ report?.updatedOn | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
       </ion-card-content>
     </ion-card>
 
