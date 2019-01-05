@@ -35,6 +35,13 @@
           <ion-input type="text" formControlName="incidentLocation"  ></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label>Incident Status</ion-label>
+          <ion-select formControlName="status" submitText="Select" cancelText="Cancel" required>
+            <ion-option value="open">Open</ion-option>
+            <ion-option value="closed">Closed</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-label>Incident Date & Time</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="incidentDateAndTime" ></ion-datetime>
         </ion-item>

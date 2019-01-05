@@ -15,7 +15,7 @@ export class ReportsService {
   
     getReports(){
       return new Promise<any>((resolve, reject) => {
-        let query = this.afs.collection('reports',  ref => ref.where('userID', '==', this.firebaseService.getCurrentUser().uid)) ;
+        let query = this.afs.collection('reports',  ref => ref.where('userId', '==', this.firebaseService.getCurrentUser().uid)) ;
         this.snapshotChangesSubscription =  query.snapshotChanges()
         .subscribe(snapshots => {
           resolve(snapshots);
@@ -28,7 +28,7 @@ export class ReportsService {
         value.createdOn = this.firebaseService.getTimeStamp();
         value.updatedOn = this.firebaseService.getTimeStamp();
         value.userId = this.firebaseService.getCurrentUser().uid;
-        this.afs.collection('reports').add( value )
+        this.afs.collection('reports').add( JSON.parse(JSON.stringify( value )) )
         .then(
           res => resolve(res),
           err => reject(err)
@@ -48,7 +48,7 @@ export class ReportsService {
       })
     }
     
-      deleteReport( id ){
+      deleteReport( id:string ){
         return new Promise<any>((resolve, reject) => {
           this.afs.collection('reports').doc(id).delete()
           .then(

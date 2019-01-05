@@ -49,8 +49,11 @@
           <ion-input type="text" formControlName="citizenship"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Sex</ion-label>
-          <ion-input type="text" formControlName="sex"></ion-input>
+          <ion-label>Sex</ion-label>
+          <ion-select formControlName="sex" submitText="Select" cancelText="Cancel" required>
+            <ion-option value="Male">Male</ion-option>
+            <ion-option value="Female">Female</ion-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Civil Status</ion-label>
@@ -58,7 +61,7 @@
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Birth Date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="birthDate" ></ion-datetime>
+          <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birthDate" ></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Age</ion-label>
@@ -72,11 +75,11 @@
         <h2>Current Address</h2>
         <div formGroupName="currentAddress">
           <ion-item>
-            <ion-label  color="primary">House Number</ion-label>
+            <ion-label  color="primary">House No/Street</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village</ion-label>
+            <ion-label  color="primary">Village/SITIO</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
@@ -84,7 +87,7 @@
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town</ion-label>
+            <ion-label  color="primary">Town/City</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
@@ -96,11 +99,11 @@
         <h2>Other Address</h2>
         <div formGroupName="otherAddress">
           <ion-item>
-            <ion-label  color="primary">House Number</ion-label>
+            <ion-label  color="primary">House No/Street</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village</ion-label>
+            <ion-label  color="primary">Village/SITIO</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
@@ -108,7 +111,7 @@
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town</ion-label>
+            <ion-label  color="primary">Town/City</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
@@ -137,11 +140,11 @@
         <h2>Contact Information</h2>
         <div formGroupName="contactInfo">
           <ion-item>
-            <ion-label  color="primary">Email Address</ion-label>
+            <ion-label  color="primary">Email Address (if any)</ion-label>
             <ion-input type="email" formControlName="emailAddress"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Home Phone</ion-label>
+            <ion-label  color="primary">Home Phone (if any)</ion-label>
             <ion-input type="text" formControlName="homePhone"></ion-input>
           </ion-item>
           <ion-item>

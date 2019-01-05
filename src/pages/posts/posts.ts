@@ -56,9 +56,9 @@ getData(){
         let post = dataMap.payload.doc.data();
         post.documentId = dataMap.payload.doc.id;
         this.postData.push( post );
-        this.displayPosts();
       });  		
     }
+    this.displayPosts();
   })
 }
 

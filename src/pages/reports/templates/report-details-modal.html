@@ -33,11 +33,12 @@
               <ion-icon name="brush"></ion-icon>
             </button>
           </ion-buttons>
-          Blotter #{{ (report?.blotterNo) || "n/a" }} ({{ (report?.status | uppercase) || "New Report" }})
+          Blotter #{{ (report?.blotterNo) || "n/a" }} ({{ (report?.publishStatus | uppercase) || "New Report" }})
         </ion-card-title>
         <p>Incident Type: <span>{{ (report?.incidentType) || invalidate() }}</span></p>
         <p>Incident Location: {{report?.incidentLocation || invalidate() }}</p>
-        <p>Incident Date: {{report?.incidentDateAndTime || invalidate() }}</p>
+        <p>Incident Date & Time: {{report?.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm' || invalidate() }}</p>
+        <p>Incident Status: {{ (report?.status | uppercase) || invalidate() }}</p>
         <p>Created On: {{ report?.createdOn || "n/a" }}</p>
         <p>Updated On: {{ report?.updatedOn || "n/a" }}</p>
       </ion-card-content>
@@ -54,41 +55,41 @@
          Type A (Reporting Person Data)
         </ion-card-title>
         <h3><strong>Personal Info:</strong></h3>
-        <p>Family Name: {{ report?.itemA.name.familyName || invalidate() }}</p>
-        <p>First Name: {{ report?.itemA.name.firstName  || invalidate() }}</p>
-        <p>Middle Name: {{ report?.itemA.name.middleName  }}</p>
-        <p>Qualifier: {{ report?.itemA.name.qualifier  }}</p>
-        <p>Nickname: {{ report?.itemA.name.nickName  }}</p>
-        <p>Citizenship: {{ report?.itemA.citizenship  || invalidate() }}</p>      
-        <p>Sex: {{ report?.itemA.sex  || invalidate() }}</p>
-        <p>Civil Status: {{ report?.itemA.civilStatus  || invalidate() }}</p>
-        <p>Birth Date: {{ report?.itemA.birthDate || invalidate() }}</p>
-        <p>Age {{ report?.itemA.age || invalidate() }}</p>
-        <p>Place of Birth: {{ report?.itemA.birthPlace || invalidate() }}</p>
+        <p>Family Name: {{ report?.typeA.name.familyName || invalidate() }}</p>
+        <p>First Name: {{ report?.typeA.name.firstName  || invalidate() }}</p>
+        <p>Middle Name: {{ report?.typeA.name.middleName  }}</p>
+        <p>Qualifier: {{ report?.typeA.name.qualifier  }}</p>
+        <p>Nickname: {{ report?.typeA.name.nickName  }}</p>
+        <p>Citizenship: {{ report?.typeA.citizenship  || invalidate() }}</p>      
+        <p>Sex: {{ report?.typeA.sex  || invalidate() }}</p>
+        <p>Civil Status: {{ report?.typeA.civilStatus  || invalidate() }}</p>
+        <p>Birth Date: {{ report?.typeA.birthDate || invalidate() }}</p>
+        <p>Age {{ report?.typeA.age || invalidate() }}</p>
+        <p>Place of Birth: {{ report?.typeA.birthPlace || invalidate() }}</p>
         <br>
         <h3><strong>Current Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemA.currentAddress.houseNumber || invalidate() }}</p>
-        <p>Village/SITIO: {{ report?.itemA.currentAddress.village  || invalidate() }}</p>
-        <p>Barangay: {{ report?.itemA.currentAddress.barangay  || invalidate() }}</p>
-        <p>Town/City: {{ report?.itemA.currentAddress.town  || invalidate() }}</p>
-        <p>Province: {{ report?.itemA.currentAddress.province  || invalidate() }}</p>
+        <p>House Number/Street: {{ report?.typeA.currentAddress.houseNumber || invalidate() }}</p>
+        <p>Village/SITIO: {{ report?.typeA.currentAddress.village  || invalidate() }}</p>
+        <p>Barangay: {{ report?.typeA.currentAddress.barangay  || invalidate() }}</p>
+        <p>Town/City: {{ report?.typeA.currentAddress.town  || invalidate() }}</p>
+        <p>Province: {{ report?.typeA.currentAddress.province  || invalidate() }}</p>
         <br>
         <h3><strong>Other Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemA.otherAddress.houseNumber }}</p>
-        <p>Village/SITIO: {{ report?.itemA.otherAddress.village  }}</p>
-        <p>Barangay: {{ report?.itemA.otherAddress.barangay  }}</p>
-        <p>Town/City: {{ report?.itemA.otherAddress.town  }}</p>
-        <p>Province: {{ report?.itemA.otherAddress.province  }}</p>
+        <p>House Number/Street: {{ report?.typeA.otherAddress.houseNumber }}</p>
+        <p>Village/SITIO: {{ report?.typeA.otherAddress.village  }}</p>
+        <p>Barangay: {{ report?.typeA.otherAddress.barangay  }}</p>
+        <p>Town/City: {{ report?.typeA.otherAddress.town  }}</p>
+        <p>Province: {{ report?.typeA.otherAddress.province  }}</p>
         <br>
         <h3><strong>Other Information:</strong></h3>
-        <p>Highest Educatioal Attainment: {{ report?.itemA.highestEducationalAttainment || invalidate() }}</p>
-        <p>Occupation: {{ report?.itemA.occupation }}</p>
-        <p>ID Card Presented: {{ report?.itemA.idCardPresented  || invalidate() }}</p>
+        <p>Highest Educatioal Attainment: {{ report?.typeA.highestEducationalAttainment || invalidate() }}</p>
+        <p>Occupation: {{ report?.typeA.occupation }}</p>
+        <p>ID Card Presented: {{ report?.typeA.idCardPresented  || invalidate() }}</p>
         <br>
         <h3><strong>Contact Info:</strong></h3>
-        <p>Email Address: {{ report?.itemA.contactInfo.emailAddress }}</p>
-        <p>Home Phone: {{ report?.itemA.contactInfo.homePhone  }}</p>
-        <p>Mobile Phone: {{ report?.itemA.contactInfo.mobilePhone  || invalidate() }}</p>
+        <p>Email Address: {{ report?.typeA.contactInfo.emailAddress }}</p>
+        <p>Home Phone: {{ report?.typeA.contactInfo.homePhone  }}</p>
+        <p>Mobile Phone: {{ report?.typeA.contactInfo.mobilePhone  || invalidate() }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -103,53 +104,61 @@
          Type B (Suspect Data)
         </ion-card-title>
         <h3><strong>Personal Info:</strong></h3>
-        <p>Family Name: {{ report?.itemB.name.familyName || invalidate() }}</p>
-        <p>First Name: {{ report?.itemB.name.firstName  || invalidate() }}</p>
-        <p>Middle Name: {{ report?.itemB.name.middleName }}</p>
-        <p>Qualifier: {{ report?.itemB.name.qualifier  || invalidate() }}</p>
-        <p>Nickname: {{ report?.itemB.name.nickName  || invalidate() }}</p>
-        <p>Citizenship: {{ report?.itemB.citizenship  || invalidate() }}</p>      
-        <p>Sex: {{ report?.itemB.sex  || invalidate() }}</p>
-        <p>Civil Status: {{ report?.itemB.civilStatus  || invalidate() }}</p>
-        <p>Birth Date: {{ report?.itemB.birthDate || invalidate() }}</p>
-        <p>Age {{ report?.itemB.age || invalidate() }}</p>
-        <p>Place of Birth: {{ report?.itemB.birthPlace || invalidate() }}</p>
+        <p>Family Name: {{ report?.typeB.name.familyName || invalidate() }}</p>
+        <p>First Name: {{ report?.typeB.name.firstName  || invalidate() }}</p>
+        <p>Middle Name: {{ report?.typeB.name.middleName }}</p>
+        <p>Qualifier: {{ report?.typeB.name.qualifier  || invalidate() }}</p>
+        <p>Nickname: {{ report?.typeB.name.nickName  || invalidate() }}</p>
+        <p>Citizenship: {{ report?.typeB.citizenship  || invalidate() }}</p>      
+        <p>Sex: {{ report?.typeB.sex  || invalidate() }}</p>
+        <p>Civil Status: {{ report?.typeB.civilStatus  || invalidate() }}</p>
+        <p>Birth Date: {{ report?.typeB.birthDate || invalidate() }}</p>
+        <p>Age {{ report?.typeB.age || invalidate() }}</p>
+        <p>Place of Birth: {{ report?.typeB.birthPlace || invalidate() }}</p>
         <br>
         <h3><strong>Current Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemB.currentAddress.houseNumber || invalidate() }}</p>
-        <p>Village/SITIO: {{ report?.itemB.currentAddress.village  || invalidate() }}</p>
-        <p>Barangay: {{ report?.itemB.currentAddress.barangay  || invalidate() }}</p>
-        <p>Town/City: {{ report?.itemB.currentAddress.town  || invalidate() }}</p>
-        <p>Province: {{ report?.itemB.currentAddress.province  || invalidate() }}</p>
+        <p>House Number/Street: {{ report?.typeB.currentAddress.houseNumber || invalidate() }}</p>
+        <p>Village/SITIO: {{ report?.typeB.currentAddress.village  || invalidate() }}</p>
+        <p>Barangay: {{ report?.typeB.currentAddress.barangay  || invalidate() }}</p>
+        <p>Town/City: {{ report?.typeB.currentAddress.town  || invalidate() }}</p>
+        <p>Province: {{ report?.typeB.currentAddress.province  || invalidate() }}</p>
         <br>
         <h3><strong>Other Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemB.otherAddress.houseNumber }}</p>
-        <p>Village/SITIO: {{ report?.itemB.otherAddress.village  }}</p>
-        <p>Barangay: {{ report?.itemB.otherAddress.barangay  }}</p>
-        <p>Town/City: {{ report?.itemB.otherAddress.town  }}</p>
-        <p>Province: {{ report?.itemB.otherAddress.province  }}</p>
+        <p>House Number/Street: {{ report?.typeB.otherAddress.houseNumber }}</p>
+        <p>Village/SITIO: {{ report?.typeB.otherAddress.village  }}</p>
+        <p>Barangay: {{ report?.typeB.otherAddress.barangay  }}</p>
+        <p>Town/City: {{ report?.typeB.otherAddress.town  }}</p>
+        <p>Province: {{ report?.typeB.otherAddress.province  }}</p>
         <br>
-        <h3><strong>Educational Info:</strong></h3>
-        <p>Highest Educatioal Attainment: {{ report?.itemB.highestEducationalAttainment || invalidate() }}</p>
-        <p>Occupation: {{ report?.itemB.occupation  || invalidate() }}</p>
+        <h3><strong>Other Info:</strong></h3>
+        <p>Highest Educatioal Attainment: {{ report?.typeB.highestEducationalAttainment || invalidate() }}</p>
+        <p>Occupation: {{ report?.typeB.occupation  }}</p>
+        <p>Work Address: {{ report?.typeB.workAddress  }}</p>
+        <p>Relation to Victim: {{ report?.typeB.relationToVictim  || invalidate() }}</p>
+        <p>Email Address: {{ report?.typeB.emailAddress }}</p>
+        <p>If AFP/PNP Personel, Rank: {{ report?.typeB.govRank }}</p>
+        <p>Unit Assignment: {{ report?.typeB.unitAssignment }}</p>
+        <p>Group Affiliation: {{ report?.typeB.groupAffiliation }}</p>
+        <p>With Previous Record?: {{ report?.typeB.previousRecord  || invalidate() }}</p>
+        <p>Previous Record Status: {{ report?.typeB.recordStatus }}</p>
         <br>
         <h3><strong>Bio-Data:</strong></h3>
-        <p>Height: {{ report?.itemB.bioData.height || invalidate() }}</p>
-        <p>Weight: {{ report?.itemB.bioData.weight || invalidate() }}</p>
-        <p>Eye Color: {{  report?.itemB.bioData.eyeColor || invalidate() }}</p>
-        <p>Eye Description: {{ report?.itemB.bioData.eyeDescription || invalidate() }}</p>
-        <p>Hair Color: {{ report?.itemB.bioData.hairColor || invalidate() }}</p>
-        <p>Hair Description: {{ report?.itemB.bioData.hairDescription || invalidate() }}</p>
-        <p>Under the Influence: {{ report?.itemB.bioData.influence || invalidate() }}</p>
+        <p>Height: {{ report?.typeB.bioData.height || invalidate() }}</p>
+        <p>Weight: {{ report?.typeB.bioData.weight || invalidate() }}</p>
+        <p>Eye Color: {{  report?.typeB.bioData.eyeColor || invalidate() }}</p>
+        <p>Eye Description: {{ report?.typeB.bioData.eyeDescription || invalidate() }}</p>
+        <p>Hair Color: {{ report?.typeB.bioData.hairColor || invalidate() }}</p>
+        <p>Hair Description: {{ report?.typeB.bioData.hairDescription || invalidate() }}</p>
+        <p>Under the Influence: {{ report?.typeB.bioData.influence || invalidate() }}</p>
         <br>
         <h3><strong>For Children In Conflit with the Law:</strong></h3>
-        <p>Guardian Name: {{ report?.itemB.children.guardianName }}</p>
-        <p>Guardian Address: {{ report?.itemB.children.guardianAddress }}</p>
-        <p>Home Phone: {{ report?.itemB.children.homePhone }}</p>
-        <p>Mobile Phone: {{ report?.itemB.children.mobilePhone }}</p>
+        <p>Guardian Name: {{ report?.typeB.children.guardianName }}</p>
+        <p>Guardian Address: {{ report?.typeB.children.guardianAddress }}</p>
+        <p>Home Phone: {{ report?.typeB.children.homePhone }}</p>
+        <p>Mobile Phone: {{ report?.typeB.children.mobilePhone }}</p>
         <br>
         <h3><strong>Other Distinguishing Features:</strong></h3>
-        <p>{{ report?.itemB.otherDistinguishingFeatures || invalidate() }}</p>
+        <p>{{ report?.typeB.otherDistinguishingFeatures || invalidate() }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -164,42 +173,42 @@
          Type C (Victim Data)
         </ion-card-title>
         <h3><strong>Personal Info:</strong></h3>
-        <p>Family Name: {{ report?.itemC.name.familyName }}</p>
-        <p>First Name: {{ report?.itemC.name.firstName  }}</p>
-        <p>Middle Name: {{ report?.itemC.name.middleName  }}</p>
-        <p>Qualifier: {{ report?.itemC.name.qualifier  }}</p>
-        <p>Nickname: {{ report?.itemC.name.middleName  }}</p>
-        <p>Nickname: {{ report?.itemC.name.middleName  }}</p>
-        <p>Citizenship: {{ report?.itemC.citizenship  }}</p>      
-        <p>Sex: {{ report?.itemC.sex  }}</p>
-        <p>Civil Status: {{ report?.itemC.civilStatus  }}</p>
-        <p>Birth Date: {{ report?.itemC.birthDate }}</p>
-        <p>Age {{ report?.itemC.age }}</p>
-        <p>Place of Birth: {{ report?.itemC.birthPlace }}</p>
+        <p>Family Name: {{ report?.typeC.name.familyName }}</p>
+        <p>First Name: {{ report?.typeC.name.firstName  }}</p>
+        <p>Middle Name: {{ report?.typeC.name.middleName  }}</p>
+        <p>Qualifier: {{ report?.typeC.name.qualifier  }}</p>
+        <p>Nickname: {{ report?.typeC.name.middleName  }}</p>
+        <p>Nickname: {{ report?.typeC.name.middleName  }}</p>
+        <p>Citizenship: {{ report?.typeC.citizenship  }}</p>      
+        <p>Sex: {{ report?.typeC.sex  }}</p>
+        <p>Civil Status: {{ report?.typeC.civilStatus  }}</p>
+        <p>Birth Date: {{ report?.typeC.birthDate }}</p>
+        <p>Age {{ report?.typeC.age }}</p>
+        <p>Place of Birth: {{ report?.typeC.birthPlace }}</p>
         <br>
         <h3><strong>Current Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemC.currentAddress.houseNumber }}</p>
-        <p>Village/SITIO: {{ report?.itemC.currentAddress.village  }}</p>
-        <p>Barangay: {{ report?.itemC.currentAddress.barangay  }}</p>
-        <p>Town/City: {{ report?.itemC.currentAddress.town  }}</p>
-        <p>Province: {{ report?.itemC.currentAddress.province  }}</p>
+        <p>House Number/Street: {{ report?.typeC.currentAddress.houseNumber }}</p>
+        <p>Village/SITIO: {{ report?.typeC.currentAddress.village  }}</p>
+        <p>Barangay: {{ report?.typeC.currentAddress.barangay  }}</p>
+        <p>Town/City: {{ report?.typeC.currentAddress.town  }}</p>
+        <p>Province: {{ report?.typeC.currentAddress.province  }}</p>
         <br>
         <h3><strong>Other Address:</strong></h3>
-        <p>House Number/Street: {{ report?.itemC.otherAddress.houseNumber }}</p>
-        <p>Village/SITIO: {{ report?.itemC.otherAddress.village  }}</p>
-        <p>Barangay: {{ report?.itemC.otherAddress.barangay  }}</p>
-        <p>Town/City: {{ report?.itemC.otherAddress.town  }}</p>
-        <p>Province: {{ report?.itemC.otherAddress.province  }}</p>
+        <p>House Number/Street: {{ report?.typeC.otherAddress.houseNumber }}</p>
+        <p>Village/SITIO: {{ report?.typeC.otherAddress.village  }}</p>
+        <p>Barangay: {{ report?.typeC.otherAddress.barangay  }}</p>
+        <p>Town/City: {{ report?.typeC.otherAddress.town  }}</p>
+        <p>Province: {{ report?.typeC.otherAddress.province  }}</p>
         <br>
         <h3><strong>Educational Info:</strong></h3>
-        <p>Highest Educatioal Attainment: {{ report?.itemC.highestEducationalAttainment }}</p>
-        <p>Occupation: {{ report?.itemC.occupation  }}</p>
-        <p>ID Card Presented: {{ report?.itemC.idCardPresented  }}</p>
+        <p>Highest Educatioal Attainment: {{ report?.typeC.highestEducationalAttainment }}</p>
+        <p>Occupation: {{ report?.typeC.occupation  }}</p>
+        <p>ID Card Presented: {{ report?.typeC.idCardPresented  }}</p>
         <br>
         <h3><strong>Contact Info:</strong></h3>
-        <p>Email Address: {{ report?.itemC.contactInfo.emailAddress }}</p>
-        <p>Home Phone: {{ report?.itemC.contactInfo.homePhone  }}</p>
-        <p>Mobile Phone: {{ report?.itemC.contactInfo.mobilePhone  }}</p>
+        <p>Email Address: {{ report?.typeC.contactInfo.emailAddress }}</p>
+        <p>Home Phone: {{ report?.typeC.contactInfo.homePhone  }}</p>
+        <p>Mobile Phone: {{ report?.typeC.contactInfo.mobilePhone  }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -214,7 +223,7 @@
           Type D (Narrative of Incident)
         </ion-card-title>
         <h3><strong>Incident Narrative:</strong></h3>
-        <p>{{ report?.itemD.incidentNarrative || invalidate() }}</p>        
+        <p>{{ report?.typeD.incidentNarrative || invalidate() }}</p>        
       </ion-card-content>
     </ion-card>
 

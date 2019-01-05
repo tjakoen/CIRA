@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ViewController, NavParams, ModalController } from 'ionic-angular';
+import { ViewChild, Component } from '@angular/core';
+import { Content, ViewController, NavParams, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { ReportsService } from './reports.service'
@@ -34,6 +34,7 @@ export class ReportsPage {
 
   // Gets Data
   getData(){
+    this.reportData = [];
     this.reportsService.getReports()
     .then(data => {
       if (data) {
@@ -41,9 +42,9 @@ export class ReportsPage {
           let report = dataMap.payload.doc.data();
           report.documentId = dataMap.payload.doc.id;
           this.reportData.push( report );
-          this.displayReports();
         });  		
       }
+      this.displayReports();
     })
   }
 
@@ -90,8 +91,7 @@ export class ReportsPage {
     let modal = this.modalCtrl.create(ReportDetailsModal, { new: true });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
-        this.reportData = [];
-        this.displayReports();
+        this.getData();
       }
     });
     modal.present();
@@ -104,6 +104,8 @@ export class ReportsPage {
   templateUrl: './templates/report-details-modal.html'
 })
 export class ReportDetailsModal {
+  @ViewChild(Content) content: Content;
+
   report: Report;
   loading: any;
   update = false;
@@ -123,10 +125,11 @@ export class ReportDetailsModal {
     private globals: Globals,
   ) {
     this.new = this.navParams.get('new');
-    if ( this.new ) {
+    if ( this.new ) { 
+      this.report = new Report();
       this.edit = true;
     } else {
-      this.report = this.navParams.get('data');
+      this.report = this.navParams.get( 'data' );
       this.published = this.report.status == 'published' ? true : false;
     }
   }
@@ -144,29 +147,31 @@ export class ReportDetailsModal {
     if ( this.update ) {
       this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to exit with unsaved changes?`, confirm => {
         if ( confirm ) {
-          this.viewCtrl.dismiss();
+          this.viewCtrl.dismiss({ update: true });
         }
       });
     } else {
-      this.viewCtrl.dismiss();
+      this.viewCtrl.dismiss()
     }
   }
 
   // (Button Action) Submit Report
-  onSubmit( draft:boolean) {
-    if ( this.update ) {
-      this.report.status = draft ? 'draft' : 'published';
+  submit( draft:boolean ) {
+    this.report.publishStatus = draft ? 'draft' : 'published';
+    if ( !this.new ) {
       this.reportsService.updateReport( this.report )
       .then(
         res => {
-          console.log(res.data);
           this.report = res.data;
+          this.update = false;
+          this.globals.showToast('Report Successfully Updated');
         });
     } else {
       this.reportsService.createReport( this.report )
       .then(
         res => {
-          this.viewCtrl.dismiss({success: true});
+          this.viewCtrl.dismiss({ success: true });
+          this.globals.showToast('Report Successfully Created');
         }
       )
     }
@@ -178,24 +183,27 @@ export class ReportDetailsModal {
       if ( confirm ) {
         this.reportsService.deleteReport(this.report.documentId)
         .then(
-          res => this.viewCtrl.dismiss(),
-          err => console.log(err)
+          res => {
+            this.viewCtrl.dismiss({ delete: true });
+            this.globals.showToast('Report Successfully Deleted');
+          },
+            err => console.log(err)
         )
       }
     });
   }
   
   // (Button Action) Edit Item
-  toggleEdit( editMode ){
+  toggleEdit( editMode:boolean ){
     if ( editMode ) {
       this.edit = true;
     } else {
       this.edit = false;
     }
-
+    this.content.resize();
   }
 
-  editReport( type ) {
+  editReport( type:string ) {
     switch ( type ){
       case 'Info':
         this.editInfo();
@@ -216,16 +224,15 @@ export class ReportDetailsModal {
   }
 
   editInfo() {
-    let modal = this.new ? this.modalCtrl.create( ReportInfoModal) : this.modalCtrl.create( ReportInfoModal, {data: this.report});
+    let modal = this.modalCtrl.create( ReportInfoModal, { data: this.report });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data;
-        console.log ( data ); 
         this.report.blotterNo = data.blotterNo;
-        this.report.status = data.blotterNo;
-        this.report.incidentType = data.blotterNo;
-        this.report.incidentLocation = data.blotterNo;
-        this.report.incidentDateAndTime = data.blotterNo;
+        this.report.status = data.status;
+        this.report.incidentType = data.incidentType;
+        this.report.incidentLocation = data.incidentLocation;
+        this.report.incidentDateAndTime = data.incidentDateAndTime;
         this.update = true;
       }
     });
@@ -233,11 +240,12 @@ export class ReportDetailsModal {
   }
 
   editTypeA() {
-    let modal = this.new ? this.modalCtrl.create( ReportTypeAModal) : this.modalCtrl.create( ReportTypeAModal, {data: this.report.typeA});
+    let modal = this.modalCtrl.create( ReportTypeAModal, {data: this.report.typeA});
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
-        this.report.typeA = data.data;
+        console.log( data );
+        this.report.typeA = data;
         this.update = true;
       }
     });
@@ -245,11 +253,11 @@ export class ReportDetailsModal {
   }
 
   editTypeB() {
-    let modal = this.new ? this.modalCtrl.create( ReportTypeBModal) : this.modalCtrl.create( ReportTypeBModal, {data: this.report.typeB});
+    let modal = this.modalCtrl.create( ReportTypeBModal, {data: this.report.typeB});
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
-        this.report.typeB = data.data;
+        this.report.typeB = data;
         this.update = true;
       }
     });
@@ -257,11 +265,11 @@ export class ReportDetailsModal {
   }
 
   editTypeC() {
-    let modal = this.new ? this.modalCtrl.create( ReportTypeCModal) : this.modalCtrl.create( ReportTypeCModal, {data: this.report.typeC});
+    let modal = this.modalCtrl.create( ReportTypeCModal, {data: this.report.typeC});
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
-        this.report.typeC = data.data;
+        this.report.typeC = data;
         this.update = true;
       }
     });
@@ -269,11 +277,11 @@ export class ReportDetailsModal {
   }
 
   editTypeD() {
-    let modal = this.new ? this.modalCtrl.create( ReportTypeDModal) : this.modalCtrl.create( ReportTypeDModal, {data: this.report.typeD});
+    let modal = this.modalCtrl.create( ReportTypeDModal, {data: this.report.typeD});
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
-        this.report.typeD = data.data;
+        this.report.typeD = data;
         this.update = true;
       }
     });
@@ -287,18 +295,17 @@ export class ReportDetailsModal {
 })
 export class ReportInfoModal {
   validations_form: FormGroup;
-  update = false;
 
   constructor(
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private params: NavParams,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     let reportData = this.params.get('data');
     if ( typeof reportData != 'undefined' ) {
-      this.update = true;
       this.setFields( true, reportData );
     } else {
       this.setFields()
@@ -316,7 +323,11 @@ export class ReportInfoModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to close with unsaved changes?`, confirm => {
+      if ( confirm ) {
+        this.viewCtrl.dismiss();
+      }
+    });
   }
 
   onSubmit( value ){
@@ -329,18 +340,17 @@ export class ReportInfoModal {
 })
 export class ReportTypeAModal {
   validations_form: FormGroup;
-  update = false;
 
   constructor(
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private params: NavParams,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     let reportData =  this.params.get('data') 
     if ( typeof reportData != 'undefined' ) {
-      this.update = true;
       this.setFields( true, reportData );
     } else {
       this.setFields()
@@ -388,7 +398,11 @@ export class ReportTypeAModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to close with unsaved changes?`, confirm => {
+      if ( confirm ) {
+        this.viewCtrl.dismiss();
+      }
+    });
   }
 
   onSubmit( value ){
@@ -401,18 +415,17 @@ export class ReportTypeAModal {
 })
 export class ReportTypeBModal {
   validations_form: FormGroup;
-  update = false;
 
   constructor(
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private params: NavParams,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     let reportData =  this.params.get('data') 
     if ( typeof reportData != 'undefined' ) {
-      this.update = true;
       this.setFields( true, reportData );
     } else {
       this.setFields()
@@ -449,12 +462,12 @@ export class ReportTypeBModal {
         province: [ update ? data.currentAddress.province : '' ],
       }),
       bioData: this.formBuilder.group({
-        height: [ update ? data.bioData.height : '' ],
-        weight: [ update ? data.bioData.weight : '' ],
-        eyeColor: [ update ? data.bioData.eyeColor : '' ],
-        eyeDescription: [ update ? data.bioData.eyeDescription : '' ],
-        hairColor: [ update ? data.bioData.hairColor : '' ],
-        hairDescription: [ update ? data.bioData.hairDescription : '' ],
+        height: [ update ? data.bioData.height : '', Validators.required ],
+        weight: [ update ? data.bioData.weight : '', Validators.required ],
+        eyeColor: [ update ? data.bioData.eyeColor : '', Validators.required ],
+        eyeDescription: [ update ? data.bioData.eyeDescription : '', Validators.required ],
+        hairColor: [ update ? data.bioData.hairColor : '', Validators.required ],
+        hairDescription: [ update ? data.bioData.hairDescription : '', Validators.required ],
         influence: [ update ? data.bioData.influence : '', Validators.required ],
       }),
       children: this.formBuilder.group({
@@ -465,12 +478,24 @@ export class ReportTypeBModal {
       }),
       highestEducationalAttainment: [ update ? data.highestEducationalAttainment : '', Validators.required ],
       occupation: [ update ? data.occupation : '' ],
+      workAddress: [ update ? data.workAddress : '' ],
+      relationToVictim:  [ update ? data.relationToVictim : '', Validators.required],
+      emailAddress:  [ update ? data.emailAddress : '' ],
+      govRank:  [ update ? data.govRank : '' ],
+      unitAssignment: [ update ? data.unitAssignment : '' ],
+      groupAffiliation:  [ update ? data.groupAffiliation : '' ],
+      previousRecord:  [ update ? data.previousRecord : '', Validators.required],
+      recordStatus:  [ update ? data.recordStatus : '' ],
       otherDistinguishingFeatures: [ update ? data.otherDistinguishingFeatures : ''],
     });
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to close with unsaved changes?`, confirm => {
+      if ( confirm ) {
+        this.viewCtrl.dismiss();
+      }
+    });
   }
 
   onSubmit( value ){
@@ -483,18 +508,17 @@ export class ReportTypeBModal {
 })
 export class ReportTypeCModal {
   validations_form: FormGroup;
-  update = false;
 
   constructor(
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private params: NavParams,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     let reportData =  this.params.get('data') 
     if ( typeof reportData != 'undefined' ) {
-      this.update = true;
       this.setFields( true, reportData );
     } else {
       this.setFields()
@@ -543,7 +567,11 @@ export class ReportTypeCModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to close with unsaved changes?`, confirm => {
+      if ( confirm ) {
+        this.viewCtrl.dismiss();
+      }
+    });
   }
 
   onSubmit( value ){
@@ -556,19 +584,17 @@ export class ReportTypeCModal {
 })
 export class ReportTypeDModal {
   validations_form: FormGroup;
-  update = false;
 
   constructor(
     private viewCtrl: ViewController,
     private formBuilder: FormBuilder,
     private params: NavParams,
+    private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     let reportData =  this.params.get('data') 
     if ( typeof reportData != 'undefined' ) {
-      this.update = true;
-
       this.setFields( true, reportData );
     } else {
       this.setFields()
@@ -582,7 +608,11 @@ export class ReportTypeDModal {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.globals.showYesNoConfirmDialog( 'Confirm', `Are you sure you want to close with unsaved changes?`, confirm => {
+      if ( confirm ) {
+        this.viewCtrl.dismiss();
+      }
+    });
   }
 
   onSubmit( value ){

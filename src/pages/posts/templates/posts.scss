@@ -33,7 +33,8 @@ page-posts{
         ion-card {
             position: relative;
             text-align: center;
-            height: 15em;
+            min-height: 15em;
+            max-height: 15em;
             background-color: rgba(0, 0, 0, 0.14);
 
             .card-title {

@@ -58,7 +58,7 @@
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Birth Date</ion-label>
-          <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="birthDate" ></ion-datetime>
+          <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birthDate" ></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Age</ion-label>
@@ -72,11 +72,11 @@
         <h2>Current Address</h2>
         <div formGroupName="currentAddress">
           <ion-item>
-            <ion-label  color="primary">House Number</ion-label>
+            <ion-label  color="primary">House No/Street</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village</ion-label>
+            <ion-label  color="primary">Village/SITIO</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
@@ -84,7 +84,7 @@
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town</ion-label>
+            <ion-label  color="primary">Town/City</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
@@ -96,11 +96,11 @@
         <h2>Other Address</h2>
         <div formGroupName="otherAddress">
           <ion-item>
-            <ion-label  color="primary">House Number</ion-label>
+            <ion-label  color="primary">House No/Street</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village</ion-label>
+            <ion-label  color="primary">Village/SITIO</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
@@ -108,7 +108,7 @@
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town</ion-label>
+            <ion-label  color="primary">Town/City</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
@@ -126,6 +126,38 @@
         <ion-item>
           <ion-label  color="primary">Occupation</ion-label>
           <ion-input type="text" formControlName="occupation"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Work Address</ion-label>
+          <ion-input type="text" formControlName="workAddress"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Relation to Victim</ion-label>
+          <ion-input type="text" formControlName="relationToVictim"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Email Address (if any)</ion-label>
+          <ion-input type="text" formControlName="emailAddress"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">If AFP/PNP Personnel, Rank</ion-label>
+          <ion-input type="text" formControlName="govRank"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Unit Assignment</ion-label>
+          <ion-input type="text" formControlName="unitAssignment"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Group Affiliation</ion-label>
+          <ion-input type="text" formControlName="groupAffiliation"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">With Previous Record? (If yes, specify)</ion-label>
+          <ion-input type="text" formControlName="previousRecord"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  color="primary">Status of Previous Case</ion-label>
+          <ion-input type="text" formControlName="recordStatus"></ion-input>
         </ion-item>
 
         <br>
@@ -162,7 +194,7 @@
         </div>
         
         <br>
-        <h2>For Children in conflict with the law</h2>
+        <h2>For Children in conflict with the law (If applies)</h2>
         <div formGroupName="children">
           <ion-item>
             <ion-label  color="primary">Guardian Name</ion-label>
