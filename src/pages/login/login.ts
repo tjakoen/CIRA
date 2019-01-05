@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ModalController } from 'ionic-angular';
-
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { FirebaseService } from '../services/firebase.service';
 
-import { RegisterPage } from './register/register';
 import { SideMenuPage } from '../sidemenu/sidemenu';
-import { EditUserModal } from '../user-info/edit-user-modal/edit-user-modal';
+
+import { EditUserModal } from '../user-info/user-info';
+import { UserInfoService } from '../user-info/user-info.service';
 
 import { AuthService } from '../services/auth.service';
 import { Globals } from '../services/globals'
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: './templates/page-login',
+  templateUrl: './templates/login.html'
 })
 export class LoginPage {
   logoURL = "assets/imgs/pnp-logo.png";
-
   validations_form: FormGroup;
   errorMessage: string = '';
 
@@ -37,22 +35,25 @@ export class LoginPage {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private alertCtrl: AlertController,
-    private firebaseService: FirebaseService,
+    private userInfoService: UserInfoService,
     private modalCtrl: ModalController,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
     this.validations_form = this.formBuilder.group({
+
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        //Validators.pattern('^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$')
       ])),
+
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required
       ])),
     });
+
   }
 
   tryLogin( value ){
@@ -62,7 +63,7 @@ export class LoginPage {
         this.showVerificationDialog();
       } else {
         this.globals.presentLoadingTillNextScreen('Logging you in...');
-        this.firebaseService.getUserDetails(login.user.uid)
+        this.userInfoService.getUserDetails(login.user.uid)
         .then( res => {
           let userData = res.userData
           if ( userData.infoSet == true  ) {
@@ -96,7 +97,7 @@ export class LoginPage {
           handler: () => {}
         },
         {
-          text: 'Resend Verification Email',
+          text: 'Send Verification Email',
           handler: () => {
             this.authService.sendVerificationEmail()
             .then(res => {
@@ -119,7 +120,64 @@ export class LoginPage {
     });
     modal.present();
   }
+}
 
-  
+@Component({
+  selector: './templates/page-register',
+  templateUrl: './templates/register.html'
+})
+export class RegisterPage {
+  validations_form: FormGroup;
+  errorMessage: string = '';
+  successMessage: string = '';
+
+  validation_messages = {
+   'email': [
+     { type: 'required', message: 'Email is required.' },
+     { type: 'pattern', message: 'Enter a valid email.' }
+   ],
+   'password': [
+     { type: 'required', message: 'Password is required.' },
+     { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+   ]
+ };
+
+  constructor(
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ionViewWillLoad(){
+    this.validations_form = this.formBuilder.group({
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        //Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+
+      password: new FormControl('', Validators.compose([
+        Validators.minLength(5),
+        Validators.required
+      ])),
+    });
+
+  }
+
+  tryRegister(value){
+    this.authService.doRegister(value)
+     .then(res => {
+       console.log(res);
+       this.errorMessage = "";
+       this.successMessage = "Your account has been created. Please log in.";
+     }, err => {
+       console.log(err);
+       this.errorMessage = err.message;
+       this.successMessage = "";
+     })
+  }
+
+  goLoginPage(){
+    this.navCtrl.pop();
+  }
 
 }

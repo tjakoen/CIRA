@@ -9,16 +9,15 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SideMenuPage } from '../pages/sidemenu/sidemenu';
 
 import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/login/register/register';
-
+import { RegisterPage } from '../pages/login/login';
 import { PostsPage, PostFilterPopover, PostDetailsModal,NewPostModalPage } from '../pages/posts/posts';
 import { PostsService } from '../pages/posts/posts.service'
 
 import { ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal } from '../pages/reports/reports';
 import { ReportsService } from '../pages/reports/reports.service'
 
-import { UserInfoPage } from '../pages/user-info/user-info';
-import { EditUserModal } from '../pages/user-info/edit-user-modal/edit-user-modal';
+import { UserInfoPage , EditUserModal} from '../pages/user-info/user-info';
+import { UserInfoService } from '../pages/user-info/user-info.service';
 
 import { DataPage } from '../pages/data/data';
 
@@ -38,18 +37,13 @@ import { Globals } from '../pages/services/globals';
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
-    RegisterPage,
-    PostsPage,
+    LoginPage, RegisterPage,
+    PostsPage,  NewPostModalPage, PostDetailsModal,   PostFilterPopover,
     ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal,
-    NewPostModalPage,
-    PostDetailsModal,
     TabsPage,
-    PostFilterPopover,
     DataPage,
     SideMenuPage,
-    EditUserModal,
-    UserInfoPage,
+    EditUserModal, UserInfoPage,
   ],
   imports: [
     BrowserModule,
@@ -62,18 +56,13 @@ import { Globals } from '../pages/services/globals';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
-    RegisterPage,
-    PostsPage,
+    LoginPage, RegisterPage,
+    PostsPage,  NewPostModalPage, PostDetailsModal, PostFilterPopover,
     ReportsPage, ReportDetailsModal, ReportInfoModal, ReportTypeAModal, ReportTypeBModal, ReportTypeCModal, ReportTypeDModal,
-    NewPostModalPage,
-    PostDetailsModal,
     TabsPage,
     SideMenuPage,
-    PostFilterPopover,
     DataPage,
-    EditUserModal,
-    UserInfoPage,
+    UserInfoPage, EditUserModal,
   ],
   providers: [
     StatusBar,
@@ -82,6 +71,7 @@ import { Globals } from '../pages/services/globals';
     FirebaseService,
     PostsService,
     ReportsService,
+    UserInfoService,
     AuthService,
     HelperService,
     Globals,

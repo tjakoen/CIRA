@@ -4,51 +4,14 @@ import * as firebase from 'firebase/app';
 
 @Injectable()
 export class FirebaseService {
-
+  
   private snapshotChangesSubscription: any;
+  
   constructor(public afs: AngularFirestore){}
 
   getCurrentUser() {
     return firebase.auth().currentUser;
   }
-
-  getUserDetails( uid ) {
-    return new Promise<any>((resolve, reject) => {
-      // Create User Document if not exists
-      this.afs.doc(`users/${uid}`)
-      .update({})
-      .then(() => {
-        this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
-          resolve({ userData: res });
-        });
-      })
-      .catch((error) => {
-        this.afs.doc(`users/${uid}`)
-          .set({
-            infoSet: false
-          }) 
-          .then(() => {
-            this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
-              resolve({ userData: res });
-            });
-          })
-      });
-
-    });
-  }
-
-  updateUser( value, uid? ) {
-    uid = typeof uid == 'undefined' ? this.getCurrentUser().uid : uid
-    return new Promise<any>((resolve, reject) => {
-      this.afs.doc( `users/${uid}` )
-        .update( value )
-        .then(() => {
-          this.afs.doc(`users/${uid}`).valueChanges().subscribe(res => {
-            resolve({ data: res });
-          });
-      });
-    });
-  } 
 
   getData() {
     return new Promise<any>((resolve, reject) => {
