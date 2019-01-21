@@ -48,7 +48,6 @@ export class DataPage {
 
     postsSum( filter='all' ) {
         let sum = 0;
-        
         switch ( filter )
         {
             case 'solved':

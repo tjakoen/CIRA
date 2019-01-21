@@ -179,6 +179,7 @@ export class ReportDetailsModal {
         res => {
           this.report = res.data;
           this.update = false;
+          // this.globals.setNotification();
           this.globals.showToast('Report Successfully Updated');
         });
     } else {

@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+// import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -75,6 +76,7 @@ import { Globals } from '../pages/services/globals';
     AuthService,
     HelperService,
     Globals,
+    // LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -22,17 +22,17 @@
             <li>
               Solved Posts: {{ postsSum('solved') }}
               <ul>
-                  <li>Missing Persons {{ postData.solved.missingPersons }}</li>
-                  <li>Missing Properties {{ postData.solved.missingProperties }}</li>
-                  <li>Wanted Pesons: {{ postData.solved.wantedPersons }}</li>
+                  <li>Missing Persons: {{ postData.solved.missingPersons || 0 }}</li>
+                  <li>Missing Properties: {{ postData.solved.missingProperties || 0 }}</li>
+                  <li>Wanted Pesons: {{ postData.solved.wantedPersons || 0 }}</li>
               </ul>
             </li>
             <li>
                 Unolved Posts: {{ postsSum('unsolved') }}
                 <ul>
-                    <li>Missing Persons {{ postData.unsolved.missingPersons }}</li>
-                    <li>Missing Properties {{ postData.unsolved.missingProperties }}</li>
-                    <li>Wanted Pesons: {{ postData.unsolved.wantedPersons }}</li>
+                    <li>Missing Persons {{ postData.unsolved.missingPersons || 0 }}</li>
+                    <li>Missing Properties {{ postData.unsolved.missingProperties || 0 }}</li>
+                    <li>Wanted Pesons: {{ postData.unsolved.wantedPersons || 0 }}</li>
                 </ul>
               </li>
           </ul>
@@ -51,14 +51,14 @@
    
    
    
-      <ion-card>
+      <!-- <ion-card>
         <ion-card-header>
           Incident Rate for the current year
         </ion-card-header>
         <ion-card-content>
           <canvas #lineCanvas></canvas>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
   
 
   </ion-content>
