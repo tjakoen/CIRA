@@ -15,7 +15,7 @@
 </ion-header>
   
 <ion-content padding>
-  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+  <form  [formGroup]="form" (ngSubmit)="onSubmit(form.value)"  #documentEditForm="ngForm">    
     <ion-card>
       <ion-card-content>
         <ion-card-title>
@@ -24,11 +24,11 @@
         <h2>Basic Information</h2>
         <div formGroupName="name">
           <ion-item>
-            <ion-label  color="primary">Family Name</ion-label>
+            <ion-label  color="primary">Family Name*</ion-label>
             <ion-input type="text" formControlName="familyName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">First Name</ion-label>
+            <ion-label  color="primary">First Name*</ion-label>
             <ion-input type="text" formControlName="firstName"></ion-input>
           </ion-item>
           <ion-item>
@@ -45,53 +45,53 @@
           </ion-item>
         </div>
         <ion-item>
-          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-label  color="primary">Citizenship*</ion-label>
           <ion-input type="text" formControlName="citizenship"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Sex</ion-label>
+          <ion-label>Sex*</ion-label>
           <ion-select formControlName="sex" submitText="Select" cancelText="Cancel" required>
             <ion-option value="Male">Male</ion-option>
             <ion-option value="Female">Female</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-label  color="primary">Civil Status*</ion-label>
           <ion-input type="text" formControlName="civilStatus"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-label  color="primary">Birth Date*</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birthDate" ></ion-datetime>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Age</ion-label>
+          <ion-label  color="primary">Age*</ion-label>
           <ion-input type="number" formControlName="age"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-label  color="primary">Birth Place*</ion-label>
           <ion-input type="text" formControlName="birthPlace"></ion-input>
         </ion-item>
         <br>
         <h2>Current Address</h2>
         <div formGroupName="currentAddress">
           <ion-item>
-            <ion-label  color="primary">House No/Street</ion-label>
+            <ion-label  color="primary">House No/Street*</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village/SITIO</ion-label>
+            <ion-label  color="primary">Village/SITIO*</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Barangay</ion-label>
+            <ion-label  color="primary">Barangay*</ion-label>
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town/City</ion-label>
+            <ion-label  color="primary">Town/City*</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Province</ion-label>
+            <ion-label  color="primary">Province*</ion-label>
             <ion-input type="text" formControlName="province"></ion-input>
           </ion-item>
         </div>
@@ -123,7 +123,7 @@
         <br>
         <h2>Other Information</h2>
         <ion-item>
-          <ion-label  color="primary">Highest Educational Attainment</ion-label>
+          <ion-label  color="primary">Highest Educational Attainment*</ion-label>
           <ion-input type="text" formControlName="highestEducationalAttainment"></ion-input>
         </ion-item>
         <ion-item>
@@ -131,7 +131,7 @@
           <ion-input type="text" formControlName="occupation"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">ID Card Presented</ion-label>
+          <ion-label  color="primary">ID Card Presented*</ion-label>
           <ion-input type="text" formControlName="idCardPresented"></ion-input>
         </ion-item>
 
@@ -148,7 +148,7 @@
             <ion-input type="text" formControlName="homePhone"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Mobile Phone</ion-label>
+            <ion-label  color="primary">Mobile Phone*</ion-label>
             <ion-input type="text" formControlName="mobilePhone"></ion-input>
           </ion-item>
         </div>

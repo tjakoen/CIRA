@@ -29,18 +29,19 @@
       <ion-card-content>
         <ion-card-title>
           <ion-buttons [hidden]="!edit" right>
+            <app-form-control-valid-prompt [valid]="reportInfoForm.valid"></app-form-control-valid-prompt>
             <button ion-button icon-only (click)="editReport('Info')">
               <ion-icon name="brush"></ion-icon>
             </button>
           </ion-buttons>
-          Blotter #{{ (report?.blotterNo) || "n/a" }} ({{ (report?.publishStatus | uppercase) || "New Report" }})
+          Blotter #{{ (report?.blotterNo) || "N/A" }} ({{ (report?.publishStatus | uppercase) || "New Report" }})
         </ion-card-title>
         <p>Incident Type: <span>{{ (report?.incidentType) || invalidate() }}</span></p>
         <p>Incident Location: {{report?.incidentLocation || invalidate() }}</p>
         <p>Incident Date & Time: {{(report?.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm') || invalidate() }}</p>
         <p>Incident Status: {{ (report?.status | uppercase) || invalidate() }}</p>
         <p>Created On: {{ report?.createdOn | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
-        <p>Updated On: {{ report?.updatedOn | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
+        <p>Updated On: {{ report?.updatedOn.toDate() | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -48,6 +49,7 @@
       <ion-card-content>
         <ion-card-title>
         <ion-buttons [hidden]="!edit" right>
+          <app-form-control-valid-prompt [valid]="reportTypeAForm.valid"></app-form-control-valid-prompt>
           <button ion-button icon-only (click)="editReport('Type A')">
             <ion-icon name="brush"></ion-icon>
           </button>
@@ -97,6 +99,7 @@
       <ion-card-content>
         <ion-card-title>
           <ion-buttons [hidden]="!edit" right>
+            <app-form-control-valid-prompt [valid]="reportTypeBForm.valid"></app-form-control-valid-prompt>
             <button ion-button icon-only (click)="editReport('Type B')">
               <ion-icon name="brush"></ion-icon>
             </button>
@@ -107,8 +110,8 @@
         <p>Family Name: {{ report?.typeB.name.familyName || invalidate() }}</p>
         <p>First Name: {{ report?.typeB.name.firstName  || invalidate() }}</p>
         <p>Middle Name: {{ report?.typeB.name.middleName }}</p>
-        <p>Qualifier: {{ report?.typeB.name.qualifier  || invalidate() }}</p>
-        <p>Nickname: {{ report?.typeB.name.nickName  || invalidate() }}</p>
+        <p>Qualifier: {{ report?.typeB.name.qualifier }}</p>
+        <p>Nickname: {{ report?.typeB.name.nickName }}</p>
         <p>Citizenship: {{ report?.typeB.citizenship  || invalidate() }}</p>      
         <p>Sex: {{ report?.typeB.sex  || invalidate() }}</p>
         <p>Civil Status: {{ report?.typeB.civilStatus  || invalidate() }}</p>
@@ -166,6 +169,7 @@
       <ion-card-content>
         <ion-card-title>
         <ion-buttons [hidden]="!edit" right>
+          <app-form-control-valid-prompt [valid]="reportTypeCForm.valid"></app-form-control-valid-prompt>
           <button ion-button icon-only (click)="editReport('Type C')">
             <ion-icon name="brush"></ion-icon>
           </button>
@@ -216,6 +220,7 @@
       <ion-card-content>
         <ion-card-title>
           <ion-buttons [hidden]="!edit" right>
+            <app-form-control-valid-prompt [valid]="reportTypeDForm.valid"></app-form-control-valid-prompt>
             <button ion-button icon-only (click)="editReport('Type D')">
               <ion-icon name="brush"></ion-icon>
             </button>
@@ -232,5 +237,5 @@
 
 <ion-footer [hidden]="!edit">
   <button class="form-action-button" ion-button block (click)="submit( true )" [hidden]="published">Save Draft</button>
-  <button class="form-action-button" ion-button block (click)="submit( false )" [disabled]="!this.valid">Publish</button>
+  <button class="form-action-button" ion-button block (click)="submit( false )" [disabled]="!reportTypeAForm.valid || !reportTypeAForm.valid || !reportTypeBForm.valid || !reportTypeCForm.valid || !reportTypeDForm.valid">Publish</button>
 </ion-footer>

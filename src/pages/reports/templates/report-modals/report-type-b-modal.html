@@ -15,7 +15,7 @@
 </ion-header>
   
 <ion-content padding>
-  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+  <form  [formGroup]="form" (ngSubmit)="onSubmit(form.value)"  #documentEditForm="ngForm">    
     <ion-card>
       <ion-card-content>
         <ion-card-title>
@@ -24,11 +24,11 @@
         <h2>Basic Information</h2>
         <div formGroupName="name">
           <ion-item>
-            <ion-label  color="primary">Family Name</ion-label>
+            <ion-label  color="primary">Family Name*</ion-label>
             <ion-input type="text" formControlName="familyName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">First Name</ion-label>
+            <ion-label  color="primary">First Name*</ion-label>
             <ion-input type="text" formControlName="firstName"></ion-input>
           </ion-item>
           <ion-item>
@@ -45,50 +45,50 @@
           </ion-item>
         </div>
         <ion-item>
-          <ion-label  color="primary">Citizenship</ion-label>
+          <ion-label  color="primary">Citizenship*</ion-label>
           <ion-input type="text" formControlName="citizenship"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Sex</ion-label>
+          <ion-label  color="primary">Sex*</ion-label>
           <ion-input type="text" formControlName="sex"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Civil Status</ion-label>
+          <ion-label  color="primary">Civil Status*</ion-label>
           <ion-input type="text" formControlName="civilStatus"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Birth Date</ion-label>
+          <ion-label  color="primary">Birth Date*</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birthDate" ></ion-datetime>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Age</ion-label>
+          <ion-label  color="primary">Age*</ion-label>
           <ion-input type="number" formControlName="age"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Birth Place</ion-label>
+          <ion-label  color="primary">Birth Place*</ion-label>
           <ion-input type="text" formControlName="birthPlace"></ion-input>
         </ion-item>
         <br>
         <h2>Current Address</h2>
         <div formGroupName="currentAddress">
           <ion-item>
-            <ion-label  color="primary">House No/Street</ion-label>
+            <ion-label  color="primary">House No/Street*</ion-label>
             <ion-input type="text" formControlName="houseNumber"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Village/SITIO</ion-label>
+            <ion-label  color="primary">Village/SITIO*</ion-label>
             <ion-input type="text" formControlName="village"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Barangay</ion-label>
+            <ion-label  color="primary">Barangay*</ion-label>
             <ion-input type="text" formControlName="barangay"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Town/City</ion-label>
+            <ion-label  color="primary">Town/City*</ion-label>
             <ion-input type="text" formControlName="town"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Province</ion-label>
+            <ion-label  color="primary">Province*</ion-label>
             <ion-input type="text" formControlName="province"></ion-input>
           </ion-item>
         </div>
@@ -120,7 +120,7 @@
         <br>
         <h2>Other Information</h2>
         <ion-item>
-          <ion-label  color="primary">Highest Educational Attainment</ion-label>
+          <ion-label  color="primary">Highest Educational Attainment*</ion-label>
           <ion-input type="text" formControlName="highestEducationalAttainment"></ion-input>
         </ion-item>
         <ion-item>
@@ -132,7 +132,7 @@
           <ion-input type="text" formControlName="workAddress"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Relation to Victim</ion-label>
+          <ion-label  color="primary">Relation to Victim*</ion-label>
           <ion-input type="text" formControlName="relationToVictim"></ion-input>
         </ion-item>
         <ion-item>
@@ -152,7 +152,7 @@
           <ion-input type="text" formControlName="groupAffiliation"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">With Previous Record? (If yes, specify)</ion-label>
+          <ion-label  color="primary">With Previous Record? (If yes, specify)*</ion-label>
           <ion-input type="text" formControlName="previousRecord"></ion-input>
         </ion-item>
         <ion-item>
@@ -164,31 +164,31 @@
         <h2>Bio-Data</h2>
         <div formGroupName="bioData">
           <ion-item>
-            <ion-label  color="primary">Height</ion-label>
+            <ion-label  color="primary">Height*</ion-label>
             <ion-input type="text" formControlName="height"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Weight</ion-label>
+            <ion-label  color="primary">Weight*</ion-label>
             <ion-input type="text" formControlName="weight"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Eye Color</ion-label>
+            <ion-label  color="primary">Eye Color*</ion-label>
             <ion-input type="text" formControlName="eyeColor"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Eye Description</ion-label>
+            <ion-label  color="primary">Eye Description*</ion-label>
             <ion-input type="text" formControlName="eyeDescription"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Hair Color</ion-label>
+            <ion-label  color="primary">Hair Color*</ion-label>
             <ion-input type="text" formControlName="hairColor"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Hair Description</ion-label>
+            <ion-label  color="primary">Hair Description*</ion-label>
             <ion-input type="text" formControlName="hairDescription"  ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label  color="primary">Under Influence? [Yes/No]. If yes give details</ion-label>
+            <ion-label  color="primary">Under Influence? [Yes/No]. If yes give details*</ion-label>
             <ion-input type="text" formControlName="influence"  ></ion-input>
           </ion-item>
         </div>
@@ -215,7 +215,7 @@
         </div>
 
         <br>
-        <h2>Other Distinguishing Features</h2>
+        <h2>Other Distinguishing Features*</h2>
         <p>DESCRIBE IN DETAIL CLOTHES, VEHICLE, SUNGLASSES, WEAPON/S, SCARS, AND OTHER DATA OR ACTIVITY OF THE SUSPECT/S WHICH WERE OBSERVED BY THE
           REPORTING PERSON AND/OR WITNESS/ES TO IDENTIFY THE SUSPECT/S. THESE ARE IMPORTANT AND MAY BECOME EVIDENCE TO IDENTIFY, AND LINK TO THE CRIME, THE SUSPECT/S. USE
           ADDITIONAL SHEET/S IF NECESSARY</p>

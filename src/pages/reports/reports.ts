@@ -77,18 +77,19 @@ export class ReportsPage {
   search(ev: any) {
     let val = ev.target.value;
     if (val && val.trim() != '') {
-      this.reports = this.filteredReportData.filter((report) => {
+      this.reports = this.filteredReportData.filter( ( report ) => {
         return (
-          report.blotterNo > -1 ||
-          report.status.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          report.incidentType.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
-          report.incidentLocation.toLowerCase().indexOf(val.toLowerCase()) > -1
+          report.blotterNo.toString().indexOf(val.toLowerCase()) > -1 ||
+          report.status.toLowerCase().indexOf( val.toLowerCase() ) > -1 ||
+          report.incidentType.toLowerCase().indexOf( val.toLowerCase() ) > -1 ||
+          report.incidentLocation.toLowerCase().indexOf( val.toLowerCase() ) > -1
         );
       })
     } else {
       this.reports = this.filteredReportData;
     }
   }
+
 
   // (Button Action) Opens Modal to view data of one item
   viewDetails( data ) {  
@@ -126,6 +127,12 @@ export class ReportDetailsModal {
   update = false;
   published = false;
 
+  reportInfoForm: FormGroup;
+  reportTypeAForm: FormGroup;
+  reportTypeBForm: FormGroup;
+  reportTypeCForm: FormGroup;
+  reportTypeDForm: FormGroup;
+
   edit = false;
   new = true;
 
@@ -138,8 +145,10 @@ export class ReportDetailsModal {
     private reportsService: ReportsService,
     public modalCtrl: ModalController,
     private globals: Globals,
+    private formBuilder: FormBuilder,
   ) {
     this.new = this.navParams.get('new');
+    this.setForms();
     if ( this.new ) { 
       this.report = new Report();
       this.edit = true;
@@ -147,8 +156,293 @@ export class ReportDetailsModal {
       this.report = this.navParams.get( 'data' );
       this.published = this.report.status == 'published' ? true : false;
     }
+    this.setValues();
   }
 
+  setForms() {
+    this.reportInfoForm = this.formBuilder.group({
+      blotterNo: [ '', Validators.required ],
+      status: ['', Validators.required ],
+      incidentType: [ '', Validators.required ],
+      incidentLocation: [ '', Validators.required ],
+      incidentDateAndTime: [ '', Validators.required ],
+    });
+    this.reportTypeAForm = this.formBuilder.group({
+      name: this.formBuilder.group({
+        familyName: [ '', Validators.required ],
+        firstName: [ '', Validators.required ],
+        middleName: [ '' ],
+        qualifier: [ '' ],
+        nickName: [ '' ],
+      }),
+      citizenship: ['', Validators.required ],
+      sex: [ '', Validators.required ],
+      civilStatus: [ '', Validators.required ],
+      birthDate: ['', Validators.required ],
+      age: [ '', Validators.required ],
+      birthPlace: [ '', Validators.required ],
+      currentAddress: this.formBuilder.group({
+        houseNumber: [  '', Validators.required ],
+        village: [ '', Validators.required ],
+        barangay: [ '', Validators.required ],
+        town: ['', Validators.required ],
+        province: [  '', Validators.required ],
+      }),
+      otherAddress: this.formBuilder.group({
+        houseNumber: [ '' ],
+        village: [ '' ],
+        barangay: [ '' ],
+        town: ['' ],
+        province: [  '' ],
+      }),
+      highestEducationalAttainment: [  '', Validators.required ],
+      occupation: [ '' ],
+      idCardPresented: [  '', Validators.required ],
+      contactInfo: this.formBuilder.group({
+        emailAddress: [ '' ],
+        homePhone: [  '' ],
+        mobilePhone: [ '', Validators.required ],
+      }),
+    });
+    this.reportTypeBForm = this.formBuilder.group({
+      name: this.formBuilder.group({
+        familyName: ['', Validators.required ],
+        firstName: [ '', Validators.required ],
+        middleName: ['' ],
+        qualifier: [ '' ],
+        nickName: [ '' ],
+      }),
+      citizenship: ['', Validators.required ],
+      sex: [ '', Validators.required ],
+      civilStatus: [ '', Validators.required ],
+      birthDate: ['', Validators.required ],
+      age: [ '', Validators.required ],
+      birthPlace: [ '', Validators.required ],
+      currentAddress: this.formBuilder.group({
+        houseNumber: [ '', Validators.required ],
+        village: [ '', Validators.required ],
+        barangay: [ '', Validators.required ],
+        town: [ '', Validators.required ],
+        province: [ '', Validators.required ],
+      }),
+      otherAddress: this.formBuilder.group({
+        houseNumber: [ '' ],
+        village: [ '' ],
+        barangay: [ '' ],
+        town: [ '' ],
+        province: [ '' ],
+      }),
+      bioData: this.formBuilder.group({
+        height: [ '', Validators.required ],
+        weight: [ '', Validators.required ],
+        eyeColor: [ '', Validators.required ],
+        eyeDescription: [ '', Validators.required ],
+        hairColor: [ '', Validators.required ],
+        hairDescription: [ '', Validators.required ],
+        influence: [ '', Validators.required ],
+      }),
+      children: this.formBuilder.group({
+        guardianName: [ '' ],
+        guardianAddress: [ '' ],
+        homePhone: [ '' ],
+        mobilePhone: [ '' ],
+      }),
+      highestEducationalAttainment: [ '', Validators.required ],
+      occupation: [ '' ],
+      workAddress: [ '' ],
+      relationToVictim:  [ '', Validators.required],
+      emailAddress:  [ '' ],
+      govRank:  [ '' ],
+      unitAssignment: [ '' ],
+      groupAffiliation:  [ '' ],
+      previousRecord:  [ '', Validators.required],
+      recordStatus:  [ '' ],
+      otherDistinguishingFeatures: [ '', Validators.required],
+    });
+    this.reportTypeCForm = this.formBuilder.group({
+      name: this.formBuilder.group({
+        familyName: [ '' ],
+        firstName: [ ''],
+        middleName: [ '' ],
+        qualifier: [ '' ],
+        nickName: [ '' ],
+      }),
+      citizenship: [''],
+      sex: [ ''],
+      civilStatus: [ ''],
+      birthDate: [''],
+      age: [ ''],
+      birthPlace: [ ''],
+      currentAddress: this.formBuilder.group({
+        houseNumber: [  ''],
+        village: [ ''],
+        barangay: [ ''],
+        town: [''],
+        province: [  ''],
+      }),
+      otherAddress: this.formBuilder.group({
+        houseNumber: [ '' ],
+        village: [ '' ],
+        barangay: [ '' ],
+        town: ['' ],
+        province: [  '' ],
+      }),
+      highestEducationalAttainment: [  ''],
+      occupation: [ '' ],
+      idCardPresented: [  ''],
+      contactInfo: this.formBuilder.group({
+        emailAddress: [ '' ],
+        homePhone: [  '' ],
+        mobilePhone: [ ''],
+      }),
+    });
+    this.reportTypeDForm = this.formBuilder.group({
+      incidentNarrative: [ '', Validators.required ],
+    });
+  }
+
+  setValues() {
+    this.reportInfoForm.setValue({
+      blotterNo: this.report.blotterNo,
+      status: this.report.status,
+      incidentType: this.report.incidentType,
+      incidentLocation:  this.report.incidentLocation ,
+      incidentDateAndTime:  this.report.incidentDateAndTime ,
+    });
+    this.reportTypeAForm.setValue({
+      name: {
+        familyName: this.report.typeA.name.familyName,
+        firstName: this.report.typeA.name.firstName,
+        middleName: this.report.typeA.name.middleName ,
+        qualifier: this.report.typeA.name.qualifier ,
+        nickName: this.report.typeA.name.nickName ,
+      },
+      citizenship: this.report.typeA.citizenship,
+      sex: this.report.typeA.sex,
+      civilStatus: this.report.typeA.civilStatus,
+      birthDate: this.report.typeA.birthDate,
+      age: this.report.typeA.age,
+      birthPlace: this.report.typeA.birthPlace,
+      currentAddress:{
+        houseNumber: this.report.typeA.currentAddress.houseNumber,
+        village: this.report.typeA.currentAddress.village,
+        barangay: this.report.typeA.currentAddress.barangay,
+        town: this.report.typeA.currentAddress.town,
+        province: this.report.typeA.currentAddress.province,
+      },
+      otherAddress: {
+        houseNumber: this.report.typeA.currentAddress.houseNumber ,
+        village: this.report.typeA.currentAddress.village ,
+        barangay: this.report.typeA.currentAddress.barangay ,
+        town: this.report.typeA.currentAddress.town ,
+        province: this.report.typeA.currentAddress.province ,
+      },
+      highestEducationalAttainment: this.report.typeA.highestEducationalAttainment,
+      occupation: this.report.typeA.occupation ,
+      idCardPresented: this.report.typeA.idCardPresented,
+      contactInfo: {
+        emailAddress: this.report.typeA.contactInfo.emailAddress ,
+        homePhone: this.report.typeA.contactInfo.homePhone ,
+        mobilePhone: this.report.typeA.contactInfo.mobilePhone,
+      },
+    });
+    this.reportTypeBForm.setValue({
+      name: {
+        familyName: this.report.typeB.name.familyName,
+        firstName: this.report.typeB.name.firstName,
+        middleName: this.report.typeB.name.middleName,
+        qualifier: this.report.typeB.name.qualifier,
+        nickName: this.report.typeB.name.nickName,
+      },
+      citizenship: this.report.typeB.citizenship,
+      sex: this.report.typeB.sex,
+      civilStatus: this.report.typeB.civilStatus,
+      birthDate: this.report.typeB.birthDate,
+      age: this.report.typeB.age,
+      birthPlace: this.report.typeB.birthPlace,
+      currentAddress: {
+        houseNumber: this.report.typeB.currentAddress.houseNumber,
+        village: this.report.typeB.currentAddress.village,
+        barangay: this.report.typeB.currentAddress.barangay,
+        town: this.report.typeB.currentAddress.town,
+        province: this.report.typeB.currentAddress.province,
+      },
+      otherAddress: {
+        houseNumber: this.report.typeB.currentAddress.houseNumber,
+        village: this.report.typeB.currentAddress.village,
+        barangay: this.report.typeB.currentAddress.barangay,
+        town: this.report.typeB.currentAddress.town,
+        province: this.report.typeB.currentAddress.province,
+      },
+      bioData: {
+        height: this.report.typeB.bioData.height,
+        weight: this.report.typeB.bioData.weight,
+        eyeColor: this.report.typeB.bioData.eyeColor,
+        eyeDescription: this.report.typeB.bioData.eyeDescription,
+        hairColor: this.report.typeB.bioData.hairColor,
+        hairDescription: this.report.typeB.bioData.hairDescription,
+        influence: this.report.typeB.bioData.influence,
+      },
+      children: {
+        guardianName: this.report.typeB.children.guardianName ,
+        guardianAddress: this.report.typeB.children.guardianAddress,
+        homePhone: this.report.typeB.children.homePhone,
+        mobilePhone: this.report.typeB.children.mobilePhone,
+      },
+      highestEducationalAttainment: this.report.typeB.highestEducationalAttainment,
+      occupation: this.report.typeB.occupation,
+      workAddress: this.report.typeB.workAddress,
+      relationToVictim:  this.report.typeB.relationToVictim,
+      emailAddress:  this.report.typeB.emailAddress,
+      govRank:  this.report.typeB.govRank,
+      unitAssignment: this.report.typeB.unitAssignment,
+      groupAffiliation:  this.report.typeB.groupAffiliation,
+      previousRecord:  this.report.typeB.previousRecord,
+      recordStatus:  this.report.typeB.recordStatus,
+      otherDistinguishingFeatures: this.report.typeB.otherDistinguishingFeatures,
+    });
+    this.reportTypeCForm.setValue({
+      name: {
+        familyName: this.report.typeC.name.familyName,
+        firstName: this.report.typeC.name.firstName,
+        middleName: this.report.typeC.name.middleName ,
+        qualifier: this.report.typeC.name.qualifier ,
+        nickName: this.report.typeC.name.nickName ,
+      },
+      citizenship: this.report.typeC.citizenship,
+      sex: this.report.typeC.sex,
+      civilStatus: this.report.typeC.civilStatus,
+      birthDate: this.report.typeC.birthDate,
+      age: this.report.typeC.age,
+      birthPlace: this.report.typeC.birthPlace,
+      currentAddress:{
+        houseNumber: this.report.typeC.currentAddress.houseNumber,
+        village: this.report.typeC.currentAddress.village,
+        barangay: this.report.typeC.currentAddress.barangay,
+        town: this.report.typeC.currentAddress.town,
+        province: this.report.typeC.currentAddress.province,
+      },
+      otherAddress: {
+        houseNumber: this.report.typeC.currentAddress.houseNumber ,
+        village: this.report.typeC.currentAddress.village ,
+        barangay: this.report.typeC.currentAddress.barangay ,
+        town: this.report.typeC.currentAddress.town ,
+        province: this.report.typeC.currentAddress.province ,
+      },
+      highestEducationalAttainment: this.report.typeC.highestEducationalAttainment,
+      occupation: this.report.typeC.occupation ,
+      idCardPresented: this.report.typeC.idCardPresented,
+      contactInfo: {
+        emailAddress: this.report.typeC.contactInfo.emailAddress ,
+        homePhone: this.report.typeC.contactInfo.homePhone ,
+        mobilePhone: this.report.typeC.contactInfo.mobilePhone,
+      },
+    });
+    this.reportTypeDForm.setValue({
+      incidentNarrative: this.report.typeD.incidentNarrative,
+    });
+  }
+  
   ionViewWillEnter(){
     this.valid = true;
   }
@@ -240,7 +534,7 @@ export class ReportDetailsModal {
   }
 
   editInfo() {
-    let modal = this.modalCtrl.create( ReportInfoModal, { data: this.report });
+    let modal = this.modalCtrl.create( ReportInfoModal, { form: this.reportInfoForm });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data;
@@ -254,9 +548,8 @@ export class ReportDetailsModal {
     });
     modal.present();
   }
-
   editTypeA() {
-    let modal = this.modalCtrl.create( ReportTypeAModal, {data: this.report.typeA});
+    let modal = this.modalCtrl.create( ReportTypeAModal, { form: this.reportTypeAForm });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data;
@@ -266,9 +559,8 @@ export class ReportDetailsModal {
     });
     modal.present();
   }
-
   editTypeB() {
-    let modal = this.modalCtrl.create( ReportTypeBModal, {data: this.report.typeB});
+    let modal = this.modalCtrl.create( ReportTypeBModal, { form: this.reportTypeBForm });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
@@ -278,9 +570,8 @@ export class ReportDetailsModal {
     });
     modal.present();
   }
-
   editTypeC() {
-    let modal = this.modalCtrl.create( ReportTypeCModal, {data: this.report.typeC});
+    let modal = this.modalCtrl.create( ReportTypeCModal, { form: this.reportTypeCForm });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
@@ -290,9 +581,8 @@ export class ReportDetailsModal {
     });
     modal.present();
   }
-
   editTypeD() {
-    let modal = this.modalCtrl.create( ReportTypeDModal, {data: this.report.typeD});
+    let modal = this.modalCtrl.create( ReportTypeDModal, {form: this.reportTypeDForm });
     modal.onDidDismiss( res => {
       if ( typeof res != 'undefined' ) {
         let data = res.data
@@ -309,32 +599,16 @@ export class ReportDetailsModal {
   templateUrl: './templates/report-modals/report-info-modal.html'
 })
 export class ReportInfoModal {
-  validations_form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder,
     private params: NavParams,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
-    let reportData = this.params.get('data');
-    if ( typeof reportData != 'undefined' ) {
-      this.setFields( true, reportData );
-    } else {
-      this.setFields()
-    }
-  }
-
-  setFields( update = false, data? ) {
-    this.validations_form = this.formBuilder.group({
-      blotterNo: [ update ? data.blotterNo : '', Validators.required ],
-      status: ['', Validators.required ],
-      incidentType: [ update ? data.incidentType : '', Validators.required ],
-      incidentLocation: [ update ? data.incidentLocation : '', Validators.required ],
-      incidentDateAndTime: [  update ? data.incidentDateAndTime : '', Validators.required ],
-    });
+    this.form = <FormGroup> this.params.get('form');
   }
 
   dismiss() {
@@ -354,62 +628,16 @@ export class ReportInfoModal {
   templateUrl: './templates/report-modals/report-type-a-modal.html'
 })
 export class ReportTypeAModal {
-  validations_form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder,
     private params: NavParams,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
-    let reportData =  this.params.get('data') 
-    if ( typeof reportData != 'undefined' ) {
-      this.setFields( true, reportData );
-    } else {
-      this.setFields()
-    }
-  }
-
-  setFields( update = false, data? ) {
-    this.validations_form = this.formBuilder.group({
-      name: this.formBuilder.group({
-        familyName: [ update ? data.name.familyName : '', Validators.required ],
-        firstName: [ update ? data.name.firstName : '', Validators.required ],
-        middleName: [ update ? data.name.middleName : '' ],
-        qualifier: [ update ? data.name.qualifier : '' ],
-        nickName: [ update ? data.name.nickName : '' ],
-      }),
-      citizenship: [ update ? data.citizenship : '', Validators.required ],
-      sex: [ update ? data.sex : '', Validators.required ],
-      civilStatus: [ update ? data.civilStatus : '', Validators.required ],
-      birthDate: [ update ? data.birthDate : '', Validators.required ],
-      age: [ update ? data.age : '', Validators.required ],
-      birthPlace: [ update ? data.birthPlace : '', Validators.required ],
-      currentAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '', Validators.required ],
-        village: [ update ? data.currentAddress.village : '', Validators.required ],
-        barangay: [ update ? data.currentAddress.barangay : '', Validators.required ],
-        town: [ update ? data.currentAddress.town : '', Validators.required ],
-        province: [ update ? data.currentAddress.province : '', Validators.required ],
-      }),
-      otherAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '' ],
-        village: [ update ? data.currentAddress.village : '' ],
-        barangay: [ update ? data.currentAddress.barangay : '' ],
-        town: [ update ? data.currentAddress.town : '' ],
-        province: [ update ? data.currentAddress.province : '' ],
-      }),
-      highestEducationalAttainment: [ update ? data.highestEducationalAttainment : '', Validators.required ],
-      occupation: [ update ? data.occupation : '' ],
-      idCardPresented: [ update ? data.idCardPresented : '', Validators.required ],
-      contactInfo: this.formBuilder.group({
-        emailAddress: [ update ? data.contactInfo.emailAddress : '' ],
-        homePhone: [ update ? data.contactInfo.homePhone : '' ],
-        mobilePhone: [ update ? data.contactInfo.mobilePhone : '', Validators.required ],
-      }),
-    });
+    this.form = <FormGroup> this.params.get('form');
   }
 
   dismiss() {
@@ -424,85 +652,20 @@ export class ReportTypeAModal {
     this.viewCtrl.dismiss({data: value});
   }
 } // End of Type A Modal
-
 @Component({
   templateUrl: './templates/report-modals/report-type-b-modal.html'
 })
 export class ReportTypeBModal {
-  validations_form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder,
     private params: NavParams,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
-    let reportData =  this.params.get('data') 
-    if ( typeof reportData != 'undefined' ) {
-      this.setFields( true, reportData );
-    } else {
-      this.setFields()
-    }
-  }
-
-  setFields( update = false, data? ) {
-    this.validations_form = this.formBuilder.group({
-      name: this.formBuilder.group({
-        familyName: [ update ? data.name.familyName : '', Validators.required ],
-        firstName: [ update ? data.name.firstName : '', Validators.required ],
-        middleName: [ update ? data.name.middleName : '' ],
-        qualifier: [ update ? data.name.qualifier : '' ],
-        nickName: [ update ? data.name.nickName : '' ],
-      }),
-      citizenship: [ update ? data.citizenship : '', Validators.required ],
-      sex: [ update ? data.sex : '', Validators.required ],
-      civilStatus: [ update ? data.civilStatus : '', Validators.required ],
-      birthDate: [ update ? data.birthDate : '', Validators.required ],
-      age: [ update ? data.age : '', Validators.required ],
-      birthPlace: [ update ? data.birthPlace : '', Validators.required ],
-      currentAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '', Validators.required ],
-        village: [ update ? data.currentAddress.village : '', Validators.required ],
-        barangay: [ update ? data.currentAddress.barangay : '', Validators.required ],
-        town: [ update ? data.currentAddress.town : '', Validators.required ],
-        province: [ update ? data.currentAddress.province : '', Validators.required ],
-      }),
-      otherAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '' ],
-        village: [ update ? data.currentAddress.village : '' ],
-        barangay: [ update ? data.currentAddress.barangay : '' ],
-        town: [ update ? data.currentAddress.town : '' ],
-        province: [ update ? data.currentAddress.province : '' ],
-      }),
-      bioData: this.formBuilder.group({
-        height: [ update ? data.bioData.height : '', Validators.required ],
-        weight: [ update ? data.bioData.weight : '', Validators.required ],
-        eyeColor: [ update ? data.bioData.eyeColor : '', Validators.required ],
-        eyeDescription: [ update ? data.bioData.eyeDescription : '', Validators.required ],
-        hairColor: [ update ? data.bioData.hairColor : '', Validators.required ],
-        hairDescription: [ update ? data.bioData.hairDescription : '', Validators.required ],
-        influence: [ update ? data.bioData.influence : '', Validators.required ],
-      }),
-      children: this.formBuilder.group({
-        guardianName: [ update ? data.children.guardianName  : '' ],
-        guardianAddress: [ update ? data.children.guardianAddress : '' ],
-        homePhone: [ update ? data.children.homePhone : '' ],
-        mobilePhone: [ update ? data.children.mobilePhone : '' ],
-      }),
-      highestEducationalAttainment: [ update ? data.highestEducationalAttainment : '', Validators.required ],
-      occupation: [ update ? data.occupation : '' ],
-      workAddress: [ update ? data.workAddress : '' ],
-      relationToVictim:  [ update ? data.relationToVictim : '', Validators.required],
-      emailAddress:  [ update ? data.emailAddress : '' ],
-      govRank:  [ update ? data.govRank : '' ],
-      unitAssignment: [ update ? data.unitAssignment : '' ],
-      groupAffiliation:  [ update ? data.groupAffiliation : '' ],
-      previousRecord:  [ update ? data.previousRecord : '', Validators.required],
-      recordStatus:  [ update ? data.recordStatus : '' ],
-      otherDistinguishingFeatures: [ update ? data.otherDistinguishingFeatures : ''],
-    });
+    this.form = <FormGroup> this.params.get('form');
   }
 
   dismiss() {
@@ -522,63 +685,16 @@ export class ReportTypeBModal {
   templateUrl: './templates/report-modals/report-type-a-modal.html'
 })
 export class ReportTypeCModal {
-  validations_form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder,
     private params: NavParams,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
-    let reportData =  this.params.get('data') 
-    if ( typeof reportData != 'undefined' ) {
-      this.setFields( true, reportData );
-    } else {
-      this.setFields()
-
-    }
-  }
-
-  setFields( update = false, data? ) {
-    this.validations_form = this.formBuilder.group({
-      name: this.formBuilder.group({
-        familyName: [ update ? data.name.familyName : '' ],
-        firstName: [ update ? data.name.firstName : '' ],
-        middleName: [ update ? data.name.middleName : '' ],
-        qualifier: [ update ? data.name.qualifier : '' ],
-        nickName: [ update ? data.name.nickName : '' ],
-      }),
-      citizenship: [ update ? data.citizenship : '' ],
-      sex: [ update ? data.sex : '' ],
-      civilStatus: [ update ? data.civilStatus : '' ],
-      birthDate: [ update ? data.birthDate : '' ],
-      age: [ update ? data.age : '' ],
-      birthPlace: [ update ? data.birthPlace : '' ],
-      currentAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '' ],
-        village: [ update ? data.currentAddress.village : '' ],
-        barangay: [ update ? data.currentAddress.barangay : '' ],
-        town: [ update ? data.currentAddress.town : '' ],
-        province: [ update ? data.currentAddress.province : '' ],
-      }),
-      otherAddress: this.formBuilder.group({
-        houseNumber: [ update ? data.currentAddress.houseNumber : '' ],
-        village: [ update ? data.currentAddress.village : '' ],
-        barangay: [ update ? data.currentAddress.barangay : '' ],
-        town: [ update ? data.currentAddress.town : '' ],
-        province: [ update ? data.currentAddress.province : '' ],
-      }),
-      highestEducationalAttainment: [ update ? data.highestEducationalAttainment : '' ],
-      occupation: [ update ? data.occupation : '' ],
-      idCardPresented: [ update ? data.idCardPresented : '' ],
-      contactInfo: this.formBuilder.group({
-        emailAddress: [ update ? data.contactInfo.emailAddress : '' ],
-        homePhone: [ update ? data.contactInfo.homePhone : '' ],
-        mobilePhone: [ update ? data.contactInfo.mobilePhone : '' ],
-      }),
-    });
+    this.form = <FormGroup> this.params.get('form');
   }
 
   dismiss() {
@@ -598,28 +714,16 @@ export class ReportTypeCModal {
   templateUrl: './templates/report-modals/report-type-d-modal.html'
 })
 export class ReportTypeDModal {
-  validations_form: FormGroup;
+  form: FormGroup;
 
   constructor(
     private viewCtrl: ViewController,
-    private formBuilder: FormBuilder,
     private params: NavParams,
     private globals: Globals,
   ) {}
 
   ionViewWillLoad(){
-    let reportData =  this.params.get('data') 
-    if ( typeof reportData != 'undefined' ) {
-      this.setFields( true, reportData );
-    } else {
-      this.setFields()
-    }
-  }
-
-  setFields( update = false, data? ) {
-    this.validations_form = this.formBuilder.group({
-      incidentNarrative: [ update ? data.incidentNarrative : '', Validators.required ],
-    });
+    this.form = <FormGroup> this.params.get('form');
   }
 
   dismiss() {

@@ -35,6 +35,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environment/environment';
 import { Globals } from '../pages/services/globals';
 
+import { FormControlValidPromptComponent } from '../components/form-control-valid-prompt/form-control-valid-prompt.component';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -45,6 +48,7 @@ import { Globals } from '../pages/services/globals';
     DataPage,
     SideMenuPage,
     EditUserModal, UserInfoPage,
+    FormControlValidPromptComponent
   ],
   imports: [
     BrowserModule,

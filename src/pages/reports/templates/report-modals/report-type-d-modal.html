@@ -15,11 +15,11 @@
 </ion-header>
   
 <ion-content padding>
-  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+  <form  [formGroup]="form" (ngSubmit)="onSubmit(form.value)"  #documentEditForm="ngForm">    
       <ion-card>
         <ion-card-content>
           <ion-card-title>
-            Type D - Incident Narrative
+            Type D - Incident Narrative*
           </ion-card-title>
             <br>
             <p>ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT, ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY AND HOW OF REPORTING. (USE ADDITIONAL SHEET/S IF NECESSARY</p>

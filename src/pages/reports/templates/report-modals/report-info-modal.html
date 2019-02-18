@@ -16,33 +16,33 @@
 </ion-header>
   
 <ion-content padding>
-  <form  [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)"  #documentEditForm="ngForm">    
+  <form  [formGroup]="form" (ngSubmit)="onSubmit(form.value)"  #documentEditForm="ngForm">    
     <ion-card>
       <ion-card-content>
         <ion-card-title>
           Report Information
         </ion-card-title>
         <ion-item>
-          <ion-label  color="primary">Blotter #</ion-label>
-          <ion-input type="number" formControlName="blotterNo"  ></ion-input>
+          <ion-label  color="primary">Blotter #*</ion-label>
+          <ion-input type="number" formControlName="blotterNo" ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Incident Type</ion-label>
+          <ion-label  color="primary">Incident Type*</ion-label>
           <ion-input type="text" formControlName="incidentType"  ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Incident Location</ion-label>
+          <ion-label  color="primary">Incident Location*</ion-label>
           <ion-input type="text" formControlName="incidentLocation"  ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Incident Status</ion-label>
+          <ion-label>Incident Status*</ion-label>
           <ion-select formControlName="status" submitText="Select" cancelText="Cancel" required>
             <ion-option value="open">Open</ion-option>
             <ion-option value="closed">Closed</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label>Incident Date & Time</ion-label>
+          <ion-label>Incident Date & Time*</ion-label>
           <ion-datetime displayFormat="MM/DD/YYYY HH:mm" formControlName="incidentDateAndTime" ></ion-datetime>
         </ion-item>
       </ion-card-content>
