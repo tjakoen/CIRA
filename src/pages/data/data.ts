@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { FirebaseService } from '../services/firebase.service';
+import { PostsService } from '../posts/posts.service';
 
 @Component({
     selector: 'page-data',
@@ -9,7 +10,6 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class DataPage {
     @ViewChild('barCanvas') barCanvas;
-    @ViewChild('doughnutCanvas') doughnutCanvas;
     @ViewChild('lineCanvas') lineCanvas;
 
     barChart: any;
@@ -27,24 +27,18 @@ export class DataPage {
             missingProperties: 0,
         },
     };
-
+    
+    monthCount = [
+        0,0,0,0,0,0,0,0,0,0,0,0
+    ]
     constructor(
         public navCtrl: NavController, 
-        private firebaseService: FirebaseService,
+        private postsService: PostsService,
         public navParams: NavParams,
-    ) {} 
+    ) {
+    } 
 
-    getData(){
-        this.firebaseService.getData()
-        .then(data => {
-            if (data) {
-            data.map( dataMap => {
-                let allData = dataMap.payload.doc.data();
-                this.postData = allData;
-            });  		
-            }
-        })
-    }
+    
 
     postsSum( filter='all' ) {
         let sum = 0;
@@ -78,67 +72,83 @@ export class DataPage {
     }
 
     ionViewDidLoad() {
-        this.getData();
-        this.barChart = new Chart(this.barCanvas.nativeElement, {
+        this.postsService.getPosts( 'all' );
+        this.postsService.collection.snapshotChanges().subscribe( data => {
+           if (data) {
+            data.map( dataMap => {
+                let post = dataMap.payload.doc.data();
+                if ( post.status.toLowerCase() == 'solved') {
+                    switch( post.type.toLowerCase() ) {
+                        case 'wanted person':
+                            this.postData.solved.wantedPersons++;                    
+                            break;
+                        case 'missing property':
+                            this.postData.solved.missingProperties++;
+                            break;
+                        case 'missing person':
+                            this.postData.solved.missingPersons++;
+                            break;
+                    }
+                } else if ( post.status.toLowerCase() == 'unsolved') {
+                    switch( post.type.toLowerCase() ) {
+                        case 'wanted person':
+                            this.postData.unsolved.wantedPersons++;                    
+                            break;
+                        case 'missing property':
+                            this.postData.unsolved.missingProperties++;
+                            break;
+                        case 'missing person':
+                            this.postData.unsolved.missingPersons++;
+                            break;
+                    }
+                }
+                
+                const year = new Date(post.dateTime).getFullYear();
+                const month = new Date(post.dateTime).getMonth();
+                if ( year == 2019 ) {
+                    this.monthCount[ month ]++;
+                }
+            }); 	
+            this.setCharts();
+        }
+    });
 
-            type: 'pie',
-            data: {
-                labels: ["Missing Persons", "Mssing Property", "Wanted Persons"],
-                datasets: [{
-                    label: 'Post Types',
-                    data: [12, 19, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            }
+}
+
+    setCharts() {
+        this.barChart = new Chart(this.barCanvas.nativeElement, {
+        type: 'pie',
+        data: {
+            labels: ["Missing Persons", "Mssing Property", "Wanted Persons"],
+            datasets: [{
+                label: 'Post Types',
+                data: [
+                    this.postData.solved.missingPersons + this.postData.unsolved.missingPersons, 
+                    this.postData.solved.missingProperties +  this.postData.unsolved.missingProperties, 
+                    this.postData.solved.wantedPersons +  this.postData.unsolved.wantedPersons,
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
+            }]
+        }
         });
 
-        // this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-
-        //     type: 'doughnut',
-        //     data: {
-        //         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        //         datasets: [{
-        //             label: '# of Votes',
-        //             data: [12, 19, 3, 5, 2, 3],
-        //             backgroundColor: [
-        //                 'rgba(255, 99, 132, 0.2)',
-        //                 'rgba(54, 162, 235, 0.2)',
-        //                 'rgba(255, 206, 86, 0.2)',
-        //                 'rgba(75, 192, 192, 0.2)',
-        //                 'rgba(153, 102, 255, 0.2)',
-        //                 'rgba(255, 159, 64, 0.2)'
-        //             ],
-        //             hoverBackgroundColor: [
-        //                 "#FF6384",
-        //                 "#36A2EB",
-        //                 "#FFCE56",
-        //                 "#FF6384",
-        //                 "#36A2EB",
-        //                 "#FFCE56"
-        //             ]
-        //         }]
-        //     }
-
-        // });
-
         this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 datasets: [
                     {
-                        label: "My First dataset",
+                        label: "Number of Incidents by Month",
                         fill: false,
                         lineTension: 0.1,
                         backgroundColor: "rgba(75,192,192,0.4)",
@@ -156,14 +166,60 @@ export class DataPage {
                         pointHoverBorderWidth: 2,
                         pointRadius: 1,
                         pointHitRadius: 10,
-                        data: [65, 59, 80, 81, 56, 55, 40],
+                        data: [{
+                            x: "January",
+                            y: this.monthCount[0],
+                        },
+                        {
+                            x: "February",
+                            y: this.monthCount[1],
+                        },
+                        {
+                            x: "March",
+                            y: this.monthCount[2],
+                        },
+                        {
+                            x: "April",
+                            y: this.monthCount[3],
+                        },
+                        {
+                            x: "May",
+                            y: this.monthCount[4],
+                        },
+                        {
+                            x: "June",
+                            y: this.monthCount[5],
+                        },
+                        {
+                            x: "July",
+                            y: this.monthCount[6],
+                        },
+                        {
+                            x: "August",
+                            y: this.monthCount[7],
+                        },
+                        {
+                            x: "September",
+                            y: this.monthCount[8],
+                        },
+                        {
+                            x: "October",
+                            y: this.monthCount[9],
+                        },
+                        {
+                            x: "November",
+                            y: this.monthCount[10],
+                        },
+                        {
+                            x: "December",
+                            y: this.monthCount[11],
+                        }
+                        ],
                         spanGaps: false,
                     }
                 ]
             }
-
         });
-
-}
+    }
 
 }

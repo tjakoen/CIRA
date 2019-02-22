@@ -13,16 +13,6 @@ export class FirebaseService {
     return firebase.auth().currentUser;
   }
 
-  getData() {
-    return new Promise<any>((resolve, reject) => {
-      let query = this.afs.collection('data');
-      this.snapshotChangesSubscription =  query.snapshotChanges()
-      .subscribe(snapshots => {
-        resolve(snapshots);
-      })
-    });
-  }
-
 
   encodeImageUri( imageUri, callback ) {
     var c = document.createElement('canvas');

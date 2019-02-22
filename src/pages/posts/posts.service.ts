@@ -4,8 +4,9 @@ import { Post } from './post.model';
 
 @Injectable()
 export class PostsService {
-    private afs;
-    private snapshotChangesSubscription: any;
+  private afs;
+  private snapshotChangesSubscription: any;
+  collection: any;
 
   constructor(
       public firebaseService: FirebaseService,
@@ -16,8 +17,8 @@ export class PostsService {
   // TODO: Dynamic database
   getPosts( filter ){
     return new Promise<any>((resolve, reject) => {
-      let query = filter == 'all' ? this.afs.collection('posts') : this.afs.collection('posts', ref => ref.where('type', '==', filter))
-      this.snapshotChangesSubscription =  query.snapshotChanges()
+      this.collection = filter == 'all' ? this.afs.collection('posts') : this.afs.collection('posts', ref => ref.where('type', '==', filter))
+      this.snapshotChangesSubscription =  this.collection.snapshotChanges()
       .subscribe(snapshots => {
         resolve(snapshots);
       })

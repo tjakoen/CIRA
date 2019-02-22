@@ -24,8 +24,6 @@ export class ReportsService {
       });
     }
 
-    
-
     createReport( value:Report  ){
       return new Promise<any>((resolve, reject) => {
         value.createdOn = new Date();
