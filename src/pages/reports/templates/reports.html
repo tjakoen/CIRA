@@ -38,7 +38,7 @@
           <p>Incident Date & Time: {{report.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm' }}</p>
           <p>Incident Type: {{report.incidentType}}</p>
           <p>Incident Location: {{report.incidentLocation}}</p>
-          <p>Incident Status: {{report.status}}</p>
+          <p>Incident Status: {{report.status | uppercase }}</p>
           <p>Victim Name: {{report.typeA.name.qualifier}} {{report.typeA.name.firstName}} {{report.typeA.name.middleName}} {{report.typeA.name.familyName}}</p>
           <p>Suspect Name: {{report.typeB.name.qualifier}} {{report.typeB.name.firstName}} {{report.typeB.name.middleName}} {{report.typeB.name.familyName}}</p>
           <button ion-button clear item-end>Details</button>

@@ -49,8 +49,11 @@
           <ion-input type="text" formControlName="citizenship"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label  color="primary">Sex*</ion-label>
-          <ion-input type="text" formControlName="sex"></ion-input>
+          <ion-label>Sex*</ion-label>
+          <ion-select formControlName="sex" submitText="Select" cancelText="Cancel" required>
+            <ion-option value="Male">Male</ion-option>
+            <ion-option value="Female">Female</ion-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label  color="primary">Civil Status*</ion-label>

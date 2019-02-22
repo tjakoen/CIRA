@@ -41,7 +41,6 @@
         <p>Incident Date & Time: {{(report?.incidentDateAndTime | date: 'dd/MM/yyyy HH:mm') || invalidate() }}</p>
         <p>Incident Status: {{ (report?.status | uppercase) || invalidate() }}</p>
         <p>Created On: {{ report?.createdOn | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
-        <p>Updated On: {{ report?.updatedOn.toDate() | date: 'dd/MM/yyyy HH:mm' || "n/a" }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -236,6 +235,6 @@
 
 
 <ion-footer [hidden]="!edit">
-  <button class="form-action-button" ion-button block (click)="submit( true )" [hidden]="published">Save Draft</button>
-  <button class="form-action-button" ion-button block (click)="submit( false )" [disabled]="!reportTypeAForm.valid || !reportTypeAForm.valid || !reportTypeBForm.valid || !reportTypeCForm.valid || !reportTypeDForm.valid">Publish</button>
+  <button class="form-action-button" ion-button block (click)="submit( true )" [hidden]="published"  [disabled]="!reportInfoForm.valid">Save Draft</button>
+  <button class="form-action-button" ion-button block (click)="submit( false )" [disabled]="!reportInfoForm.valid || !reportTypeAForm.valid || !reportTypeAForm.valid || !reportTypeBForm.valid || !reportTypeCForm.valid || !reportTypeDForm.valid">Publish</button>
 </ion-footer>

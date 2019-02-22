@@ -154,7 +154,8 @@ export class ReportDetailsModal {
       this.edit = true;
     } else {
       this.report = this.navParams.get( 'data' );
-      this.published = this.report.status == 'published' ? true : false;
+      console.log( this.report );
+      this.published = this.report.publishStatus.toLowerCase() == 'published' ? true : false;
     }
     this.setValues();
   }

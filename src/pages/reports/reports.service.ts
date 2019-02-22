@@ -6,6 +6,7 @@ import { Report } from './report.model';
 export class ReportsService {
     private afs;
     private snapshotChangesSubscription: any;
+    collection: any;
 
   constructor(
       public firebaseService: FirebaseService,
@@ -15,18 +16,19 @@ export class ReportsService {
   
     getReports(){
       return new Promise<any>((resolve, reject) => {
-        let query = this.afs.collection('reports',  ref => ref.where('userId', '==', this.firebaseService.getCurrentUser().uid)) ;
-        this.snapshotChangesSubscription =  query.snapshotChanges()
-        .subscribe(snapshots => {
+        this.collection = this.afs.collection('reports',  ref => ref.where('userId', '==', this.firebaseService.getCurrentUser().uid)) ;
+        this.snapshotChangesSubscription =  this.collection.snapshotChanges()
+        .subscribe( snapshots => {
           resolve(snapshots);
         })
       });
     }
 
+    
+
     createReport( value:Report  ){
       return new Promise<any>((resolve, reject) => {
         value.createdOn = new Date();
-        value.updatedOn = new Date();
         value.userId = this.firebaseService.getCurrentUser().uid;
         this.afs.collection('reports').add( JSON.parse(JSON.stringify( value )) )
         .then(
@@ -38,7 +40,6 @@ export class ReportsService {
 
     updateReport( value:Report ) {
       return new Promise<any>((resolve, reject) => {
-        value.updatedOn = new Date();
         this.afs.collection( 'reports' ).doc( value.documentId ).update( value ) 
         .then(() => {
           this.afs.collection('reports').doc( value.documentId ).valueChanges().subscribe(res => {

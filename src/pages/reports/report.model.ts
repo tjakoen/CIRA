@@ -152,8 +152,7 @@ export class Report {
     incidentLocation: string;
     incidentDateAndTime: string;
     documentId: string;
-    createdOn: any;
-    updatedOn: any;
+    createdOn: Date;
     userId: string;
     typeA: {
         name: {
