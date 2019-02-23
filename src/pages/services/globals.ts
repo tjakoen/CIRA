@@ -3,7 +3,7 @@ import { ToastController, LoadingController, normalizeURL, AlertController } fro
 import { ImagePicker } from '@ionic-native/image-picker';
 import { FirebaseService } from './firebase.service';
 // import { LocalNotifications } from '@ionic-native/local-notifications';
-
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Injectable()
 export class Globals {
@@ -15,6 +15,7 @@ export class Globals {
     private imagePicker: ImagePicker,
     private firebaseService: FirebaseService,
     private alertCtrl: AlertController,
+    private camera: Camera,
     // private localNotifications:LocalNotifications,
   ){}
 
@@ -61,40 +62,37 @@ export class Globals {
 
   uploadImage(){
     return new Promise<any>((resolve, reject) => {
-      this.imagePicker.hasReadPermission()
-      .then((result) => {
-        if(result == false){
-          // no callbacks required as this opens a popup which returns async
-          this.imagePicker.requestReadPermission();
-        }
-        else if(result == true){
-          this.imagePicker.getPictures({
-            maximumImagesCount: 1
-          }).then(
-            (results) => {
-              this.showToast( 'Here');
-              for (var i = 0; i < results.length; i++) {
-                let image = normalizeURL(results[i])
-                let randomId = Math.random().toString(36).substr(2, 5);
-                //uploads img to firebase storage
+      
+      const options: CameraOptions = {
+        quality: 100,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        encodingType: this.camera.EncodingType.JPEG,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        saveToPhotoAlbum: false,
+      }
 
-                this.showToast( 'Here 2');
-                this.firebaseService.uploadImage(image, randomId)
-                  .then(photoURL => {
-                    resolve({ image:photoURL })
-                });
-              }
-            }, (err) => {
-              console.log(err);
-              this.showToast( 'Here 3');
-              reject();
-            }
-          );
-        }
-      }, (err) => {
-        console.log(err);
-        reject();
-      });
+      this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+
+          // let base64Image = 'data:image/jpeg;base64,' + imageData;
+          // let image = normalizeURL(base64Image);
+        console.log(imageData);
+          let image = normalizeURL(imageData);
+          let randomId = Math.random().toString(36).substr(2, 5);
+          //uploads img to firebase storage
+          this.showToast( 'Photo Uploading');
+          this.firebaseService.uploadImage(image, randomId)
+            .then(photoURL => {
+              resolve({ image:photoURL })
+          }, (err) => {
+            console.log(err);
+            reject();
+          });
+        }, (err) => {
+          console.log(err);
+          reject();
+        });
     })
   }
 
@@ -105,7 +103,7 @@ export class Globals {
   //     text: 'You have drafts waiting',
   //     trigger: { 
   //       firstAt: new Date(),
-  //       every: { hour: 12, minute: 0} 
+  //       every: { hour: 4, minute: 0} 
   //     }
   //   };
 

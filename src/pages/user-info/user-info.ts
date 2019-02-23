@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, normalizeURL, NavParams, ModalController, ToastController,  LoadingController } from 'ionic-angular';
-import { ImagePicker } from '@ionic-native/image-picker';
+import { ViewController, NavParams, ModalController, ToastController,  LoadingController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import { Globals } from '../services/globals'
@@ -72,8 +71,8 @@ export class EditUserModal {
     private userInfoService: UserInfoService,
   ) {
     this.loading = this.loadingCtrl.create();
-    this.userData =  params.get('data') 
-    this.userId = params.get('uid') 
+    this.userData =  this.params.get('data') 
+    this.userId = this.params.get('uid') 
   }
 
   ionViewWillLoad(){

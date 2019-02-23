@@ -22,6 +22,7 @@
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
     "@firebase/firestore": "^0.9.1",
+    "@ionic-native/camera": "^5.2.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/image-picker": "^4.7.0",
     "@ionic-native/local-notifications": "^4.19.0",
@@ -35,6 +36,7 @@
     "cordova-android": "7.1.3",
     "cordova-ios": "4.5.5",
     "cordova-plugin-badge": "0.8.8",
+    "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-image-picker": "^1.1.3",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
@@ -52,7 +54,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.1",
+    "@ionic/app-scripts": "^3.2.2",
     "typescript": "~2.6.2"
   },
   "description": "Decision Support System for Crime Investigatory Report in Angeles City",
@@ -66,7 +68,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-local-notification": {}
+      "cordova-plugin-local-notification": {},
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "android",

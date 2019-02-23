@@ -5,7 +5,6 @@ import { Post } from './post.model';
 @Injectable()
 export class PostsService {
   private afs;
-  private snapshotChangesSubscription: any;
   collection: any;
 
   constructor(
@@ -18,7 +17,7 @@ export class PostsService {
   getPosts( filter ){
     return new Promise<any>((resolve, reject) => {
       this.collection = filter == 'all' ? this.afs.collection('posts') : this.afs.collection('posts', ref => ref.where('type', '==', filter))
-      this.snapshotChangesSubscription =  this.collection.snapshotChanges()
+      this.collection.snapshotChanges()
       .subscribe(snapshots => {
         resolve(snapshots);
       })

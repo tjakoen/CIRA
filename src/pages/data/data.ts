@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Chart } from 'chart.js';
-import { FirebaseService } from '../services/firebase.service';
 import { PostsService } from '../posts/posts.service';
 
 @Component({

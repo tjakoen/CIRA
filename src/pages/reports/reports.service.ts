@@ -5,7 +5,6 @@ import { Report } from './report.model';
 @Injectable()
 export class ReportsService {
     private afs;
-    private snapshotChangesSubscription: any;
     collection: any;
 
   constructor(
@@ -17,7 +16,7 @@ export class ReportsService {
     getReports(){
       return new Promise<any>((resolve, reject) => {
         this.collection = this.afs.collection('reports',  ref => ref.where('userId', '==', this.firebaseService.getCurrentUser().uid)) ;
-        this.snapshotChangesSubscription =  this.collection.snapshotChanges()
+        this.collection.snapshotChanges()
         .subscribe( snapshots => {
           resolve(snapshots);
         })
