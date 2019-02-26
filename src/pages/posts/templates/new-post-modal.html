@@ -25,7 +25,17 @@
           </ion-row>
           <ion-row no-padding class="user-image-row">
             <ion-col no-padding width-60>
-              <button class="image-action-button" ion-button outline block small (click)="openImagePicker()">Change Picture</button>
+              <label>
+                  <input type="file" (change)="detectFiles($event)">
+                </label>
+            
+                <button
+                 class="image-action-button" ion-button outline block small
+                        [disabled]="!selectedFiles"
+                        (click)="uploadSingle()">
+                 Change Picture
+                </button>
+             
             </ion-col>
           </ion-row>
         </div> 

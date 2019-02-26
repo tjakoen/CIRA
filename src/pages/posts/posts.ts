@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ViewController, LoadingController, ModalController,PopoverController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { FirebaseService } from '../services/firebase.service';
+import { FirebaseService, Upload, UploadService } from '../services/firebase.service';
 import { PostsService } from './posts.service'
 
 import { HelperService } from '../services/helpers.service';
@@ -256,6 +256,11 @@ export class NewPostModalPage {
   myDateTime:String;
   documentId:string;
 
+  // Upload Pics
+  selectedFiles: FileList;
+  currentUpload: Upload;
+
+
   constructor(
     private params: NavParams,
     private viewCtrl: ViewController,
@@ -263,6 +268,7 @@ export class NewPostModalPage {
     private postsService: PostsService,
     private loadingCtrl: LoadingController,
     private globals: Globals,
+    private upSvc: UploadService,
   ) {
     this.loading = this.loadingCtrl.create();
   }
@@ -314,16 +320,20 @@ export class NewPostModalPage {
       }
   }
 
-  openImagePicker() {
-    this.loading.present()
-    this.globals.uploadImage()
-    .then( res => {
-      this.image = res.image;
+
+  detectFiles(event) {
+      this.selectedFiles = event.target.files;
+  }
+
+  uploadSingle() {
+    let file = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(file);
+    this.upSvc.pushUpload(this.currentUpload).then( res => {
+      this.image = res;
       this.loading.dismiss()
       this.globals.showToast('Image was uploaded successfully');
     }, err => {
       this.loading.dismiss()
     })
   }
-
 }

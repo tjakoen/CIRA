@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import * as firebase from 'firebase/app';
 import { Globals } from '../services/globals'
 import { UserInfoService } from './user-info.service';
+import { UploadService, Upload } from '../services/firebase.service';
 
 @Component({
   templateUrl: 'templates/user-info.html'
@@ -60,7 +61,11 @@ export class EditUserModal {
   userData;
   userId;
 
+  // Upload Pics
+  selectedFiles: FileList;
+  currentUpload: Upload;
 
+  
   constructor(
     private viewCtrl: ViewController,
     private toastCtrl: ToastController,
@@ -69,6 +74,7 @@ export class EditUserModal {
     private params: NavParams,
     private globals: Globals,
     private userInfoService: UserInfoService,
+    private upSvc: UploadService,
   ) {
     this.loading = this.loadingCtrl.create();
     this.userData =  this.params.get('data') 
@@ -147,20 +153,21 @@ export class EditUserModal {
     }
   }
 
-  openImagePicker(){
-    this.loading.present()
-    this.globals.uploadImage()
-    .then( res => {
-      this.image = res.image;
-      this.loading.dismiss()
-      let toast = this.toastCtrl.create({
-        message: 'Image was updated successfully',
-        duration: 3000
-      });
-      toast.present();
-    }, err => {
-      this.loading.dismiss()
-    })
-  }
+ 
+detectFiles(event) {
+  this.selectedFiles = event.target.files;
+}
+
+uploadSingle() {
+  let file = this.selectedFiles.item(0)
+  this.currentUpload = new Upload(file);
+  this.upSvc.pushUpload(this.currentUpload).then( res => {
+    this.image = res;
+    this.loading.dismiss()
+    this.globals.showToast('Image was uploaded successfully');
+  }, err => {
+    this.loading.dismiss()
+  })
+}
 
 }
